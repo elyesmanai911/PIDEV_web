@@ -114,7 +114,7 @@
                         <ul>
                             <li><i class="fa fa-sun-o"></i> <span>20<sup>c</sup></span> London</li>
                             <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                            <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i>
+                            <a href="{{ asset('#') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i>
                             </a>
                         </ul>
                     </div>
@@ -240,7 +240,7 @@
                             <li><a href="{{ asset('./details-post-review.html') }}">Post review</a></li>
                             <li><a href="{{ asset('./contact.html') }}">Contact</a></li>
                         </ul>
-                    <li><a href="{{ asset('#') }}"><span> Paniers<i class="active"></i></span></a></li>
+                    <li><a href="{{ path('commande') }}"><span> Paniers<i class="active"></i></span></a></li>
                     </li>
                 </ul>
             </div>

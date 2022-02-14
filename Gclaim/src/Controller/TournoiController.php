@@ -17,4 +17,13 @@ class TournoiController extends AbstractController
             'controller_name' => 'TournoiController',
         ]);
     }
+    /**
+     * @Route("/back", name="back")
+     */
+    public function back(): Response
+    {
+        return $this->render('back.html.twig', [
+            'controller_name' => 'TournoiController',
+        ]);
+    }
 }
