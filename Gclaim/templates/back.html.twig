@@ -19,6 +19,7 @@
     {% endblock %}
 </head>
 {% block header %}
+
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
@@ -199,6 +200,33 @@
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
+
+                            <i class="nav-icon fas fa-procedures"></i>
+                            <p>
+                                 Produits et categories
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ path('categorie_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Categories</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('produit_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Products</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
@@ -225,6 +253,26 @@
                         </a>
                     </li>
 
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="../tables/simple.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Simple Tables</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../tables/data.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>DataTables</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../tables/jsgrid.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>jsGrid</p>
+                            </a>
+                        </li>
+                    </ul>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -251,6 +299,7 @@
             </div><!-- /.container-fluid -->
         </section>
 
+        {% block body %} {% endblock %}
         <!-- Main content -->
         <section class="content">
 
@@ -277,6 +326,7 @@
                 </div>
                 <!-- /.card-footer-->
             </div>
+
             <!-- /.card -->
 
         </section>
