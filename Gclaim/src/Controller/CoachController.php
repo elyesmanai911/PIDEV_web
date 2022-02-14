@@ -53,7 +53,6 @@ class CoachController extends AbstractController
     {
         $coach = new Coach();
         $form = $this->createForm(CoachType::class, $coach);
-        $form->add('Ajouter',SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -71,7 +70,6 @@ class CoachController extends AbstractController
     {
         $coach=$repository->find($id);
         $form = $this->createForm(CoachType::class, $coach);
-        $form->add('modifier',SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
