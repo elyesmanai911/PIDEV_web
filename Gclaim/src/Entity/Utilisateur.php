@@ -50,7 +50,6 @@ abstract class Utilisateur
      *      max = "20",
      *      minMessage = "Votre mot de passe doit faire au moins {{ limit }} caractères",
      *      maxMessage = "Votre mot de passe ne peut pas être plus long que {{ limit }} caractères")
-     * @Assert\EqualTo(value={{ compared_value }},message="verifiez votre mot de passe")
      */
     protected $verifpassword;
 
