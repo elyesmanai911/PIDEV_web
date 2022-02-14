@@ -12,7 +12,6 @@
     <!-- Google Font -->
     {% block css%}
 
-
         <link href="{{ asset('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap') }}"
               rel="stylesheet">
         <link href="{{ asset('https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap') }}" rel="stylesheet">
@@ -117,9 +116,6 @@
                             <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
                             <a href="{{ asset('#') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i>
                             </a>
-
-                            <li class="signup-switch signup-open"><i class="fa fa-sign-out"></i> Login / Sign up
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -156,8 +152,6 @@
                 <ul>
                     <li class="active"><a href="{{ asset('#') }}"><span>Accueil</span></a></li>
                     <li class="mega-menu"><a href="{{ asset('#') }}"><span>Tournois <i class="fa fa-angle-down"></i></span></a>
-                    <li class="active"><a href="{{ asset('./index.html') }}"><span>Home</span></a></li>
-                    <li class="mega-menu"><a href="{{ asset('#') }}"><span>Platform <i class="fa fa-angle-down"></i></span></a>
                         <div class="megamenu-wrapper">
                             <ul class="mw-nav">
                                 <li><a href="{{ asset('#') }}"><span>Playstation</span></a></li>
@@ -172,8 +166,6 @@
                                     </div>
                                     <div class="mw-text">
                                         <h6><a href="{{ asset('#') }}">Tournois1</a></h6>
-                                        <h6><a href="{{ asset('#') }}">A Monster Prom poster got hijacked for a Papa Roach
-                                                concert...</a></h6>
                                         <ul>
                                             <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
                                             <li><i class="fa fa-comment-o"></i> 12</li>
@@ -186,7 +178,6 @@
                                     </div>
                                     <div class="mw-text">
                                         <h6><a href="{{ asset('#') }}">Tournois2</a>
-                                        <h6><a href="{{ asset('#') }}">A new Borderlands 3 trailer introduces Moze and her...</a>
                                         </h6>
                                         <ul>
                                             <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
@@ -200,7 +191,6 @@
                                     </div>
                                     <div class="mw-text">
                                         <h6><a href="{{ asset('#') }}">Tournois3</a>
-                                        <h6><a href="{{ asset('#') }}">Teamfight Tactics is in chaos after today's patch...</a>
                                         </h6>
                                         <ul>
                                             <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
@@ -214,8 +204,6 @@
                                     </div>
                                     <div class="mw-text">
                                         <h6><a href="{{ asset('#') }}">Tournois4</a></h6>
-                                        <h6><a href="{{ asset('#') }}">Borderlands 2 dev explains why there's mysterious
-                                                boxes...</a></h6>
                                         <ul>
                                             <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
                                             <li><i class="fa fa-comment-o"></i> 12</li>
@@ -228,7 +216,6 @@
                                     </div>
                                     <div class="mw-text">
                                         <h6><a href="{{ asset('#') }}">Tournois5</a>
-                                        <h6><a href="{{ asset('#') }}">Capcom asks select fans to test new Resident Evil game</a>
                                         </h6>
                                         <ul>
                                             <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
@@ -244,9 +231,6 @@
                     <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="active"></i></span></a></li>
                     <li>
                         <a href="{{ asset('#') }}"><span>Produits <i class="fa fa-angle-down"></i></span></a>
-
-                    <li>
-                        <a href="{{ asset('#') }}"><span>Pages <i class="fa fa-angle-down"></i></span></a>
                         <ul class="dropdown">
                             <li><a href="{{ asset('./categories-list.html') }}">Categories</a></li>
                             <li><a href="{{ asset('./categories-grid.html') }}">Categories grid</a></li>
@@ -258,10 +242,6 @@
                         </ul>
                     <li><a href="{{ path('commande') }}"><span> Paniers<i class="active"></i></span></a></li>
                     </li>
-                    </li>
-                    <li><a href="{{ asset('#') }}"><span>Reviews <i class="fa fa-angle-down"></i></span></a></li>
-                    <li><a href="{{ asset('#') }}"><span>Windows <i class="fa fa-angle-down"></i></span></a></li>
-                    <li><a href="{{ asset('#') }}"><span>Videos <i class="fa fa-angle-down"></i></span></a></li>
                 </ul>
             </div>
         </div>
@@ -271,9 +251,7 @@
 
 <!-- Hero Section Begin -->
 <section class="hero-section">
-
-{% block body %}
-
+    {% block body %}
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-6">
@@ -419,7 +397,6 @@
 <!-- Latest Preview Section Begin -->
 <section class="latest-preview-section">
     {% block tournois %}
-
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -1219,13 +1196,552 @@
     </div>
 </section>
 <!-- Update News Section End -->
-
 {#
+<!-- Videos Guide Section Begin -->
+<section class="video-guide-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h5>Videos guide</h5>
+                </div>
+            </div>
+        </div>
+        <div class="tab-elem">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="{{ asset('#tabs-5') }}" role="tab">All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="{{ asset('#tabs-6') }}" role="tab">Platform</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="{{ asset('#tabs-7') }}" role="tab">Hardware</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="{{ asset('#tabs-8') }}" role="tab">Reviews</a>
+                </li>
+            </ul><!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tabs-5" role="tabpanel">
+                    <div class="row">
+                        <div class="vg-slider owl-carousel">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-1.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-2.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-3.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-4.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-5.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-1.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-2.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-3.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-4.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-5.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tabs-6" role="tabpanel">
+                    <div class="row">
+                        <div class="vg-slider owl-carousel">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-1.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-2.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-3.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-4.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-5.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-1.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-2.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-3.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-4.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-5.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tabs-7" role="tabpanel">
+                    <div class="row">
+                        <div class="vg-slider owl-carousel">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-1.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-2.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-3.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-4.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-5.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-1.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-2.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-3.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-4.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-5.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tabs-8" role="tabpanel">
+                    <div class="row">
+                        <div class="vg-slider owl-carousel">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-1.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-2.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-3.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-4.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-5.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-1.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="vg-item large-vg set-bg" data-setbg="{{ asset('img/videos/videos-2.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h5>THROUGH THE AGES' FIRST EXPANSION WILL BE RELEASING ON DIGITAL
+                                                    PLATFORMS...</h5>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-3.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-4.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="vg-item set-bg" data-setbg="{{ asset('img/videos/videos-5.jpg') }}">
+                                            <a href="{{ asset('https://www.youtube.com/watch?v=EzKkl64rRbM') }}"
+                                               class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                                            <div class="vg-text">
+                                                <h6>THis gam,ing laptop with Gtx 1660 ti and of ram is</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 #}
 <!-- Videos Guide Section End -->
 {#
-<!-- Videos Guide Section End -->
-
 <!-- Instagram Post Section Begin -->
 <section class="instagram-post-section spad">
     <div class="container">
@@ -1411,10 +1927,9 @@
         </div>
     </div>
 </section> #}
+    {% endblock%}
     {% endblock %}
 
-
-</section>
 
 <!-- Instagram Post Section End -->
 
@@ -1510,39 +2025,7 @@
         </div>
     </div>
 </footer>
-
-
-<!-- Sign Up Section Begin -->
-<div class="signup-section">
-    <div class="signup-close"><i class="fa fa-close"></i></div>
-    <div class="signup-text">
-        <div class="container">
-            <div class="signup-title">
-                <h2>Sign up</h2>
-                <p>Fill out the form below to recieve a free and confidential</p>
-            </div>
-            <form action="#" class="signup-form">
-                <div class="sf-input-list">
-                    <input type="text" class="input-value" placeholder="User Name*">
-                    <input type="text" class="input-value" placeholder="Password">
-                    <input type="text" class="input-value" placeholder="Confirm Password">
-                    <input type="text" class="input-value" placeholder="Email Address">
-                    <input type="text" class="input-value" placeholder="Full Name">
-                </div>
-                <div class="radio-check">
-                    <label for="rc-agree">I agree with the term & conditions
-                        <input type="checkbox" id="rc-agree">
-                        <span class="checkbox"></span>
-                    </label>
-                </div>
-                <button type="submit"><span>REGISTER NOW</span></button>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Sign Up Section End -->
-
-
+<!--- Footer Section End -->
 <!-- Search model Begin -->
 <div class="search-model">
     <div class="h-100 d-flex align-items-center justify-content-center">
@@ -1557,15 +2040,14 @@
 <!-- Js Plugins -->
 {% block js %}
 
-
-<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
-<script src="{{ asset('js/circle-progress.min.js') }}"></script>
-<script src="{{ asset('js/jquery.barfiller.js') }}"></script>
-<script src="{{ asset('js/jquery.slicknav.js') }}"></script>
-<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('js/circle-progress.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.barfiller.js') }}"></script>
+    <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 {% endblock %}
 </body>
 
