@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
+use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Route("/commande")
@@ -29,29 +31,40 @@ class CommandeController extends AbstractController
     /**
      * @Route("/front", name="commande", methods={"GET"})
      */
-    public function indexFront(CommandeRepository $commandeRepository): Response
+    public function indexFront(ProduitRepository $produitRepository,SessionInterface $session): Response
     {
+       
         return $this->render('commande/indexFront.html.twig', [
-            'commandes' => $commandeRepository->findAll(),
+            'produits' =>  $produitRepository->findAll(),
         ]);
     }
+
+
     /**
      * @Route("/new", name="commande_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,SessionInterface $session): Response
     {
+        $somme=0;
+        $cart=$session->get('cart',[]);
+        foreach ($cart as $c){
+            //dd($c);
+            $somme=$somme+$c["total"];
+        }
+        
         $commande = new Commande();
         $commande->setIdUser(2);
         $commande->setDateAchat(new \DateTime('now'));
-        $form = $this->createForm(CommandeType::class, $commande);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        $commande->setTotal($somme);
+       // $form = $this->createForm(CommandeType::class, $commande);
+        //$form->handleRequest($request);
+        $commande->setLivrer(false);
+        //if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($commande);
             $entityManager->flush();
-
+        
             return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
-        }
+        //}
 
         return $this->render('commande/new.html.twig', [
             'commande' => $commande,
@@ -103,5 +116,30 @@ class CommandeController extends AbstractController
         }
 
         return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/cart", name="cart", methods={"GET"})
+     */
+    public function ToCart(): Response
+    {
+        return $this->redirectToRoute('panier', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/add/{id}",name="add")
+     */
+    public function add($id ,SessionInterface $session)
+    {
+        $panier = $session->get("panier",[]);
+      
+        if (!empty($panier[$id])){
+            $panier[$id]++;
+        }else{
+            $panier[$id]=1;
+        }
+       
+        $session->set("panier",$panier);
+        return $this->redirectToRoute('commande', [], Response::HTTP_SEE_OTHER);
     }
 }
