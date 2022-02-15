@@ -28,6 +28,11 @@ class LigneCommande
      */
     private $quantite;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $Commande;
+
     public function getId(): ?int
     {
         return $this->id;

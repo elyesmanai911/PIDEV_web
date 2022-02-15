@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
+use App\Entity\LigneCommande;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
 use App\Repository\ProduitRepository;
@@ -43,7 +44,7 @@ class CommandeController extends AbstractController
     /**
      * @Route("/new", name="commande_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager,SessionInterface $session): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,SessionInterface $session,ProduitRepository $produitRepository): Response
     {
         $somme=0;
         $cart=$session->get('cart',[]);
@@ -62,7 +63,20 @@ class CommandeController extends AbstractController
         //if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($commande);
             $entityManager->flush();
+            $panier=$session->get('panier',[]);
+            foreach ($panier as $id => $quantite ){
+                
+                $produit=$produitRepository->find($id);
+            $ligneCommande= new LigneCommande();
+            $ligneCommande->setProduit($produit);
+            $ligneCommande->setQuantite($quantite);
+            $entityManager->persist($ligneCommande);
+            //dd($entityManager);
+            }
+            $entityManager->flush();
         
+        $session->set('cart',[]);
+        $session->set('panier',[]);
             return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
         //}
 
