@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Contact  | Template{% endblock %}</title>
+    {% block css %}
+    <!-- Google Font -->
+    <link href="{{ asset('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap"
+        rel="stylesheet') }}">
+    <link href="{{ asset('https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap') }}" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/elegant-icons.css"') }} type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/barfiller.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
+    {% endblock %}
+</head>
+
+<body>
+  
+    <!-- Contact Section Begin -->
+    <section class="contact-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="contact-text">
+                        <div class="contact-title">
+                            <h3>Contact us</h3>
+                            <p>My experience with Realy is absolutely positive. The themes are beautifully<br />
+                                designed and well documented. Realy theme provides quick support.</p>
+                        </div>
+                        <div class="contact-form">
+                            <div class="dt-leave-comment">
+                                <form action="#">
+                                    <div class="input-list">
+                                        <input type="text" placeholder="Name">
+                                        <input type="text" placeholder="Lastname">
+                                        {% block game %}{% endblock%}
+                                    </div>
+                                   {% block description %}{% endblock%}
+                                    {% block submit %}{% endblock%}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-about">
+                        <div class="fa-logo">
+                            <a href="{{ asset('#') }}"><img src="{{ asset('img/f-logo.png') }}" alt=""></a>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua lacus vel facilisis.</p>
+                        <div class="fa-social">
+                            <a href="{{ asset('#') }}"><i class="fa fa-facebook"></i></a>
+                            <a href="{{ asset('#') }}"><i class="fa fa-twitter"></i></a>
+                            <a href="{{ asset('#') }}"><i class="fa fa-youtube-play"></i></a>
+                            <a href="{{ asset('#') }}"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="editor-choice">
+                        <div class="section-title">
+                            <h5>Editor's Choice</h5>
+                        </div>
+                        <div class="ec-item">
+                            <div class="ec-pic">
+                                <img src="{{ asset('img/trending/editor-1.jpg') }}" alt="">
+                            </div>
+                            <div class="ec-text">
+                                <h6><a href="{{ asset('#') }}">A Monster Prom poster got hijacked for a Papa Roach concert...</a>
+                                </h6>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ec-item">
+                            <div class="ec-pic">
+                                <img src="{{ asset('img/trending/editor-2.jpg') }}" alt="">
+                            </div>
+                            <div class="ec-text">
+                                <h6><a href="{{ asset('#') }}">Facebook wants to read your thoughts with its augmented...</a>
+                                </h6>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                    <li><i class="fa fa-comment-o"></i> 12</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="tags-cloud">
+                        <div class="section-title">
+                            <h5>Tags Cloud</h5>
+                        </div>
+                        <div class="tag-list">
+                            <a href="{{ asset('#') }}"><span>Gaming</span></a>
+                            <a href="{{ asset('#') }}"><span>Platform</span></a>
+                            <a href="{{ asset('#') }}"><span>Playstation</span></a>
+                            <a href="{{ asset('#') }}"><span>Hardware</span></a>
+                            <a href="{{ asset('#') }}"><span>Reviews</span></a>
+                            <a href="{{ asset('#') }}"><span>Simulation</span></a>
+                            <a href="{{ asset('#') }}"><span>Strategy</span></a>
+                            <a href="{{ asset('#') }}"><span>Scientific</span></a>
+                            <a href="{{ asset('#') }}"><span>References</span></a>
+                            <a href="{{ asset('#') }}"><span>Role-playing</span></a>
+                            <a href="{{ asset('#') }}"><span>Adventurea</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    <!-- Sign Up Section Begin -->
+    <div class="signup-section">
+        <div class="signup-close"><i class="fa fa-close"></i></div>
+        <div class="signup-text">
+            <div class="container">
+                <div class="signup-title">
+                    <h2>Sign up</h2>
+                    <p>Fill out the form below to recieve a free and confidential</p>
+                </div>
+                <form action="#" class="signup-form">
+                    <div class="sf-input-list">
+                        <input type="text" class="input-value" placeholder="User Name*">
+                        <input type="text" class="input-value" placeholder="Password">
+                        <input type="text" class="input-value" placeholder="Confirm Password">
+                        <input type="text" class="input-value" placeholder="Email Address">
+                        <input type="text" class="input-value" placeholder="Full Name">
+                    </div>
+                    <div class="radio-check">
+                        <label for="rc-agree">I agree with the term & conditions
+                            <input type="checkbox" id="rc-agree">
+                            <span class="checkbox"></span>
+                        </label>
+                    </div>
+                    <button type="submit"><span>REGISTER NOW</span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Sign Up Section End -->
+
+    <!-- Search model Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+                        {% block js %}
+    <!-- Js Plugins -->
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('js/circle-progress.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.barfiller.js') }}"></script>
+    <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+                        {% endblock %}
+</body>
+
+</html>
