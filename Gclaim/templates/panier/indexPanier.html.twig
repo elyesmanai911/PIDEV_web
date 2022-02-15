@@ -1,0 +1,29 @@
+{% extends 'test.html.twig' %}
+
+{% block title %}LigneCommande index{% endblock %}
+
+{% block body %}
+<h1>LigneCommande</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Quantite</th>
+      <th>Total</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for panier in paniers %}
+
+    <tr>
+      <td>{{panier.produit}}</td>
+      <td>{{panier.quantite}}</td>
+      <td>{{panier.total}}
+      
+    </tr>
+{% endfor %}
+  </tbody>
+<a href="{{ path('commande_new')}}" class="nav-link" type="button">Valider</a>
+{% endblock %}
