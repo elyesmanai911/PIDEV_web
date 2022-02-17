@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=ProduitRepository::class)
  */
@@ -25,6 +25,7 @@ class Produit
      *      max = 20,
      *      minMessage = "Your first name must be at least 2 characters long",
      *      maxMessage = "Your first name cannot be longer than 20 characters"
+     * )
      */
     private $nom_produit;
 
@@ -36,13 +37,13 @@ class Produit
      *      max = 220,
      *      minMessage = "Your first name must be at least 2 characters long",
      *      maxMessage = "Your first name cannot be longer than 20 characters"
+     * )
      */
     private $description;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @Assert\NotBlank
-     * @Assert\Lengtht
      */
     private $prix_produit;
 
@@ -63,7 +64,7 @@ class Produit
      */
     private $categorie;
 
-    public function getId(): ?int
+    public function getId_produit(): ?int
     {
         return $this->id_produit;
     }

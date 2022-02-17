@@ -1,0 +1,26 @@
+
+
+
+
+{% block body %}
+
+
+    <table class="table" >
+        <tbody>
+
+        {% for categorie in categories %}
+        <div class="bp-text">
+
+            <input type="checkbox" id="categorie" name="categorie" >
+            <label style="color: #e66a02">{{ categorie.nomCategorie }}</label>
+
+
+        </div>
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+
+{% endblock %}

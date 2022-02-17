@@ -8,8 +8,8 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id_produit</th>
-                <td>{{ produit.Id }}</td>
+                <th>id_produit</th>
+                <td>{{ produit.id_produit }}</td>
             </tr>
             <tr>
                 <th>Nom_produit</th>
@@ -34,9 +34,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('produit_index') }}">back to list</a>
+    <a href="{{ path('produit_index') }}" class="btn btn-primary">back to list</a>
 
-    <a href="{{ path('produit_edit', {'id_produit': produit.Id}) }}">edit</a>
+    <a href="{{ path('produit_edit', {'id_produit': produit.id_produit}) }}" class="btn btn-primary">edit</a>
 
     {{ include('produit/_delete_form.html.twig') }}
 {% endblock %}

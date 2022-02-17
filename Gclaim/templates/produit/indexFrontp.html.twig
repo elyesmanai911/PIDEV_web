@@ -1,0 +1,151 @@
+{% extends 'test.html.twig' %}
+
+{% block title %} produit {% endblock %}
+
+{%  block body %}
+
+    <!-- Instagram Post Section Begin -->
+    <section class="instagram-post-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="section-title">
+                        <h5>Produits</h5>
+                    </div>
+                     {% for produit in produits %}
+                        <div class="ip-item">
+                            <div class="ip-pic">
+                                <img src="{{ asset('img/instagram/insta-1.jpg') }}" alt="">
+                            </div>
+                            <div class="ip-text">
+                                <div class="label"><span>{{ produit.prixProduit }} DT</span></div>
+
+                                <ul>
+                                    <h5><a href="{{ asset('#') }}">{{ produit.nomProduit }}</a></h5>
+                                    <li>by <span>Admin</span></li>
+                                    <li><i class="fa fa-clock-o"></i> {{ produit.dateAjoutProduit ? produit.dateAjoutProduit|date('Y-m-d') : '' }}</li>
+
+                                </ul>
+                                    <p>{{ produit.description }}</p>
+                                  <div class="container">
+                                        <div class="tags-cloud">
+                                            <div class="section-title">
+
+                                            </div>
+                                            <div class="tag-list">
+                                                <a href="{{ asset('#') }}"><span>Ajouter au panier</span></a>
+
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+
+
+                    <div class="pagination-item">
+                        <a href="{{ asset('#') }}"><span>1</span></a>
+                        <a href="{{ asset('#') }}"><span>2</span></a>
+                        <a href="{{ asset('#') }}"><span>3</span></a>
+                        <a href="{{ asset('#') }}"><span>Next</span></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-7">
+                    <div class="sidebar-option">
+                        <div class="insta-media">
+                            <div class="section-title">
+                                <h5>Categories</h5>
+                            </div>
+
+                                <div class="insta-pic">
+                                    {{ include('categorie/affichagecategorie.html.twig') }}
+
+                                </div>
+                        </div>
+                        <div class="best-of-post">
+                            <div class="section-title">
+                                <h5>Best of</h5>
+                            </div>
+                            <div class="bp-item">
+                                <div class="bp-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                                <span class="circle-progress-1" data-cpid="id-1" data-cpvalue="10"
+                                                      data-cpcolor="#c20000"></span>
+                                            <div class="review-point">9.5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bp-text">
+                                    <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="bp-item">
+                                <div class="bp-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                                <span class="circle-progress-1" data-cpid="id-2" data-cpvalue="85"
+                                                      data-cpcolor="#c20000"></span>
+                                            <div class="review-point">8.5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bp-text">
+                                    <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="bp-item">
+                                <div class="bp-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                                <span class="circle-progress-1" data-cpid="id-3" data-cpvalue="80"
+                                                      data-cpcolor="#c20000"></span>
+                                            <div class="review-point">8.0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bp-text">
+                                    <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="bp-item">
+                                <div class="bp-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                                <span class="circle-progress-1" data-cpid="id-4" data-cpvalue="75"
+                                                      data-cpcolor="#c20000"></span>
+                                            <div class="review-point">7.5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bp-text">
+                                    <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                        <li><i class="fa fa-comment-o"></i> 20</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

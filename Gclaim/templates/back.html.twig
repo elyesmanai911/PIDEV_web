@@ -18,7 +18,8 @@
         <link rel="stylesheet" href=  "{{asset('../back/css/adminlte.css')}}">
     {% endblock %}
 </head>
-{% block content %}
+{% block header %}
+
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
@@ -197,12 +198,14 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
+                        
                     <li class="nav-item">
+                      
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-procedures"></i>
-                            <p>
-                                 Produits et categories
+                         <i class="nav-icon fas fa-procedures"></i>
+                       Produits et categories
                                 <i class="right fas fa-angle-left"></i>
+                               
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -221,9 +224,37 @@
 
                         </ul>
                     </li>
+                    
+                           
+                            <p>
+          
+               <li class="nav-item">
+                        <a href="#" class="nav-link">
+                         <i class="nav-icon fas fa-procedures"></i>
+                      Commande et Ligne Commande
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ path('commande_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Commande</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('produit_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ligne Commande</p>
+                                </a>
+                            </li>
 
+                        </ul>
+                    </li>
+                    <p>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
+
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
@@ -249,6 +280,7 @@
                             </p>
                         </a>
                     </li>
+
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="../tables/simple.html" class="nav-link">
@@ -294,6 +326,7 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
+
         {% block body %} {% endblock %}
         <!-- Main content -->
         <section class="content">
@@ -313,7 +346,7 @@
 {#                    </div>#}
 {#                </div>#}
 {#                <div class="card-body">#}
-{#                    Start creating your amazing application!#}
+{#                    {% block content%}{% endblock %}#}
 {#                </div>#}
 {#                <!-- /.card-body -->#}
 {#                <div class="card-footer">#}
@@ -321,6 +354,7 @@
 {#                </div>#}
 {#                <!-- /.card-footer-->#}
 {#            </div>#}
+
             <!-- /.card -->
 
         </section>

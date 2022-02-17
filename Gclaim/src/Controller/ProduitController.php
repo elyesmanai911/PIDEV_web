@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitType;
+use App\Repository\CategorieRepository;
+use App\Repository\CommandeRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +25,7 @@ class ProduitController extends AbstractController
     {
         return $this->render('produit/index.html.twig', [
             'produits' => $produitRepository->findAll(),
+
         ]);
     }
 
@@ -90,4 +93,17 @@ class ProduitController extends AbstractController
 
         return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/prod/frontp", name="produit", methods={"GET"})
+     */
+    public function indexFront(ProduitRepository $produitRepository, CategorieRepository $categorieRepository): Response
+    {
+        return $this->render('produit/indexFrontP.html.twig', [
+            'produits' => $produitRepository->findAll(),
+            'categories' => $categorieRepository->findAll(),
+        ]);
+    }
+
+
 }
