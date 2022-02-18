@@ -44,12 +44,12 @@ class CommandeController extends AbstractController
     /**
      * @Route("/new", name="commande_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager,SessionInterface $session,ProduitRepository $produitRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,SessionInterface $session,ProduitRepository $produitRepository,CommandeRepository $commandeRepository): Response
     {
         $somme=0;
         $cart=$session->get('cart',[]);
         foreach ($cart as $c){
-            //dd($c);
+            
             $somme=$somme+$c["total"];
         }
         
@@ -60,18 +60,21 @@ class CommandeController extends AbstractController
        // $form = $this->createForm(CommandeType::class, $commande);
         //$form->handleRequest($request);
         $commande->setLivrer(false);
+        
         //if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($commande);
             $entityManager->flush();
             $panier=$session->get('panier',[]);
             foreach ($panier as $id => $quantite ){
                 
-                $produit=$produitRepository->find($id);
+            $produit=$produitRepository->find($id);
             $ligneCommande= new LigneCommande();
             $ligneCommande->setProduit($produit);
             $ligneCommande->setQuantite($quantite);
+            $comm=$commandeRepository->find($commande->getId());
+            $ligneCommande->setCommande($comm);
             $entityManager->persist($ligneCommande);
-            //dd($entityManager);
+            
             }
             $entityManager->flush();
         
