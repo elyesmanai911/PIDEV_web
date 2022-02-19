@@ -134,6 +134,7 @@
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/phpunit/phpunit" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfonycasts/verify-email-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
