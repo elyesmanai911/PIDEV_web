@@ -39,7 +39,6 @@ class Equipe
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank(message="Il faut mentionner l'etat de l'equipe  ")
      */
     private $Etat;
 

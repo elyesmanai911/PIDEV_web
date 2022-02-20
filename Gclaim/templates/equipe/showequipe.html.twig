@@ -32,7 +32,16 @@
 
                                     <h5><a href="#">{{equipe.nomEquipe }}</a></h5>
                                     <ul>
-                                        <li> <span><a href="{{ path('rejoindreequipe',{'id':equipe.id}) }}" style="color: #c24400">Rejoindre l'Equipe</a></span></li>
+
+                                        {% if equipe.etat %}
+                                            <li> <span><a href="{{ path('rejoindreequipe',{'id':equipe.id}) }}" style="color: #c24400">Rejoindre l'Equipe</a></span></li>
+
+                                        {% else %}
+
+                                                    <li> <span>Equipe fermé</span></li>
+                                        {% endif %}
+
+
                                         <li><i class="fa fa-clock-o"></i> {{ equipe.dateCreation|date }}</li>
                                     </ul>
                                     <li><a style="color: #ffffff"> Description de l'équipe </a></li>

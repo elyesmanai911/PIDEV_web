@@ -112,15 +112,14 @@
                 <div class="col-lg-6 col-md-8">
                     <div class="ht-widget">
                         <ul>
+                            <li><i class="fa fa-clock-o"></i>   {{"now"|date('F j, Y')}} </li>
+                            <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>
+
                             {% if user is not null %}
-                                <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sun-o"> se deconnecter </i> </li></a>
+                                <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
+                            {% else%}
+                                <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
                             {% endif %}
-                            <li><i class="fa fa-clock-o"></i> {{"now"|date('F j, Y')}}</li>
-                            {% if user is not null %}
-                            <a href="{{ path('profile') }}"><li> <i class="fa fa-sign-out"> profile </i>
-                                    {% else %}
-                                    <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li>
-                                {% endif %}
 
                             </a>
                         </ul>
