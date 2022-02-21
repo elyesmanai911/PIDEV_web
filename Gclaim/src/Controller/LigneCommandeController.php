@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\LigneCommande;
-use App\Form\LigneCommandeType;
+use App\Form\LigneCommande1Type;
 use App\Repository\LigneCommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,6 +21,7 @@ class LigneCommandeController extends AbstractController
      */
     public function index(LigneCommandeRepository $ligneCommandeRepository): Response
     {
+        //dd($ligneCommandeRepository->findAll());
         return $this->render('ligne_commande/index.html.twig', [
             'ligne_commandes' => $ligneCommandeRepository->findAll(),
         ]);
@@ -32,7 +33,7 @@ class LigneCommandeController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $ligneCommande = new LigneCommande();
-        $form = $this->createForm(LigneCommandeType::class, $ligneCommande);
+        $form = $this->createForm(LigneCommande1Type::class, $ligneCommande);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +64,7 @@ class LigneCommandeController extends AbstractController
      */
     public function edit(Request $request, LigneCommande $ligneCommande, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(LigneCommandeType::class, $ligneCommande);
+        $form = $this->createForm(LigneCommande1Type::class, $ligneCommande);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

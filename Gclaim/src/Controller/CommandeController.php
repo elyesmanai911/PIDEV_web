@@ -64,15 +64,16 @@ class CommandeController extends AbstractController
         //if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($commande);
             $entityManager->flush();
-            $panier=$session->get('panier',[]);
-            foreach ($panier as $id => $quantite ){
-                
-            $produit=$produitRepository->find($id);
+            
+            foreach ($cart as $p ){
+              
+            $produit=$produitRepository->find($p['id']);
             $ligneCommande= new LigneCommande();
             $ligneCommande->setProduit($produit);
-            $ligneCommande->setQuantite($quantite);
+            $ligneCommande->setQuantite($p['quantite']);
             $comm=$commandeRepository->find($commande->getId());
             $ligneCommande->setCommande($comm);
+            
             $entityManager->persist($ligneCommande);
             
             }
@@ -148,15 +149,15 @@ class CommandeController extends AbstractController
      */
     public function add($id ,SessionInterface $session)
     {
-        $panier = $session->get("panier",[]);
+        $panier = $session->get("cart",[]);
       
         if (!empty($panier[$id])){
-            $panier[$id]++;
+            $panier[$id]['quantite']=$panier[$id]['quantite']+1;
         }else{
-            $panier[$id]=1;
+            $panier[$id]['quantite']=1;
         }
        
-        $session->set("panier",$panier);
+        $session->set("cart",$panier);
         return $this->redirectToRoute('commande', [], Response::HTTP_SEE_OTHER);
     }
 }

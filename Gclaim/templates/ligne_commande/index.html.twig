@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'back.html.twig' %}
 
 {% block title %}LigneCommande index{% endblock %}
 
@@ -17,7 +17,7 @@
         {% for ligne_commande in ligne_commandes %}
             <tr>
                 <td>{{ ligne_commande.id }}</td>
-                <td>{{ ligne_commande.quantite }}</td>
+                <td>{{ ligne_commande.quantite }}{{ligne_commande.produit.id}}</td>
                 <td>
                     <a href="{{ path('ligne_commande_show', {'id': ligne_commande.id}) }}">show</a>
                     <a href="{{ path('ligne_commande_edit', {'id': ligne_commande.id}) }}">edit</a>
