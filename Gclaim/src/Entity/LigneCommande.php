@@ -19,7 +19,7 @@ class LigneCommande
 
     /**
      * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="Produit")
-     * @ORM\JoinColumn(name="LigneCommande", referencedColumnName="id_produit")
+     * @ORM\JoinColumn(name="Produit", referencedColumnName="id_produit")
      */
     private $Produit;
 

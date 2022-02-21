@@ -81,7 +81,7 @@ class CommandeController extends AbstractController
         
         $session->set('cart',[]);
         $session->set('panier',[]);
-            return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('commande', [], Response::HTTP_SEE_OTHER);
         //}
 
         return $this->render('commande/new.html.twig', [
