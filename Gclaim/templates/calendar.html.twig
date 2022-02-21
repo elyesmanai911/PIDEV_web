@@ -1,0 +1,33 @@
+
+<html>
+<head>
+    <title>My Evo Calendar</title>
+
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.midnight-blue.css') }}"/>
+</head>
+<body>
+
+
+<div id="calendar"></div>
+
+
+<script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js') }}"></script>
+<script src="{{ asset('js/evo-calendar.js') }}"></script>
+
+<script>
+    // initialize your calendar, once the page's DOM is ready
+    $(document).ready(function() {
+        $('#calendar').evoCalendar({
+            theme: 'Midnight Blue'
+        })
+        $('#calendar').evoCalendar({
+            'firstDayOfWeek': 0 // Sun
+            // 0-6 (Sun-Sat)
+        });
+    })
+</script>
+
+</body>
+</html>

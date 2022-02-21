@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SimpleUtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Mapping\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,6 +29,16 @@ class SimpleUtilisateur extends Utilisateur
      */
     private $fullname;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Rdv::class, mappedBy="users")
+     */
+    private $rdvs;
+
+    public function __construct()
+    {
+        $this->rdvs = new ArrayCollection();
+    }
+
 
 
     public function getFullName(): ?string
@@ -40,4 +52,36 @@ class SimpleUtilisateur extends Utilisateur
 
         return $this;
     }
+
+    /**
+     * @return Collection|Rdv[]
+     */
+    public function getRdvs(): Collection
+    {
+        return $this->rdvs;
+    }
+
+    public function addRdv(Rdv $rdv): self
+    {
+        if (!$this->rdvs->contains($rdv)) {
+            $this->rdvs[] = $rdv;
+            $rdv->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRdv(Rdv $rdv): self
+    {
+        if ($this->rdvs->removeElement($rdv)) {
+            // set the owning side to null (unless already changed)
+            if ($rdv->getUsers() === $this) {
+                $rdv->setUsers(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

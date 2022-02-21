@@ -14,9 +14,17 @@
 
         <link href="{{ asset('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap') }}"
               rel="stylesheet">
+        <link rel="preconnect" href="{{ asset('https://fonts.gstatic.com') }}" />
+        <link
+                href="{{ asset('https://fonts.googleapis.com/css2?family=Poppins&display=swap') }}"
+                rel="stylesheet"
+        />
         <link href="{{ asset('https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap') }}" rel="stylesheet">
-
+        <link rel="stylesheet" href="{{ asset('css/button.css') }}" />
         <!-- Css Styles -->
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.midnight-blue.css') }}"/>
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/elegant-icons.css') }}" type="text/css">
@@ -2048,6 +2056,22 @@
     <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/evo-calendar.js') }}"></script>
+    <script>
+        // initialize your calendar, once the page's DOM is ready
+        $(document).ready(function() {
+            $('#calendar').evoCalendar({
+                theme: 'Midnight Blue'
+            })
+
+
+            ;
+
+        })
+    </script>
+   {% block script %}{% endblock %}
 {% endblock %}
 </body>
 

@@ -1,16 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'test.html.twig' %}
 
 {% block title %}Profil{% endblock %}
 
 {% block body %}
-    <h1>Profil</h1>
+    <h1>{{ profil.username }}</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ profil.id }}</td>
-            </tr>
+
             <tr>
                 <th>Description</th>
                 <td>{{ profil.description }}</td>
@@ -26,6 +23,81 @@
             </tr>
         </tbody>
     </table>
+
+    <html>
+
+    <div id="calendar"></div>
+    {% block script %}
+
+<script>
+    $(document).ready(function() {
+
+
+        $('#calendar').evoCalendar('addCalendarEvent', {
+            id: 'kNybja6',
+            name: 'Mom\'s Birthday',
+            description: 'Lorem ipsum dolor sit..',
+            date: '02/19/2022',
+            type: 'birthday'
+        });
+        $('#calendar').evoCalendar('addCalendarEvent', {
+            id: 'kNybja6',
+            name: 'soumaya Birthday',
+            description: 'Lorem ipsum dolor sit..',
+            date: '02/20/2022',
+            type: 'birthday'
+        });
+
+
+
+    } )
+    function add() {
+          var active_events = $('#calendar').evoCalendar('getActiveEvents');
+      /*  if(active_events=='[object Object]')
+         { window.alert("Impossible");}
+         else window.alert("possible");
+*/
+
+
+
+    }
+
+
+
+
+</script>
+
+    {% endblock %}
+
+<script>
+    function add() {
+        var active_date = $('#calendar').evoCalendar('getActiveDate');
+        sessionStorage.setItem("myDate", active_date);
+        sessionStorage.setItem("myCoach", profil.id);
+
+
+</script>
+
+
+
+    <div class="contact-form">
+        <a  href="{{ path('rdv_new',{'id':profil.id}) }}" class="btn btn-3" onclick="add()" > Réserver maintenant! </a>
+
+    </div>
+
+
+    <script>
+
+        var myDate = sessionStorage.getItem("myDate");
+        var myCoach = sessionStorage.getItem("myCoach");
+
+    </script>
+<br>
+
+    </body>
+    </html>
+
+
 
     <a href="{{ path('profil_index') }}">back to list</a>
 
