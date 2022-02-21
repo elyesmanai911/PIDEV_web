@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Profil;
+use App\Entity\Rdv;
 use App\Form\ProfilType;
 use App\Repository\ProfilRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,8 +22,10 @@ class ProfilController extends AbstractController
      */
     public function index(ProfilRepository $profilRepository): Response
     {
+        $user=$this->getUser();
         return $this->render('profil/index.html.twig', [
             'profils' => $profilRepository->findAll(),
+            'user' => $user,
         ]);
     }
 
@@ -31,11 +34,13 @@ class ProfilController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+       // $user=$this->getUser();
         $profil = new Profil();
         $form = $this->createForm(ProfilType::class, $profil);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //$profil->setUser($user);
             $entityManager->persist($profil);
             $entityManager->flush();
 
@@ -54,8 +59,12 @@ class ProfilController extends AbstractController
      */
     public function show(Profil $profil): Response
     {
+        $coach = $this->getDoctrine()->getRepository(Rdv::class)->findBycoach($profil->getId());
+
         return $this->render('profil/show.html.twig', [
             'profil' => $profil,
+            'coach' =>$coach,
+            'user'=> $this->getUser()
         ]);
     }
 
@@ -76,6 +85,7 @@ class ProfilController extends AbstractController
         return $this->render('profil/edit.html.twig', [
             'profil' => $profil,
             'form' => $form->createView(),
+            'user'=> $this->getUser(),
         ]);
     }
 

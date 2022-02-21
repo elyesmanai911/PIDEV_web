@@ -53,7 +53,6 @@ class CoachController extends AbstractController
     {
         $coach = new Coach();
         $form = $this->createForm(CoachType::class, $coach);
-        $form->add('Ajouter',SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -71,7 +70,6 @@ class CoachController extends AbstractController
     {
         $coach=$repository->find($id);
         $form = $this->createForm(CoachType::class, $coach);
-        $form->add('modifier',SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -81,5 +79,15 @@ class CoachController extends AbstractController
         }
         return $this->render("coach/add.html.twig",['form'=>$form->createView()]);
     }
-
+    /**
+     * @Route("/deletesimpleutilisateur1/{id}", name="deletesimpleutilisateur1")
+     */
+    public function deletesimpleutilisateur1($id,SimpleUtilisateurRepository $repository)
+    {
+        $simpleutilisateur=$repository->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($simpleutilisateur);
+        $em->flush();
+        return $this->redirectToRoute("affichesimpleutilisateur");
+    }
 }

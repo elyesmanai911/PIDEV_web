@@ -25,6 +25,17 @@
         <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
+
+
+
+        <link rel="preconnect" href="{{ asset('https://fonts.gstatic.com') }}" />
+
+        <link rel="stylesheet" href="{{ asset('css/button.css') }}" />
+        <!-- Css Styles -->
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.midnight-blue.css') }}"/>
+
     {% endblock %}
 </head>
 
@@ -45,7 +56,7 @@
             <li><a href="{{ asset('./index.html') }}">Home</a></li>
             <li><a href="{{ asset('#') }}">Pages <i class="fa fa-angle-down"></i></a>
                 <ul class="dropdown">
-                    <li><a href="{{ asset('./categories-list.html') }}">Categories</a></li>
+                    <li><a href="{{ asset('#') }}">Equipes</a></li>
                     <li><a href="{{ asset('./categories-grid.html') }}">Categories grid</a></li>
                     <li><a href="{{ asset('./typography.html') }}">Typography</a></li>
                     <li><a href="{{ asset('./details-post-default.html') }}">Post default</a></li>
@@ -112,9 +123,14 @@
                 <div class="col-lg-6 col-md-8">
                     <div class="ht-widget">
                         <ul>
-                            <li><i class="fa fa-sun-o"></i> <span>20<sup>c</sup></span> London</li>
-                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                            <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i>
+                            <li><i class="fa fa-clock-o"></i>   {{"now"|date('F j, Y')}} </li>
+                            {% if user is not null %}
+                                <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>
+                                <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
+                            {% else%}
+                                <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
+                            {% endif %}
+
                             </a>
                         </ul>
                     </div>
@@ -151,84 +167,90 @@
             <div class="nav-menu">
                 <ul>
                     <li class="active"><a href="{{ asset('#') }}"><span>Accueil</span></a></li>
-                    <li class="mega-menu"><a href="{{ asset('#') }}"><span>Tournois <i class="fa fa-angle-down"></i></span></a>
-                        <div class="megamenu-wrapper">
-                            <ul class="mw-nav">
-                                <li><a href="{{ asset('#') }}"><span>Playstation</span></a></li>
-                                <li><a href="{{ asset('#') }}"><span>Windows</span></a></li>
-                                <li><a href="{{ asset('#') }}"><span>Mobile</span></a></li>
-                                <li><a href="{{ asset('#') }}"><span>Xbox</span></a></li>
-                            </ul>
-                            <div class="mw-post">
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-1.jpg') }}" alt="">
+                    <li class="mega-menu"><a href="{{ path('tournoi') }}"><span>Tournois <i class="fa fa-angle-down"></i></span></a>
+                        {% block navb %}
+                            <div class="megamenu-wrapper">
+                                <ul class="mw-nav">
+                                    <li><a href="{{ asset('#') }}"><span>Playstation</span></a></li>
+                                    <li><a href="{{ asset('#') }}"><span>Windows</span></a></li>
+                                    <li><a href="{{ asset('#') }}"><span>Mobile</span></a></li>
+                                    <li><a href="{{ asset('#') }}"><span>Xbox</span></a></li>
+                                </ul>
+                                <div class="mw-post">
+                                    <div class="mw-post-item">
+                                        <div class="mw-pic">
+                                            <img src="{{ asset('img/megamenu/mm-1.jpg') }}" alt="">
+                                        </div>
+                                        <div class="mw-text">
+                                            <h6><a href="{{ asset('#') }}">Tournois1</a></h6>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                <li><i class="fa fa-comment-o"></i> 12</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois1</a></h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
+                                    <div class="mw-post-item">
+                                        <div class="mw-pic">
+                                            <img src="{{ asset('img/megamenu/mm-2.jpg') }}" alt="">
+                                        </div>
+                                        <div class="mw-text">
+                                            <h6><a href="{{ asset('#') }}">Tournois2</a>
+                                            </h6>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                <li><i class="fa fa-comment-o"></i> 12</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-2.jpg') }}" alt="">
+                                    <div class="mw-post-item">
+                                        <div class="mw-pic">
+                                            <img src="{{ asset('img/megamenu/mm-3.jpg') }}" alt="">
+                                        </div>
+                                        <div class="mw-text">
+                                            <h6><a href="{{ asset('#') }}">Tournois3</a>
+                                            </h6>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                <li><i class="fa fa-comment-o"></i> 12</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois2</a>
-                                        </h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
+                                    <div class="mw-post-item">
+                                        <div class="mw-pic">
+                                            <img src="{{ asset('img/megamenu/mm-4.jpg') }}" alt="">
+                                        </div>
+                                        <div class="mw-text">
+                                            <h6><a href="{{ asset('#') }}">Tournois4</a></h6>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                <li><i class="fa fa-comment-o"></i> 12</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-3.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois3</a>
-                                        </h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-4.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois4</a></h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-5.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois5</a>
-                                        </h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
+                                    <div class="mw-post-item">
+                                        <div class="mw-pic">
+                                            <img src="{{ asset('img/megamenu/mm-5.jpg') }}" alt="">
+                                        </div>
+                                        <div class="mw-text">
+                                            <h6><a href="{{ asset('#') }}">Tournois5</a>
+                                            </h6>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                <li><i class="fa fa-comment-o"></i> 12</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endblock %}
                     </li>
 
                     <li><a href="{{ asset('#') }}"><span>Actualités <i class="active"></i></span></a></li>
-                    <li><a href="{{ path('profil_index') }}"><span>Entraineurs <i class="active"></i></span></a></li>
+                    <li><a href="{{ path('profil_index') }}"><span>Entraineurs <i class="fa fa-angle-down"></i></span></a>
+                        <ul class="dropdown">
+                            <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>
+                            </li>
+                        </ul>
                     <li>
                         <a href="{{ asset('#') }}"><span>Produits <i class="fa fa-angle-down"></i></span></a>
                         <ul class="dropdown">
@@ -241,6 +263,7 @@
                             <li><a href="{{ asset('./contact.html') }}">Contact</a></li>
                         </ul>
                     <li><a href="{{ asset('#') }}"><span> Paniers<i class="active"></i></span></a></li>
+
                     </li>
                 </ul>
             </div>
@@ -1927,8 +1950,8 @@
         </div>
     </div>
 </section> #}
-    {% endblock%}
-    {% endblock %}
+{% endblock%}
+{% endblock %}
 
 
 <!-- Instagram Post Section End -->
@@ -2048,7 +2071,12 @@
     <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/evo-calendar.js') }}"></script>
+
 {% endblock %}
+{% block script %}{% endblock %}
 </body>
 
 </html>

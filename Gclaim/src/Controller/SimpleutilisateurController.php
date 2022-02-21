@@ -10,16 +10,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder;
 
 class SimpleutilisateurController extends AbstractController
 {
     /**
-     * @Route("/simpleutilisateur", name="simpleutilisateur")
+     * @Route("/profile", name="profile")
      */
     public function index(): Response
     {
-        return $this->render('simpleutilisateur/index.html.twig', [
-            'controller_name' => 'SimpleutilisateurController',
+        $user = $this->getUser();
+
+        if(!$user){
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('simpleutilisateur/profile.html.twig', [
+            'user' => $user
         ]);
     }
     /**
@@ -40,24 +48,36 @@ class SimpleutilisateurController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($simpleutilisateur);
         $em->flush();
-        return $this->redirectToRoute("affichesimpleutilisateur");
+        return $this->redirectToRoute("profile");
     }
     /**
      * @Route("/addUtilisateur", name="addUtilisateur")
      */
 
-   public function addUtilisateur(Request $request)
+    public function addUtilisateur(Request $request)
     {
         $Utilisateur = new SimpleUtilisateur();
         $form = $this->createForm(SimpleUtilisateurType::class, $Utilisateur);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($Utilisateur);
-            $em->flush();
-            return $this->redirectToRoute('affichesimpleutilisateur');
+            if ($form["verifpassword"]->getData() != $form["password"]->getData()) {
+                return $this->render('simpleutilisateur/add.html.twig', [
+                    "form" => $form->createView(),
+                    "error" => "Les mots de passe ne correspondent pas!",
+                    "user"=>$Utilisateur
+                ]);
+            }
+            else {
+                //$Utilisateur->setPassword(MD5($Utilisateur->getPassword(), PASSWORD_DEFAULT));
+                // $Utilisateur->setVerifPassword(password_hash($Utilisateur->getVerifPassword(), PASSWORD_DEFAULT));
+                $Utilisateur->setRoles(['ROLE_USER']);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($Utilisateur);
+                $em->flush();
+                return $this->redirectToRoute("app_login");
+            }
         }
-        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView()]);
+        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),"user"=>$Utilisateur,'error'=>'']);
     }
     /**
      * @Route("/updateUtilisateur/{id}", name="updateUtilisateur")
@@ -72,9 +92,10 @@ class SimpleutilisateurController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($simpleutilisateur);
             $em->flush();
-            return $this->redirectToRoute('affichesimpleutilisateur');
+            return $this->redirectToRoute('profile');
         }
-        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView()]);
+        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),'user'=>$simpleutilisateur,'error'=>'']);
     }
+
 
 }

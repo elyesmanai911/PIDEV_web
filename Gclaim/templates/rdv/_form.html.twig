@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+
+
+{{ form_label(form.date) }}
+{{ form_widget(form.date) }}
+<br>
+
+
+
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

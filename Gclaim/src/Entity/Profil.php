@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProfilRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
@@ -42,6 +44,16 @@ class Profil
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $game;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Rdv::class, mappedBy="coach")
+     */
+    private $rdvs;
+
+    public function __construct()
+    {
+        $this->rdvs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +116,36 @@ class Profil
     public function setGame(?string $game): self
     {
         $this->game = $game;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rdv[]
+     */
+    public function getRdvs(): Collection
+    {
+        return $this->rdvs;
+    }
+
+    public function addRdv(Rdv $rdv): self
+    {
+        if (!$this->rdvs->contains($rdv)) {
+            $this->rdvs[] = $rdv;
+            $rdv->setCoach($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRdv(Rdv $rdv): self
+    {
+        if ($this->rdvs->removeElement($rdv)) {
+            // set the owning side to null (unless already changed)
+            if ($rdv->getCoach() === $this) {
+                $rdv->setCoach(null);
+            }
+        }
 
         return $this;
     }

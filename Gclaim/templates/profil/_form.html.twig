@@ -16,7 +16,9 @@
                                 <div class="dt-leave-comment">
                                     {{ form_start(form) }}
                                         <div class="input-list">
-                                            <input type="text" placeholder="Name">
+
+                                            {# <input type="text" value={{ user.username }}> #}
+
                                             {{ form_widget(form.username,{'attr':{'placeholder':'Username','style':'border-color: #c24400;background:transparent;width:30%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
 	transform: skewX(-15deg);'}}) }}
                                             {{ form_widget(form.game,{'attr':{'placeholder':'Game','style':'border-color: #c24400;background:transparent;width:30%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;

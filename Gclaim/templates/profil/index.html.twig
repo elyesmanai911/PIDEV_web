@@ -47,7 +47,7 @@
 
                                 </div>
                                 <div class="cg-text">
-                                    <h5><a href="#">{{ p.username }}</a></h5>
+                                    <h5><a href="{{ path('profil_show', {'id': p.id}) }}">{{ p.username }}</a></h5>
                                     <p>Game:{{ p.game }}</p>
                                     <br>
                                     <p>{{ p.description }}</p>
