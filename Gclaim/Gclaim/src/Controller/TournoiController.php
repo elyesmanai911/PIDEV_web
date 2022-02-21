@@ -17,8 +17,9 @@ class TournoiController extends AbstractController
      */
     public function index(): Response
     {
+        $user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
-        return $this->render('tournoi/index.html.twig', array("tournois" => $tournois));
+        return $this->render('tournoi/index.html.twig', array("tournois" => $tournois, 'user' => $user));
     }
     /**
      * @Route("/back", name="back")

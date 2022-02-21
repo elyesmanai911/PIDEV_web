@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\TournoiRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Jeu;
+
 /**
  * @ORM\Entity(repositoryClass=TournoiRepository::class)
  */
@@ -34,14 +36,7 @@ class Tournoi
     private $nomtournoi;
 
     /**
-     * @ORM\Column(type="integer")
-     *      * @Assert\NotBlank(message="l'Id du jeu est obligatoire")
-     *      @Assert\Length(
-     *      min=1,
-     *      max=3,
-     *      minMessage = "Id jeu doit etre composer de 1 chiffre au minimum  ",
-     *      maxMessage  ="Id jeu  ne doit pas depasser 3 chiffres ",
-     * )
+     * @ORM\ManyToOne(targetEntity=Jeu::class, inversedBy="tournois")
      */
 
     private $idjeu;

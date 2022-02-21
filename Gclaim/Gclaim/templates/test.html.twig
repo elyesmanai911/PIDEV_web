@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -46,7 +45,7 @@
             <li><a href="{{ asset('./index.html') }}">Home</a></li>
             <li><a href="{{ asset('#') }}">Pages <i class="fa fa-angle-down"></i></a>
                 <ul class="dropdown">
-                    <li><a href="{{ asset('./categories-list.html') }}">Categories</a></li>
+                    <li><a href="{{ asset('#') }}">Equipes</a></li>
                     <li><a href="{{ asset('./categories-grid.html') }}">Categories grid</a></li>
                     <li><a href="{{ asset('./typography.html') }}">Typography</a></li>
                     <li><a href="{{ asset('./details-post-default.html') }}">Post default</a></li>
@@ -113,10 +112,15 @@
                 <div class="col-lg-6 col-md-8">
                     <div class="ht-widget">
                         <ul>
-                            <li><i class="fa fa-sun-o"></i> <span>20<sup>c</sup></span> London</li>
-                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                            <li class="signup-switch signup-open"><i class="fa fa-sign-out"></i> Login / Sign up
-                            </li>
+                            <li><i class="fa fa-clock-o"></i>   {{"now"|date('F j, Y')}} </li>
+                            {% if user is not null %}
+                                <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>
+                                <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
+                            {% else%}
+                                <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
+                            {% endif %}
+
+                            </a>
                         </ul>
                     </div>
                 </div>
@@ -151,87 +155,91 @@
             </div>
             <div class="nav-menu">
                 <ul>
-                    <li class="active"><a href="{{ path('tournoi') }}"><span>Accueil</span></a></li>
-                    <li class="mega-menu"><a href="{{ path('listtTournoi') }}"><span>Tournois <i class="fa fa-angle-down"></i></span></a>
+                    <li class="active"><a href="{{ asset('#') }}"><span>Accueil</span></a></li>
+                    <li class="mega-menu"><a href="{{ path('tournoi') }}"><span>Tournois <i class="fa fa-angle-down"></i></span></a>
                         {% block navb %}
-                        <div class="megamenu-wrapper">
-                            <ul class="mw-nav">
-                                <li><a href="{{ asset('#') }}"><span>Playstation</span></a></li>
-                                <li><a href="{{ asset('#') }}"><span>Windows</span></a></li>
-                                <li><a href="{{ asset('#') }}"><span>Mobile</span></a></li>
-                                <li><a href="{{ asset('#') }}"><span>Xbox</span></a></li>
-                            </ul>
-                            <div class="mw-post">
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-1.jpg') }}" alt="">
+                            <div class="megamenu-wrapper">
+                                <ul class="mw-nav">
+                                    <li><a href="{{ asset('#') }}"><span>Playstation</span></a></li>
+                                    <li><a href="{{ asset('#') }}"><span>Windows</span></a></li>
+                                    <li><a href="{{ asset('#') }}"><span>Mobile</span></a></li>
+                                    <li><a href="{{ asset('#') }}"><span>Xbox</span></a></li>
+                                </ul>
+                                <div class="mw-post">
+                                    <div class="mw-post-item">
+                                        <div class="mw-pic">
+                                            <img src="{{ asset('img/megamenu/mm-1.jpg') }}" alt="">
+                                        </div>
+                                        <div class="mw-text">
+                                            <h6><a href="{{ asset('#') }}">Tournois1</a></h6>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                <li><i class="fa fa-comment-o"></i> 12</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois1</a></h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
+                                    <div class="mw-post-item">
+                                        <div class="mw-pic">
+                                            <img src="{{ asset('img/megamenu/mm-2.jpg') }}" alt="">
+                                        </div>
+                                        <div class="mw-text">
+                                            <h6><a href="{{ asset('#') }}">Tournois2</a>
+                                            </h6>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                <li><i class="fa fa-comment-o"></i> 12</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-2.jpg') }}" alt="">
+                                    <div class="mw-post-item">
+                                        <div class="mw-pic">
+                                            <img src="{{ asset('img/megamenu/mm-3.jpg') }}" alt="">
+                                        </div>
+                                        <div class="mw-text">
+                                            <h6><a href="{{ asset('#') }}">Tournois3</a>
+                                            </h6>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                <li><i class="fa fa-comment-o"></i> 12</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois2</a>
-                                        </h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
+                                    <div class="mw-post-item">
+                                        <div class="mw-pic">
+                                            <img src="{{ asset('img/megamenu/mm-4.jpg') }}" alt="">
+                                        </div>
+                                        <div class="mw-text">
+                                            <h6><a href="{{ asset('#') }}">Tournois4</a></h6>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                <li><i class="fa fa-comment-o"></i> 12</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-3.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois3</a>
-                                        </h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-4.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois4</a></h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-5.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois5</a>
-                                        </h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
+                                    <div class="mw-post-item">
+                                        <div class="mw-pic">
+                                            <img src="{{ asset('img/megamenu/mm-5.jpg') }}" alt="">
+                                        </div>
+                                        <div class="mw-text">
+                                            <h6><a href="{{ asset('#') }}">Tournois5</a>
+                                            </h6>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                                <li><i class="fa fa-comment-o"></i> 12</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         {% endblock %}
                     </li>
 
                     <li><a href="{{ asset('#') }}"><span>Actualités <i class="active"></i></span></a></li>
-                    <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="active"></i></span></a></li>
+                    <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="fa fa-angle-down"></i></span></a>
+                        <ul class="dropdown">
+                            <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>
+                            </li>
+                        </ul>
                     <li>
                         <a href="{{ asset('#') }}"><span>Produits <i class="fa fa-angle-down"></i></span></a>
                         <ul class="dropdown">
@@ -244,6 +252,7 @@
                             <li><a href="{{ asset('./contact.html') }}">Contact</a></li>
                         </ul>
                     <li><a href="{{ asset('#') }}"><span> Paniers<i class="active"></i></span></a></li>
+
                     </li>
                 </ul>
             </div>
@@ -1199,7 +1208,7 @@
     </div>
 </section>
 <!-- Update News Section End -->
-
+{#
 <!-- Videos Guide Section Begin -->
 <section class="video-guide-section">
     <div class="container">
@@ -1742,11 +1751,11 @@
         </div>
     </div>
 </section>
+#}
 <!-- Videos Guide Section End -->
-
+{#
 <!-- Instagram Post Section Begin -->
 <section class="instagram-post-section spad">
-
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
@@ -1824,13 +1833,115 @@
                     <a href="{{ asset('#') }}"><span>Next</span></a>
                 </div>
             </div>
-
+            <div class="col-lg-4 col-md-7">
+                <div class="sidebar-option">
+                    <div class="insta-media">
+                        <div class="section-title">
+                            <h5>Instagram</h5>
+                        </div>
+                        <div class="insta-pic">
+                            <img src="{{ asset('img/instagram/ip-1.jpg') }}" alt="">
+                            <img src="{{ asset('img/instagram/ip-2.jpg') }}" alt="">
+                            <img src="{{ asset('img/instagram/ip-3.jpg') }}" alt="">
+                            <img src="{{ asset('img/instagram/ip-4.jpg') }}" alt="">
+                        </div>
+                    </div>
+                    <div class="best-of-post">
+                        <div class="section-title">
+                            <h5>Best of</h5>
+                        </div>
+                        <div class="bp-item">
+                            <div class="bp-loader">
+                                <div class="loader-circle-wrap">
+                                    <div class="loader-circle">
+                                            <span class="circle-progress-1" data-cpid="id-1" data-cpvalue="95"
+                                                  data-cpcolor="#c20000"></span>
+                                        <div class="review-point">9.5</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bp-text">
+                                <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                    <li><i class="fa fa-comment-o"></i> 20</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bp-item">
+                            <div class="bp-loader">
+                                <div class="loader-circle-wrap">
+                                    <div class="loader-circle">
+                                            <span class="circle-progress-1" data-cpid="id-2" data-cpvalue="85"
+                                                  data-cpcolor="#c20000"></span>
+                                        <div class="review-point">8.5</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bp-text">
+                                <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                    <li><i class="fa fa-comment-o"></i> 20</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bp-item">
+                            <div class="bp-loader">
+                                <div class="loader-circle-wrap">
+                                    <div class="loader-circle">
+                                            <span class="circle-progress-1" data-cpid="id-3" data-cpvalue="80"
+                                                  data-cpcolor="#c20000"></span>
+                                        <div class="review-point">8.0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bp-text">
+                                <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                    <li><i class="fa fa-comment-o"></i> 20</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bp-item">
+                            <div class="bp-loader">
+                                <div class="loader-circle-wrap">
+                                    <div class="loader-circle">
+                                            <span class="circle-progress-1" data-cpid="id-4" data-cpvalue="75"
+                                                  data-cpcolor="#c20000"></span>
+                                        <div class="review-point">7.5</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bp-text">
+                                <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                    <li><i class="fa fa-comment-o"></i> 20</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subscribe-option">
+                        <div class="section-title">
+                            <h5>Subscribe</h5>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmod tempor.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Name">
+                            <input type="text" placeholder="Email">
+                            <button type="submit"><span>Subscribe</span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</section> #}
+{% endblock%}
+{% endblock %}
 
-    {% endblock%}
-    {% endblock %}
-</section>
 
 <!-- Instagram Post Section End -->
 
@@ -1927,37 +2038,6 @@
     </div>
 </footer>
 <!--- Footer Section End -->
-
-<!-- Sign Up Section Begin -->
-<div class="signup-section">
-    <div class="signup-close"><i class="fa fa-close"></i></div>
-    <div class="signup-text">
-        <div class="container">
-            <div class="signup-title">
-                <h2>Sign up</h2>
-                <p>Fill out the form below to recieve a free and confidential</p>
-            </div>
-            <form action="#" class="signup-form">
-                <div class="sf-input-list">
-                    <input type="text" class="input-value" placeholder="User Name*">
-                    <input type="text" class="input-value" placeholder="Password">
-                    <input type="text" class="input-value" placeholder="Confirm Password">
-                    <input type="text" class="input-value" placeholder="Email Address">
-                    <input type="text" class="input-value" placeholder="Full Name">
-                </div>
-                <div class="radio-check">
-                    <label for="rc-agree">I agree with the term & conditions
-                        <input type="checkbox" id="rc-agree">
-                        <span class="checkbox"></span>
-                    </label>
-                </div>
-                <button type="submit"><span>REGISTER NOW</span></button>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Sign Up Section End -->
-
 <!-- Search model Begin -->
 <div class="search-model">
     <div class="h-100 d-flex align-items-center justify-content-center">

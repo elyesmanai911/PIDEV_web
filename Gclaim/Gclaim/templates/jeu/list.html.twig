@@ -1,0 +1,53 @@
+
+{% extends 'data.html.twig' %}
+{% block body %}
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">LES Jeus</h3>
+                </div>
+                <!-- ./card-header -->
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <td>Id</td>
+                            <td>NOM_jeu</td>
+                            <td>CREATEUR</td>
+                            <td>DESCRIPTION</td>
+                            <td>DATE_SORTIE</td>
+                            <td>IMAGE</td>
+                            <td>SUPPRIMER</td>
+                            <td>MODIFIER</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for jeu in jeus %}
+                            <tr data-widget="expandable-table" aria-expanded="false">
+                                <td>{{ jeu.id }}</td>
+                                <td>{{ jeu.nomjeu }}</td>
+                                <td>{{ jeu.createur }}</td>
+                                <td>{{ jeu.description}}</td>
+                                <td>{{ jeu.dateS |date("m/d/Y") }}</td>
+                                <td>{{ jeu.image }}</td>
+
+                                <td>  <a href="{{ path('deleteJeu',{'id':jeu.id},{'attr':{'class':'btn btn-primary'}}) }}">Delete</a></td>
+                                <td>    <a href="{{ path('updateJeu',{'id':jeu.id},{'attr':{'class':'btn btn-primary'}}) }}">Update</a>
+
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <a href="{{ path('addJeu',{'attr':{'class':'btn btn-primary'}}) }}">Add jeu</a>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+{% endblock %}

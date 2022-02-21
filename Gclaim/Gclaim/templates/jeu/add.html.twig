@@ -1,0 +1,68 @@
+{% extends 'data.html.twig' %}
+{% block body %}
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-6">
+{{ form_start(jeu,{'attr':{'class':'card card-primary','novalidate':'novalidate'}}) }}
+    <div class="card-header">
+        <h3 class="card-title"> Ajouter un jeu </h3>
+    </div>
+<div class="card-body">
+    {% if (form_errors(jeu.nomjeu)) not in ["veuillez saisir le nom du jeu","le nom du jeu doit etre supérieur a 6 caracteres","le nom du jeu ne doit pas depasser 15 caracteres"]%}
+
+{{ form_errors(jeu.nomjeu,{'attr':{'class':'alert alert-danger alert-dismissible'}}) }}
+
+    {% endif %}
+    <div class="form-group">
+{{ form_label(jeu.nomjeu,"Nom du jeu",{'attr':{'class':'exampleInputEmail1'}}) }}
+    </div>
+{{ form_widget(jeu.nomjeu,{'attr':{'class':'form-control'}}) }}
+    <div class="form-group">
+{{ form_errors(jeu.description,{'attr':{'class':'text-danger'}}) }}
+    </div>
+    <div class="form-group">
+{{ form_label(jeu.description,"description pour le jeu:",{'attr':{'class':'exampleInputEmail1'}}) }}
+    </div>
+{{ form_widget(jeu.description,{'attr':{'class':'form-control'}})}}
+    <div class="form-group">
+        {{ form_errors(jeu.createur,{'attr':{'class':'exampleInputEmail1'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(jeu.createur,"Createur:",{'attr':{'class':'exampleInputEmail1'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(jeu.createur,{'attr':{'class':'exampleInputEmail1'}})}}
+    </div>
+    <div class="form-group">
+    {{ form_errors(jeu.image,{'attr':{'class':'text-danger'}}) }}
+</div>
+    <div class="form-group">
+    {{ form_label(jeu.image,"image:",{'attr':{'class':'exampleInputEmail1'}}) }}
+    </div>
+    {{ form_widget(jeu.image,{'attr':{'class':'form-control'}})}}
+
+    {{ form_errors(jeu.dateS,{'attr':{'class':'exampleInputEmail1'}}) }}
+
+    <div class="form-group">
+        {{ form_label(jeu.dateS,"Date de Creation",{'attr':{'class':'exampleInputEmail1'}}) }}
+    </div>
+    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+    {{ form_widget(jeu.dateS,{'attr':{'class':'form-control  datetimepicker-input'}}) }}
+        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        </div>
+    </div>
+    </div>
+    </div>
+</div>
+
+<div class="card-footer">
+    {{ form_widget(jeu.save,{'attr':{'class':'btn btn-primary'}})}}
+</div>
+
+
+
+{{ form_end(jeu,{'attr':{'class':'btn btn-primary'}}) }}
+    </div></div>
+{% endblock %}
+
