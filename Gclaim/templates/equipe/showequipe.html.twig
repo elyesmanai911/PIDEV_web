@@ -33,10 +33,17 @@
 
                                     <h5><a href="#">{{equipe.nomEquipe }}</a></h5>
                                     <ul>
+                                        {% set verif=0 %}
                                         {% if user is not null %}
                                                    {% if equipe.etat %}
+                                                       {% for e in equipe.getSimpleutilisateurs() %}
+                                                           {% if e.getUserName()==user.username %}
+                                                               {% set verif=1 %}
+                                                           {% endif %}
+                                                       {% endfor %}
+                                                       {% if verif==0 %}
                                                           <li> <span><a href="{{ path('rejoindreequipe',{'id':equipe.id}) }}" style="color: #c24400">Rejoindre l'Equipe</a></span></li>
-
+                                                       {% endif %}
                                                    {% else %}
 
                                                     <li> <span>Equipe fermé</span></li>

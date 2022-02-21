@@ -92,7 +92,6 @@ class EquipeController extends AbstractController
     {
         $user = $this->getUser();
         $equipe = $repository->find($id);
-
     $equipe->addSimpleutilisateur($user);
     $em = $this->getDoctrine()->getManager();
     $em->persist($equipe);
