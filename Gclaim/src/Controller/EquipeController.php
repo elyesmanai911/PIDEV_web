@@ -57,6 +57,7 @@ class EquipeController extends AbstractController
             date_default_timezone_set('Europe/Paris');
             $dateTime = date_create_immutable_from_format('m/d/Y', date('m/d/Y'));
             $em = $this->getDoctrine()->getManager();
+            $equipe->setChef($this->getUser()->getUsername());
             $equipe->addSimpleutilisateur($user);
             $equipe->setDateCreation($dateTime);
             $em->persist($equipe);
@@ -88,20 +89,23 @@ class EquipeController extends AbstractController
      * @Route("/rejoindreequipe/{id}", name="rejoindreequipe")
      */
     public function rejoindreequipe($id,EquipeRepository  $repository,Request $request)
-    {   $user = $this->getUser();
+    {
+        $user = $this->getUser();
         $equipe = $repository->find($id);
-        $equipe->addSimpleutilisateur($user);
-        $em = $this->getDoctrine()->getManager();
 
-        $em->persist($equipe);
-        $em->flush();
-        return $this->redirectToRoute("afficheequipe");
+    $equipe->addSimpleutilisateur($user);
+    $em = $this->getDoctrine()->getManager();
+    $em->persist($equipe);
+    $em->flush();
+            return $this->redirectToRoute('afficheequipe');
+
+
     }
     /**
      * @Route("/updateequipe/{id}", name="updateequipe")
      */
     public function updateequipe(Request $request,$id,EquipeRepository  $repository)
-    {
+    {  $user = $this->getUser();
         $equipe = $repository->find($id);
         $form = $this->createForm(EquipeType::class, $equipe);
 
@@ -110,8 +114,9 @@ class EquipeController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($equipe);
             $em->flush();
-            return $this->redirectToRoute('affichetoutequipe');
+           return $this->redirectToRoute('afficheequipe');
+
         }
-        return $this->render("equipe/add.html.twig",array('form'=>$form->createView()));
+        return $this->render("equipe/add.html.twig",array('form'=>$form->createView(),'user' => $user));
     }
 }

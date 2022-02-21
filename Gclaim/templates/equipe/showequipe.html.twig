@@ -16,6 +16,7 @@
     </section>
 
     <!-- Categories Grid Section Begin -->
+
     <section class="categories-grid-section spad">
         <div class="container">
 
@@ -32,16 +33,26 @@
 
                                     <h5><a href="#">{{equipe.nomEquipe }}</a></h5>
                                     <ul>
+                                        {% if user is not null %}
+                                                   {% if equipe.etat %}
+                                                          <li> <span><a href="{{ path('rejoindreequipe',{'id':equipe.id}) }}" style="color: #c24400">Rejoindre l'Equipe</a></span></li>
 
-                                        {% if equipe.etat %}
-                                            <li> <span><a href="{{ path('rejoindreequipe',{'id':equipe.id}) }}" style="color: #c24400">Rejoindre l'Equipe</a></span></li>
-
-                                        {% else %}
+                                                   {% else %}
 
                                                     <li> <span>Equipe fermé</span></li>
+                                                   {% endif %}
+                                        {% else %}
+                                            <li> <span><a href="{{ path('app_login') }}" style="color: #c24400">Rejoindre l'Equipe</a></span></li>
+
+
+                                        {% endif %}
+                                        {% if user is not null %}
+                                        {% if user.username==equipe.getChef() %}
+                                            <li> <span><a href="{{ path('updateequipe',{'id':equipe.id}) }}" style="color: #c24400">Modifier l'Equipe</a></span></li>
+
                                         {% endif %}
 
-
+                                        {% endif %}
                                         <li><i class="fa fa-clock-o"></i> {{ equipe.dateCreation|date }}</li>
                                     </ul>
                                     <li><a style="color: #ffffff"> Description de l'équipe </a></li>
@@ -62,6 +73,7 @@
                         </div>
 
                         {% endfor %}
+
                     </div>
                     <div class="pagination-item">
                         <a href="#"><span>1</span></a>

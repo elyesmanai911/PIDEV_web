@@ -89,7 +89,13 @@ class UsersAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
+
+//dd(password_hash($credentials['password'], PASSWORD_DEFAULT));
+
+        if($user->getPassword()==$credentials['password'])
 return true;
+        else
+            return false;
 //return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 

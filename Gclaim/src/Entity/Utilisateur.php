@@ -45,11 +45,6 @@ abstract class Utilisateur
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="mot de passe est incorrect")
-     * @Assert\Length(
-     *      min = "8",
-     *      max = "20",
-     *      minMessage = "Votre mot de passe doit faire au moins {{ limit }} caractères",
-     *      maxMessage = "Votre mot de passe ne peut pas être plus long que {{ limit }} caractères")
      */
     protected $verifpassword;
 

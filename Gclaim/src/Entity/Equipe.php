@@ -47,6 +47,11 @@ class Equipe
      */
     private $simpleutilisateurs;
 
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $chef;
+
     public function __construct()
     {
         $this->simpleutilisateurs = new ArrayCollection();
@@ -125,6 +130,18 @@ class Equipe
     public function removeSimpleutilisateur(SimpleUtilisateur $simpleutilisateur): self
     {
         $this->simpleutilisateurs->removeElement($simpleutilisateur);
+
+        return $this;
+    }
+
+    public function getChef(): ?string
+    {
+        return $this->chef;
+    }
+
+    public function setChef(string $chef): self
+    {
+        $this->chef = $chef;
 
         return $this;
     }

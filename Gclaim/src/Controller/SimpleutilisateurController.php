@@ -63,12 +63,13 @@ class SimpleutilisateurController extends AbstractController
             if ($form["verifpassword"]->getData() != $form["password"]->getData()) {
                 return $this->render('simpleutilisateur/add.html.twig', [
                     "form" => $form->createView(),
-                    "error" => "Passwords do not match!"
+                    "error" => "Les mots de passe ne correspondent pas!",
+                    "user"=>$Utilisateur
                 ]);
             }
                 else {
-                  $Utilisateur->setPassword(password_hash($Utilisateur->getPassword(), PASSWORD_DEFAULT));
-                  $Utilisateur->setVerifPassword(password_hash($Utilisateur->getVerifPassword(), PASSWORD_DEFAULT));
+                 //$Utilisateur->setPassword(MD5($Utilisateur->getPassword(), PASSWORD_DEFAULT));
+                 // $Utilisateur->setVerifPassword(password_hash($Utilisateur->getVerifPassword(), PASSWORD_DEFAULT));
                     $Utilisateur->setRoles(['ROLE_USER']);
             $em = $this->getDoctrine()->getManager();
             $em->persist($Utilisateur);
@@ -76,7 +77,7 @@ class SimpleutilisateurController extends AbstractController
                     return $this->redirectToRoute("app_login");
         }
             }
-        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),"user"=>$Utilisateur]);
+        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),"user"=>$Utilisateur,'error'=>'']);
     }
     /**
      * @Route("/updateUtilisateur/{id}", name="updateUtilisateur")
@@ -93,7 +94,7 @@ class SimpleutilisateurController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('profile');
         }
-        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),"user"=>$simpleutilisateur]);
+        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),'user'=>$simpleutilisateur,'error'=>'']);
     }
 
 

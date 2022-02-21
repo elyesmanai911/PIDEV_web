@@ -17,6 +17,7 @@
                             <td>DESCRIPTION</td>
                             <td>DATE DE LA CREATION </td>
                             <td>ETAT </td>
+                            <td>CHEF EQUIPE </td>
                             <td>UTILISATEURS </td>
                             <td>MODIFIER</td>
 
@@ -31,6 +32,7 @@
                                 <td>{{ equipe.description }}</td>
                                 <td>{{ equipe.dateCreation|date }}</td>
                                 <td>{{ equipe.etat }}</td>
+                                <td>{{ equipe.chef }}</td>
                                 <td>
                                     {% for e in equipe.getSimpleutilisateurs() %}
                                         {{ e.email }}
