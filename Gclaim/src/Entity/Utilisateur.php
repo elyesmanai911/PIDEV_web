@@ -47,7 +47,7 @@ abstract class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank(message="mot de passe est incorrect")
+     * @Assert\NotBlank(message="mot de passe est obligatoire")
      */
     protected $verifpassword;
 

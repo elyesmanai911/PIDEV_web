@@ -231,7 +231,12 @@
                     </li>
 
                     <li><a href="{{ asset('#') }}"><span>Actualités <i class="active"></i></span></a></li>
-                    <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="active"></i></span></a></li>
+                    <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="active"></i></span></a>
+                    <ul class="dropdown">
+                        <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>
+                        </li>
+                    </ul>
+                    </li>
                     <li>
                         <a href="{{ asset('#') }}"><span>Produits <i class="fa fa-angle-down"></i></span></a>
                         <ul class="dropdown">
@@ -285,7 +290,7 @@
                         {% if user.isVerified==0 %}
                             <div class="label"><span>{{ user.username }}</span> </div>
                         {% elseif user.isVerified==1 %}
-                            <div class="label"><span>BIENVENUE MONSIEUR COACH :  {{ user.username }}</span> </div>
+                            <div class="label"><span>BIENVENUE COACH!! :  {{ user.username }}</span> </div>
                         {% endif %}
 
 
@@ -329,9 +334,18 @@
                                             <a ><span>{{ user.email }}</span></a>
                                         </div>
                                         <div class="section-title">
-                                            <h5>MOT DE PASSE</h5>
+                                            <h5>ROLE</h5>
 
-                                            <a ><span>{{ user.password }}</span></a>
+                                            {% if user.isVerified==0 %}
+
+
+                                                    <a ><span>Simple Utilisateur </span></a>
+
+                                            {% elseif user.isVerified==1 %}
+
+                                                    <a ><span>Coach </span></a>
+
+                                            {% endif %}
                                         </div>
                                     </div>
 
