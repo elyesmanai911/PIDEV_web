@@ -19,7 +19,7 @@
                             <td>ETAT </td>
                             <td>CHEF EQUIPE </td>
                             <td>UTILISATEURS </td>
-                            <td>MODIFIER</td>
+
 
                             <td>SUPPRIMER</td>
 
@@ -33,13 +33,14 @@
                                 <td>{{ equipe.dateCreation|date }}</td>
                                 <td>{{ equipe.etat }}</td>
                                 <td>{{ equipe.chef }}</td>
+
                                 <td>
                                     {% for e in equipe.getSimpleutilisateurs() %}
                                         {{ e.email }}
                                         <br>
                                     {% endfor %}
                                 </td>
-                                <td><a href="{{ path('updateequipe',{'id':equipe.id}) }}">Modifier</a></td>
+
                                 <td>   <a href="{{ path('deleteequipe',{'id':equipe.id}) }}">Supprimer</a></td>
                             </tr>
                         {% endfor %}

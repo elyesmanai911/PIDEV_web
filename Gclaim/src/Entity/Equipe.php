@@ -43,7 +43,7 @@ class Equipe
     private $Etat;
 
     /**
-     * @ORM\ManyToMany(targetEntity=SimpleUtilisateur::class, inversedBy="membreEquipes")
+     * @ORM\ManyToMany(targetEntity=Utilisateur::class, inversedBy="membreEquipes")
      */
     private $simpleutilisateurs;
 
@@ -111,14 +111,14 @@ class Equipe
     }
 
     /**
-     * @return Collection|SimpleUtilisateur[]
+     * @return Collection|Utilisateur[]
      */
     public function getSimpleutilisateurs(): Collection
     {
         return $this->simpleutilisateurs;
     }
 
-    public function addSimpleutilisateur(SimpleUtilisateur $simpleutilisateur): self
+    public function addSimpleutilisateur(Utilisateur $simpleutilisateur): self
     {
         if (!$this->simpleutilisateurs->contains($simpleutilisateur)) {
             $this->simpleutilisateurs[] = $simpleutilisateur;
@@ -127,7 +127,7 @@ class Equipe
         return $this;
     }
 
-    public function removeSimpleutilisateur(SimpleUtilisateur $simpleutilisateur): self
+    public function removeSimpleutilisateur(Utilisateur $simpleutilisateur): self
     {
         $this->simpleutilisateurs->removeElement($simpleutilisateur);
 

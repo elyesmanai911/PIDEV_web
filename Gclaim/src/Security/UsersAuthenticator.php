@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\SimpleUtilisateur;
+use App\Entity\Utilisateur;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,7 +72,7 @@ class UsersAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(SimpleUtilisateur::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->entityManager->getRepository(Utilisateur::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
             throw new UsernameNotFoundException('email n existe pas' );

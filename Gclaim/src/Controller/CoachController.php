@@ -21,9 +21,9 @@ class CoachController extends AbstractController
      * @Route("/coach", name="coach")
      */
     public function index(): Response
-    {
+    { $user = $this->getUser();
         return $this->render('coach/index.html.twig', [
-            'controller_name' => 'CoachController',
+            'controller_name' => 'CoachController','user' => $user
         ]);
     }
     /**
@@ -55,12 +55,22 @@ class CoachController extends AbstractController
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form["verifpassword"]->getData() != $form["password"]->getData()) {
+                return $this->render('coach/add.html.twig', [
+                    "form" => $form->createView(),
+                    "error" => "Les mots de passe ne correspondent pas!",
+                    "user"=>$coach
+                ]);
+            }else{
+            $coach->setRoles(['ROLE_COACH']);
+            $coach->setIsVerified(1);
             $em = $this->getDoctrine()->getManager();
             $em->persist($coach);
             $em->flush();
             return $this->redirectToRoute('affichecoach');
         }
-        return $this->render("coach/add.html.twig",['form'=>$form->createView()]);
+        }
+        return $this->render("coach/add.html.twig",['form'=>$form->createView(),"user"=>$coach,'error'=>'']);
     }
     /**
      * @Route("/updatecoach/{id}", name="updatecoach")
@@ -72,12 +82,43 @@ class CoachController extends AbstractController
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form["verifpassword"]->getData() != $form["password"]->getData()) {
+                return $this->render('coach/add.html.twig', [
+                    "form" => $form->createView(),
+                    "error" => "Les mots de passe ne correspondent pas!",
+                    "user"=>$coach
+                ]);
+            }else{
             $em = $this->getDoctrine()->getManager();
             $em->persist($coach);
             $em->flush();
             return $this->redirectToRoute('affichecoach');
-        }
-        return $this->render("coach/add.html.twig",['form'=>$form->createView()]);
+        }}
+        return $this->render("coach/add.html.twig",['form'=>$form->createView(),'error'=>'']);
+    }
+    /**
+     * @Route("/updatecoach1/{id}", name="updatecoach1")
+     */
+
+    public function updatecoach1($id,Request $request,CoachRepository $repository)
+    {
+        $coach=$repository->find($id);
+        $form = $this->createForm(CoachType::class, $coach);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form["verifpassword"]->getData() != $form["password"]->getData()) {
+                return $this->render('coach/modifcoach.html.twig', [
+                    "form" => $form->createView(),
+                    "error" => "Les mots de passe ne correspondent pas!",
+                    "user"=>$coach
+                ]);
+            }else{
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($coach);
+                $em->flush();
+                return $this->redirectToRoute('profile');
+            }}
+        return $this->render("coach/modifcoach.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach]);
     }
     /**
      * @Route("/deletesimpleutilisateur1/{id}", name="deletesimpleutilisateur1")

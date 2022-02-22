@@ -281,7 +281,15 @@
                     </div>
 
                     <div class="ip-text">
-                        <div class="label"><span>{{ user.username }}</span> </div>
+
+                        {% if user.isVerified==0 %}
+                            <div class="label"><span>{{ user.username }}</span> </div>
+                        {% elseif user.isVerified==1 %}
+                            <div class="label"><span>BIENVENUE MONSIEUR COACH :  {{ user.username }}</span> </div>
+                        {% endif %}
+
+
+
                        <br>
                         <br>
                         <div class="container">
@@ -289,21 +297,32 @@
                                 <div class="name-area">
                                     <h4></h4>
                                 </div>
+
                             {% endif %}
 
                                 <div class="tags-cloud">
 
                                     <div class="tag-list">
+
                                         <div class="section-title">
                                             <h5>LOGIN</h5>
 
                                             <a ><span>{{ user.username }}</span></a>
                                         </div>
+
+                                        {% if user.isVerified==0 %}
                                         <div class="section-title">
                                             <h5>NOM ET PRENOM</h5>
 
                                             <a ><span>{{ user.fullname }}</span></a>
                                         </div>
+                                            {% elseif user.isVerified==1 %}
+                                                <div class="section-title">
+                                                    <h5>SPECIALITE</h5>
+
+                                                    <a ><span>{{ user.specialite }}</span></a>
+                                                </div>
+                                        {% endif %}
                                         <div class="section-title">
                                             <h5>EMAIL</h5>
 
@@ -322,7 +341,14 @@
                                 </div>
 
                         <div class="ip-text">
-                            <div class="label"><span><a href="{{ path('updateUtilisateur',{'id':user.id}) }}">Modifier</a></span> </div>
+
+
+                            {% if user.isVerified==0 %}
+                                <div class="label"><span><a href="{{ path('updateUtilisateur',{'id':user.id}) }}">Modifier</a></span> </div>
+                            {% elseif user.isVerified==1 %}
+                                <div class="label"><span><a href="{{ path('updatecoach1',{'id':user.id}) }}">Modifier le Profil de COACH</a></span> </div>
+                            {% endif %}
+
 
                                                </div>
 
