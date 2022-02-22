@@ -13,8 +13,9 @@ class AchatType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Numero_de_Telephone')
+           
             ->add('Addresse')
+            ->add('Numero_de_Telephone')
             ->add('Confirmer',SubmitType::class)
         ;
     }

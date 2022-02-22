@@ -9,6 +9,7 @@ Class Achat {
      */
      
     public $Numero_De_Telephone;
+    
     /**
      * @Assert\NotBlank
      * @Assert\Length(
