@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Entity\LigneCommande;
+use App\Entity\Achat;
 use App\Form\CommandeType;
+use App\Form\AchatType;
 use App\Repository\CommandeRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Repository\LigneCommandeRepository;
 
 /**
  * @Route("/commande")
@@ -48,6 +51,7 @@ class CommandeController extends AbstractController
     {
         $somme=0;
         $cart=$session->get('cart',[]);
+        if ($cart != []){
         foreach ($cart as $c){
             
             $somme=$somme+$c["total"];
@@ -81,6 +85,7 @@ class CommandeController extends AbstractController
         
         $session->set('cart',[]);
         $session->set('panier',[]);
+    }
             return $this->redirectToRoute('commande', [], Response::HTTP_SEE_OTHER);
         //}
 
@@ -93,10 +98,10 @@ class CommandeController extends AbstractController
     /**
      * @Route("/{id}", name="commande_show", methods={"GET"})
      */
-    public function show(Commande $commande): Response
+    public function show(LigneCommandeRepository $ligneCommandeRepository,Commande $commande): Response
     {
-        return $this->render('commande/show.html.twig', [
-            'commande' => $commande,
+        return $this->render('ligne_commande/index.html.twig', [
+            'ligne_commandes' => $ligneCommandeRepository->findByCommandeID($commande),
         ]);
     }
 
@@ -145,12 +150,33 @@ class CommandeController extends AbstractController
     }
 
     /**
+     * @Route("/cart/form", name="form")
+     */
+    public function ToConfirmCart(Request $request ): Response
+    {
+        $achat = new Achat();
+        $form = $this->createForm(AchatType::class, $achat);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('commande_new', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('panier/form.html.twig', [
+            'achat' => $achat,
+            'form' => $form->createView(),
+        ]);
+    
+    }
+
+
+    /**
      * @Route("/add/{id}",name="add")
      */
     public function add($id ,SessionInterface $session)
     {
         $panier = $session->get("cart",[]);
-      
+        if (empty($panier)){
+
+        
         if (!empty($panier[$id])){
             $panier[$id]['quantite']=$panier[$id]['quantite']+1;
         }else{
@@ -158,6 +184,7 @@ class CommandeController extends AbstractController
         }
        
         $session->set("cart",$panier);
+    }
         return $this->redirectToRoute('commande', [], Response::HTTP_SEE_OTHER);
     }
 }
