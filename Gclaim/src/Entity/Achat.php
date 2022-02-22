@@ -2,20 +2,23 @@
 
 namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
+
 Class Achat {
     /**
      * @Assert\NotBlank
      * @Assert\Positive
+     * @Assert\Length(min = 8, max = 20, minMessage = "Il faut tapper un numero de telephone correcte", maxMessage = "Il faut tapper un numero de telephone correcte")
      */
      
     public $Numero_De_Telephone;
     
     /**
+     * @Assert\Type("string")
      * @Assert\NotBlank
      * @Assert\Length(
      *      min = 2,
      *      max = 220,
-     *      minMessage = "Votre Addresse doit étre plus que 2 characteres",
+     *      minMessage = "Votre Addresse doit étre plus que 4 characteres",
      *      maxMessage = "Votre Addresse doit étre moins que 20 characteres"
      * )
      */
@@ -26,12 +29,12 @@ Class Achat {
     {
     }
 
-    public function getNumeroDeTelephone(): ?int
+    public function getNumeroDeTelephone(): ? string
     {
         return $this->Numero_De_Telephone;
     }
 
-    public function setnumeroDeTelephone(int $Numero_De_Telephone): self
+    public function setnumeroDeTelephone(string $Numero_De_Telephone): self
     {
         $this->Numero_De_Telephone = $Numero_De_Telephone;
 

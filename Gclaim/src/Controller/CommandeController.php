@@ -81,16 +81,17 @@ class CommandeController extends AbstractController
             $ligneCommande->setQuantite($p['quantite']);
             $comm=$commandeRepository->find($commande->getId());
             $ligneCommande->setCommande($comm);
-            
+
             $entityManager->persist($ligneCommande);
+            $entityManager->flush();
             
             }
-            $entityManager->flush();
+           
         
         $session->set('cart',[]);
         $session->set('panier',[]);
     }
-            return $this->redirectToRoute('commande', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('produit', [], Response::HTTP_SEE_OTHER);
         //}
 
 
@@ -166,6 +167,7 @@ class CommandeController extends AbstractController
         $form = $this->createForm(AchatType::class, $achat);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            
             return $this->redirectToRoute('commande_new', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('panier/form.html.twig', [
@@ -182,7 +184,7 @@ class CommandeController extends AbstractController
     public function add($id ,SessionInterface $session)
     {
         $panier = $session->get("cart",[]);
-        if (empty($panier)){
+        
 
         
         if (!empty($panier[$id])){
@@ -192,8 +194,8 @@ class CommandeController extends AbstractController
         }
        
         $session->set("cart",$panier);
-    }
-        return $this->redirectToRoute('commande', [], Response::HTTP_SEE_OTHER);
+    
+        return $this->redirectToRoute('produit', [], Response::HTTP_SEE_OTHER);
     }
 
 }

@@ -2,7 +2,7 @@
 
 {% block title %}LigneCommande index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Ligne Commande</h1>
 
     <table class="table">
@@ -22,7 +22,7 @@
                 <td>{{ligne_commande.produit.NomProduit}}</td>
                 <td>
                     <a href="{{ path('ligne_commande_show', {'id': ligne_commande.id}) }}"><button type="button" class="btn btn-block btn-primary"><i class="fa fa-info"></i>Show</button></a>
-                    <a href="{{ path('ligne_commande_edit', {'id': ligne_commande.id}) }}"><button type="button" class="btn btn-block btn-info"><i class="fa fa-edit"></i>Edit</button></a>
+                    <!--<a href="{{ path('ligne_commande_edit', {'id': ligne_commande.id}) }}"><button type="button" class="btn btn-block btn-info"><i class="fa fa-edit"></i>Edit</button></a>-->
                 </td>
             </tr>
         {% else %}

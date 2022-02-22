@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class AchatType extends AbstractType
 {
@@ -15,7 +16,7 @@ class AchatType extends AbstractType
         $builder
            
             ->add('Addresse')
-            ->add('Numero_de_Telephone')
+            ->add('Numero_de_Telephone',IntegerType::class)
             ->add('Confirmer',SubmitType::class)
         ;
     }

@@ -14,7 +14,7 @@ class Produit
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedphpValue
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id_produit;
@@ -68,14 +68,7 @@ class Produit
      * @ORM\OneToMany(targetEntity=Images::class, mappedBy="imageproduit", orphanRemoval=true)
      */
     private $images;
-
-    public function __construct()
-    {
-        $this->images = new ArrayCollection();
-    }
-
-    public function getId_produit(): ?int
-
+    /** 
      * @ORM\OneToMany(targetEntity=LigneCommande::class, mappedBy="Produit")
      */
     private $ligneCommandes;
@@ -83,13 +76,17 @@ class Produit
     public function __construct()
     {
         $this->ligneCommandes = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
-    public function getId(): ?int
-
+    public function getId_produit(): ?int
     {
         return $this->id_produit;
     }
+
+   
+
+   
 
     public function getNomProduit(): ?string
     {
