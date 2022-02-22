@@ -24,7 +24,7 @@
                 <td>{{ produit.description }}</td>
                 <td>{{ produit.prixProduit }}</td>
                 <td>{{ produit.dateAjoutProduit ? produit.dateAjoutProduit|date('Y-m-d') : '' }}</td>
-                <td>{{ produit.imageProduit }}</td>
+
                 <td>
                     <a href="{{ path('produit_show', {'id_produit': produit.id_produit}) }}" class="btn btn-primary" >show</a>
                     </br></br>

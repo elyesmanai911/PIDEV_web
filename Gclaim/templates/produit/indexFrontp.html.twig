@@ -3,7 +3,11 @@
 {% block title %} produit {% endblock %}
 
 {%  block body %}
-
+{#    <div class="hero-slider owl-carousel">#}
+{#        <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-1.jpg') }}"></div>#}
+{#        <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-2.jpg') }}"></div>#}
+{#        <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-3.jpg') }}"></div>#}
+{#    </div>#}
     <!-- Instagram Post Section Begin -->
     <section class="instagram-post-section spad">
         <div class="container">
@@ -15,7 +19,9 @@
                      {% for produit in produits %}
                         <div class="ip-item">
                             <div class="ip-pic">
-                                <img src="{{ asset('img/instagram/insta-1.jpg') }}" alt="">
+                                 {% for image in produit.images  %}
+                                <img src="{{ asset('/uploads/' ~ image.UrlImage ) }}" alt="" width="300" height="250">
+                                {% endfor %}
                             </div>
                             <div class="ip-text">
                                 <div class="label"><span>{{ produit.prixProduit }} DT</span></div>

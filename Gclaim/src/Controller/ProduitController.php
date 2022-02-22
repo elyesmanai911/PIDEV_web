@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Images;
 use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\CategorieRepository;
@@ -35,10 +36,26 @@ class ProduitController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $produit = new Produit();
+        $datetime = new \DateTime('now');
+        $produit->setDateAjoutProduit($datetime);
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $images = $form ->get('images')->getData();
+            foreach ($images as $image) {
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('upload_directory'),
+                    $fichier
+
+                );
+
+                $img = new Images();
+                $img->setUrlImage($fichier);
+                $produit-> addImage($img);
+            }
+            $entityManager->persist($img);
             $entityManager->persist($produit);
             $entityManager->flush();
 
@@ -70,6 +87,22 @@ class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $images = $form ->get('images')->getData();
+            foreach ($images as $image) {
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('upload_directory'),
+                    $fichier
+
+                );
+
+                $img = new Images();
+                $img->setUrlImage($fichier);
+                $produit-> addImage($img);
+            }
+
+            $entityManager->persist($img);
+            $entityManager->persist($produit);
             $entityManager->flush();
 
             return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
@@ -104,6 +137,25 @@ class ProduitController extends AbstractController
             'categories' => $categorieRepository->findAll(),
         ]);
     }
+    /**
+     * @Route("/prod/filtreprod", name="filtre", methods={"GET", "POST"})
+     */
+    public function filtreprod(ProduitRepository $produitRepository, CategorieRepository $categorieRepository, Request $request): Response
+    {
+        $cat = $request->get('cat');
 
+
+
+        $products = $this->getDoctrine()
+        ->getManager()
+        ->createQuery('SELECT p FROM App\Entity\Produit p  WHERE p.categorie in (:list) ')
+        ->setParameter('list',$cat)
+        ->getResult();
+        return $this->render('produit/indexFrontP.html.twig', [
+            'produits' => $products,
+            'categories' => $categorieRepository->findAll(),
+        ]);
+
+    }
 
 }

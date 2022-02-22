@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
@@ -12,7 +14,7 @@ class Produit
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedphpValue
      * @ORM\Column(type="integer")
      */
     private $id_produit;
@@ -53,16 +55,23 @@ class Produit
      */
     private $dateAjout_produit;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image_produit;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="produits")
      * @ORM\JoinColumn(name="categorie", referencedColumnName="id_categorie")
      */
     private $categorie;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="imageproduit", orphanRemoval=true)
+     */
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId_produit(): ?int
     {
@@ -117,17 +126,9 @@ class Produit
         return $this;
     }
 
-    public function getImageProduit(): ?string
-    {
-        return $this->image_produit;
-    }
 
-    public function setImageProduit(?string $image_produit): self
-    {
-        $this->image_produit = $image_produit;
 
-        return $this;
-    }
+
 
     public function getCategorie(): ?Categorie
     {
@@ -137,6 +138,36 @@ class Produit
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Images[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setImageproduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getImageproduit() === $this) {
+                $image->setImageproduit(null);
+            }
+        }
 
         return $this;
     }
