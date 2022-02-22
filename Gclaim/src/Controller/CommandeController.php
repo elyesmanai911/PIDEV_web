@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
+
 use App\Entity\LigneCommande;
 use App\Entity\Achat;
 use App\Form\CommandeType;
 use App\Form\AchatType;
 use App\Repository\CommandeRepository;
 use App\Repository\ProduitRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\LigneCommandeRepository;
+
 
 /**
  * @Route("/commande")
@@ -35,6 +38,7 @@ class CommandeController extends AbstractController
     /**
      * @Route("/front", name="commande", methods={"GET"})
      */
+
     public function indexFront(ProduitRepository $produitRepository,SessionInterface $session): Response
     {
        
@@ -89,6 +93,7 @@ class CommandeController extends AbstractController
             return $this->redirectToRoute('commande', [], Response::HTTP_SEE_OTHER);
         //}
 
+
         return $this->render('commande/new.html.twig', [
             'commande' => $commande,
             'form' => $form->createView(),
@@ -98,10 +103,12 @@ class CommandeController extends AbstractController
     /**
      * @Route("/{id}", name="commande_show", methods={"GET"})
      */
+
     public function show(LigneCommandeRepository $ligneCommandeRepository,Commande $commande): Response
     {
         return $this->render('ligne_commande/index.html.twig', [
             'ligne_commandes' => $ligneCommandeRepository->findByCommandeID($commande),
+
         ]);
     }
 
@@ -140,6 +147,7 @@ class CommandeController extends AbstractController
 
         return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
     }
+
 
     /**
      * @Route("/cart", name="cart", methods={"GET"})
@@ -187,4 +195,5 @@ class CommandeController extends AbstractController
     }
         return $this->redirectToRoute('commande', [], Response::HTTP_SEE_OTHER);
     }
+
 }

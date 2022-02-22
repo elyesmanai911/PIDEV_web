@@ -3,7 +3,9 @@
 {% block title %}Commande{% endblock %}
 
 {% block content %}
+
     <h1>Liste des commandes</h1>
+
 
     <table class="table">
         <thead>
@@ -25,6 +27,7 @@
                 <td>{{ commande.dateAchat ? commande.dateAchat|date('Y-m-d') : '' }}</td>
                 <td>{{ commande.livrer ? 'Yes' : 'No' }}</td>
                 <td>
+
                     <div class="row">
                     <div class="col-sm-4 col-md-8 text-center">
                     <a href="{{ path('commande_show', {'id': commande.id}) }}"><button type="button" class="btn btn-block btn-primary"><i class="fa fa-info"></i>Details</button></a>
@@ -35,6 +38,7 @@
                     <a href="{{ path('commande_edit', {'id': commande.id}) }}"><button type="button" class="btn btn-info btn-block"><i class="fa fa-edit"></i>Update Status</button></a>
                    </div>
                    </div>
+
                 </td>
             </tr>
         {% else %}
@@ -45,5 +49,7 @@
         </tbody>
     </table>
 
+
     <a href="{{ path('commande_new') }}"><button type="button" class="btn btn-outline btn-primary">Create New</button></a>
+
 {% endblock %}

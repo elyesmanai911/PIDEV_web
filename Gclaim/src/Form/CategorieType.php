@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +14,20 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('nom_categorie')
-            ->add('type_categorie')
-        ;
+            ->add('type_categorie',ChoiceType::class,[
+                'choices' => [
+                   'hardware' => 'hardware',
+                    'software' => 'software'
+
+                ],
+
+                'label' => 'Type categorie'
+            ])
+
+             ;
+
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -23,4 +36,6 @@ class CategorieType extends AbstractType
             'data_class' => Categorie::class,
         ]);
     }
+
+
 }
