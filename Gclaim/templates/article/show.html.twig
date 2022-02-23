@@ -1,0 +1,44 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h1>Article</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ article.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ article.description }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>
+                <td><img style="width: 100%" src="{{asset('img/article/') ~ article.image }}" class="img-responsive" alt="Image"></td>
+            </tr>
+            <tr>
+                <th>CreateAt</th>
+                <td>{{ article.createAt ? article.createAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+{#            <tr>#}
+{#                <th>Commentaire</th>#}
+{#                <td>{{ article.commentaire.titre}}</td>#}
+{#            </tr>#}
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('article_show') ,}}">back to list</a>
+
+    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+
+    {{ include('article/_delete_form.html.twig') }}
+{% endblock %}

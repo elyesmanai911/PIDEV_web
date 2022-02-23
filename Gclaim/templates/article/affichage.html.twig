@@ -1,0 +1,43 @@
+
+{% extends 'test.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+    <section class="instagram-post-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="section-title">
+                        <h5>ARTICLES</h5>
+                    </div>
+                    {% for article in articles %}
+                    <div class="ip-item">
+                        <div class="ip-pic">
+                            <img style="width: 400px ; height: 400px" src="{{asset('img/article/') ~ article.image }}" alt="">
+                        </div>
+                        <div class="ip-text">
+                            <div class="label">
+                            <h5><a href="{{ path('article_afficheA',{'id': article.id}) }}"</a>savoir plus</a></h5>
+                            </div>
+
+                                <div class="section-title">
+
+                                <h5>{{ article.titre }}</h5>
+                                </div>
+                            <ul>
+                                <li>by <span>Admin</span></li>
+                                <li><i class="fa fa-clock-o"></i> {{ article.createAt ? article.createAt|date('Y-m-d H:i:s') : '' }}</li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

@@ -1,0 +1,109 @@
+
+{% extends 'test.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+    <div class="details-gallery-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+                        <div class="dg-item set-bg">
+                            {% set images = articles.image| trim('*') | split("*") %}
+                            <img style="width: 1000px ; height: 700px" src="{{asset('img/article/') ~ articles.getImage() }}" class="img-responsive" alt="Image">
+                        </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Details Gallery Section End -->
+
+    <!-- Details Post Section Begin -->
+    <section class="details-post-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 p-0">
+                    <div class="details-text gallery-page">
+                        <div class="dt-title-gallery details-hero-text">
+                            <div class="label"><span>Playstation</span></div>
+                            <div class="label"><span>Hardware</span></div>
+
+                            <h3>{{ articles.getTitre() }}</h3>
+                            <ul>
+                                <li>by <span>Admin</span></li>
+
+                            </ul>
+                        </div>
+                        <div class="dt-desc">
+                            <p>{{ articles.description }}</p>
+                            <li><i class="fa fa-clock-o"></i> {{ articles.createAt ? articles.createAt|date('Y-m-d H:i:s') : '' }}</li>
+
+                        </div>
+
+
+                        <div class="dt-comment">
+                            {% for commentaire in commentaires %}
+                                {% if commentaire in articles.commentaires %}
+                            <div class="dc-item">
+                                <div class="dc-pic">
+                                    <img src="{{ asset('img/details/comment/comment-1.jpg') }}"alt="">
+                                </div>
+                                <div class="dc-text">
+
+                                    <h5>{{ commentaire.user }}</h5>
+
+                                    <p>{{ commentaire.commentaire }}</p>
+                                    <li>{{ commentaire.creation ? commentaire.creation|date('Y-m-d H:i:s') : '' }}</li>
+
+                                    <a href="#" class="reply-btn"><span>Reply</span></a>
+                                </div>
+                            </div>
+
+
+
+{% endif %}
+
+                            {% endfor %}
+
+
+                            <h4>Créer Votre commentaire</h4>
+
+                            <div class="contact-form">
+                                <div class="dt-leave-comment">
+                                    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}},{'attr': {'class': 'signup-form'}}) }}
+                                    <div class="input-list">
+{#                                        {{ form_errors(form.article) }}#}
+{#                                        {{ form_widget(form.article,{'attr':{'placeholder':'article','style':'border-color: #c24400;background:transparent;width:48%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;#}
+{#	                                 transform: skewX(-15deg);'}}) }}#}
+                                        <br>
+                                        {{ form_errors(form.user) }}
+                                        {{ form_widget(form.user,{'attr':{'placeholder':'user','style':'border-color: #c24400;background:transparent;width:48%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+	                                 transform: skewX(-15deg);'}}) }}
+                                        <br>
+                                        {{ form_errors(form.commentaire,{'attr':{'style':'color: #c24400;'}}) }}
+                                        {{ form_widget(form.commentaire,{'attr':{'placeholder':'commentaire*','style':'border-color: #c24400;background:transparent;width:100%;height: 100px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+                                       	transform: skewX(-15deg);'}}) }}
+
+
+
+
+
+
+                                    </div>
+
+                                    {{ form_widget(form.confirmer,{'attr':{'style':'border-color: #c24400;background:#c24400;width:100%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+	                              transform: skewX(-15deg);'}}) }}
+                                    {{ form_end(form) }}
+                                </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}
