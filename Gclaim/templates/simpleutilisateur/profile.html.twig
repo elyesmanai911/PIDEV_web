@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}PROFILE{% endblock %}</title>
+
+    <!-- Google Font -->
+    {% block css%}
+
+        <link href="{{ asset('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap') }}"
+              rel="stylesheet">
+        <link href="{{ asset('https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap') }}" rel="stylesheet">
+
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/elegant-icons.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/barfiller.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
+    {% endblock %}
+</head>
+
+<body>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Humberger Menu Begin -->
+<div class="humberger-menu-overlay"></div>
+<div class="humberger-menu-wrapper">
+    <div class="hw-logo">
+        <a href="{{ asset('#') }}"><img src="{{ asset('img/f-logo.png') }}" alt=""></a>
+    </div>
+    <div class="hw-menu mobile-menu">
+        <ul>
+            <li><a href="{{ asset('/') }}">Home</a></li>
+            <li><a href="{{ asset('#') }}">Pages <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown">
+                    <li><a href="{{ asset('./categories_list.html.twig') }}">Categories</a></li>
+                    <li><a href="{{ asset('./categories-grid.html') }}">Categories grid</a></li>
+                    <li><a href="{{ asset('./typography.html') }}">Typography</a></li>
+                    <li><a href="{{ asset('./details-post-default.html') }}">Post default</a></li>
+                    <li><a href="{{ asset('./details-post-gallery.html') }}">Post gallery</a></li>
+                    <li><a href="{{ asset('./details-post-review.html') }}">Post review</a></li>
+                    <li><a href="{{ asset('./contact.html') }}">Contact</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ asset('#') }}">Reviews <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown">
+                    <li><a href="{{ asset('#') }}">Playstation</a></li>
+                    <li><a href="{{ asset('#') }}">Windows</a></li>
+                    <li><a href="{{ asset('#') }}">Mobile</a></li>
+                    <li><a href="{{ asset('#') }}">Xbox</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ asset('#') }}">Windows <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown">
+                    <li><a href="{{ asset('#') }}">Playstation</a></li>
+                    <li><a href="{{ asset('#') }}">Windows</a></li>
+                    <li><a href="{{ asset('#') }}">Mobile</a></li>
+                    <li><a href="{{ asset('#') }}">Xbox</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ asset('#') }}">Videos <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown">
+                    <li><a href="{{ asset('#') }}">Playstation</a></li>
+                    <li><a href="{{ asset('#') }}">Windows</a></li>
+                    <li><a href="{{ asset('#') }}">Mobile</a></li>
+                    <li><a href="{{ asset('#') }}">Xbox</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+
+    <div class="hw-social">
+        <a href="{{ asset('#') }}"><i class="fa fa-facebook"></i></a>
+        <a href="{{ asset('#') }}"><i class="fa fa-twitter"></i></a>
+        <a href="{{ asset('#') }}"><i class="fa fa-youtube-play"></i></a>
+        <a href="{{ asset('#') }}"><i class="fa fa-instagram"></i></a>
+    </div>
+    <div class="hw-insta-media">
+        <div class="section-title">
+            <h5>Instagram</h5>
+        </div>
+        <div class="insta-pic">
+            <img src="{{ asset('img/instagram/ip-1.jpg') }}" alt="">
+            <img src="{{ asset('img/instagram/ip-2.jpg') }}" alt="">
+            <img src="{{ asset('img/instagram/ip-3.jpg') }}" alt="">
+            <img src="{{ asset('img/instagram/ip-4.jpg') }}" alt="">
+        </div>
+    </div>
+</div>
+<!-- Humberger Menu End -->
+
+<!-- Header Section Begin -->
+<header class="header-section">
+    <div class="ht-options">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-8">
+                    <div class="ht-widget">
+                        <ul>
+                            <li><i class="fa fa-clock-o"></i>   {{"now"|date('F j, Y')}} </li>
+                            <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>
+
+                            {% if user is not null %}
+                                <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
+                            {% else%}
+                                <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4">
+                    <div class="ht-social">
+                        <a href="{{ asset('#') }}"><i class="fa fa-facebook"></i></a>
+                        <a href="{{ asset('#') }}"><i class="fa fa-twitter"></i></a>
+                        <a href="{{ asset('#') }}"><i class="fa fa-youtube-play"></i></a>
+                        <a href="{{ asset('#') }}"><i class="fa fa-instagram"></i></a>
+                        <a href="{{ asset('#') }}"><i class="fa fa-envelope-o"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="logo">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <a href="{{ asset('./index.html') }}"><img src="{{ asset('img/logo.png') }}" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav-options">
+        <div class="container">
+            <div class="humberger-menu humberger-open">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="nav-search search-switch">
+                <i class="fa fa-search"></i>
+            </div>
+            <div class="nav-menu">
+                <ul>
+                    <li class="active"><a href="{{ asset('/') }}"><span>Accueil</span></a></li>
+                    <li class="mega-menu"><a href="{{ asset('#') }}"><span>Tournois <i class="fa fa-angle-down"></i></span></a>
+                        <div class="megamenu-wrapper">
+                            <ul class="mw-nav">
+                                <li><a href="{{ asset('#') }}"><span>Playstation</span></a></li>
+                                <li><a href="{{ asset('#') }}"><span>Windows</span></a></li>
+                                <li><a href="{{ asset('#') }}"><span>Mobile</span></a></li>
+                                <li><a href="{{ asset('#') }}"><span>Xbox</span></a></li>
+                            </ul>
+                            <div class="mw-post">
+                                <div class="mw-post-item">
+                                    <div class="mw-pic">
+                                        <img src="{{ asset('img/megamenu/mm-1.jpg') }}" alt="">
+                                    </div>
+                                    <div class="mw-text">
+                                        <h6><a href="{{ asset('#') }}">Tournois1</a></h6>
+                                        <ul>
+                                            <li><i class="fa fa-clock-o"></i> {{"now"|date('Y-m-d')}}</li>
+                                            <li><i class="fa fa-comment-o"></i> 12</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mw-post-item">
+                                    <div class="mw-pic">
+                                        <img src="{{ asset('img/megamenu/mm-2.jpg') }}" alt="">
+                                    </div>
+                                    <div class="mw-text">
+                                        <h6><a href="{{ asset('#') }}">Tournois2</a>
+                                        </h6>
+                                        <ul>
+                                            <li><i class="fa fa-clock-o"></i> {{"now"|date('Y-m-d')}}</li>
+                                            <li><i class="fa fa-comment-o"></i> 12</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mw-post-item">
+                                    <div class="mw-pic">
+                                        <img src="{{ asset('img/megamenu/mm-3.jpg') }}" alt="">
+                                    </div>
+                                    <div class="mw-text">
+                                        <h6><a href="{{ asset('#') }}">Tournois3</a>
+                                        </h6>
+                                        <ul>
+                                            <li><i class="fa fa-clock-o"></i> {{"now"|date('Y-m-d')}}</li>
+                                            <li><i class="fa fa-comment-o"></i> 12</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mw-post-item">
+                                    <div class="mw-pic">
+                                        <img src="{{ asset('img/megamenu/mm-4.jpg') }}" alt="">
+                                    </div>
+                                    <div class="mw-text">
+                                        <h6><a href="{{ asset('#') }}">Tournois4</a></h6>
+                                        <ul>
+                                            <li><i class="fa fa-clock-o"></i> {{"now"|date('Y-m-d')}}</li>
+                                            <li><i class="fa fa-comment-o"></i> 12</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mw-post-item">
+                                    <div class="mw-pic">
+                                        <img src="{{ asset('img/megamenu/mm-5.jpg') }}" alt="">
+                                    </div>
+                                    <div class="mw-text">
+                                        <h6><a href="{{ asset('#') }}">Tournois5</a>
+                                        </h6>
+                                        <ul>
+                                            <li><i class="fa fa-clock-o"></i> {{"now"|date('Y-m-d')}}</li>
+                                            <li><i class="fa fa-comment-o"></i> 12</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li><a href="{{ asset('#') }}"><span>Actualités <i class="active"></i></span></a></li>
+                    <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="active"></i></span></a></li>
+                    <li>
+                        <a href="{{ asset('#') }}"><span>Produits <i class="fa fa-angle-down"></i></span></a>
+                        <ul class="dropdown">
+                            <li><a href="{{ asset('./categories-list.html') }}">Categories</a></li>
+                            <li><a href="{{ asset('./categories-grid.html') }}">Categories grid</a></li>
+                            <li><a href="{{ asset('./typography.html') }}">Typography</a></li>
+                            <li><a href="{{ asset('./details-post-default.html') }}">Post default</a></li>
+                            <li><a href="{{ asset('./details-post-gallery.html') }}">Post gallery</a></li>
+                            <li><a href="{{ asset('./details-post-review.html') }}">Post review</a></li>
+                            <li><a href="{{ asset('./contact.html') }}">Contact</a></li>
+                        </ul>
+                    <li><a href="{{ asset('#') }}"><span> Paniers<i class="active"></i></span></a></li>
+
+
+
+
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Instagram Post Section Begin -->
+<section class="instagram-post-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="section-title">
+                    <h5>Mon profile</h5>
+                </div>
+                <div class="ip-item">
+                    <div class="ip-pic">
+                        <img src="{{ asset('img/instagram/insta-1.jpg') }}" alt="">
+                        <div class="social-media">
+                            <div class="section-title">
+                                <h5>Créer une équipe</h5>
+                                <div class="ip-text">
+                                    <div class="label"><span><a href="{{ path('addequipe') }}">Créer</a></span> </div>
+                                    {#   <div class="label"><span><a href="{{ path('updateequipe',{'id':user.membreEquipes.id}) }} }}">Modifier l'equipe</a></span> </div>
+                                    #}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ip-text">
+                        <div class="label"><span>{{ user.username }}</span> </div>
+                        <br>
+                        <br>
+                        <div class="container">
+                            {% if user.isVerified %}
+                                <div class="name-area">
+                                    <h4></h4>
+                                </div>
+                            {% endif %}
+
+                            <div class="tags-cloud">
+
+                                <div class="tag-list">
+                                    <div class="section-title">
+                                        <h5>LOGIN</h5>
+
+                                        <a ><span>{{ user.username }}</span></a>
+                                    </div>
+                                    <div class="section-title">
+                                        <h5>NOM ET PRENOM</h5>
+
+                                        <a ><span>{{ user.fullname }}</span></a>
+                                    </div>
+                                    <div class="section-title">
+                                        <h5>EMAIL</h5>
+
+                                        <a ><span>{{ user.email }}</span></a>
+                                    </div>
+                                    <div class="section-title">
+                                        <h5>MOT DE PASSE</h5>
+
+                                        <a ><span>{{ user.password }}</span></a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="ip-text">
+                            <div class="label"><span><a href="{{ path('updateUtilisateur',{'id':user.id}) }}">Modifier</a></span> </div>
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    </div>
+
+    </div>
+
+    </div>
+
+</section>
+
+<!-- Instagram Post Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="footer-about">
+                    <div class="fa-logo">
+                        <a href="{{ asset('#') }}"><img src="{{ asset('img/f-logo.png') }}" alt=""></a>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua lacus vel facilisis.</p>
+                    <div class="fa-social">
+                        <a href="{{ asset('#') }}"><i class="fa fa-facebook"></i></a>
+                        <a href="{{ asset('#') }}"><i class="fa fa-twitter"></i></a>
+                        <a href="{{ asset('#') }}"><i class="fa fa-youtube-play"></i></a>
+                        <a href="{{ asset('#') }}"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="editor-choice">
+                    <div class="section-title">
+                        <h5>Editor's Choice</h5>
+                    </div>
+                    <div class="ec-item">
+                        <div class="ec-pic">
+                            <img src="{{ asset('img/trending/editor-1.jpg') }}" alt="">
+                        </div>
+                        <div class="ec-text">
+                            <h6><a href="{{ asset('#') }}">A Monster Prom poster got hijacked for a Papa Roach concert...</a>
+                            </h6>
+                            <ul>
+                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                <li><i class="fa fa-comment-o"></i> 12</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ec-item">
+                        <div class="ec-pic">
+                            <img src="{{ asset('img/trending/editor-2.jpg') }}" alt="">
+                        </div>
+                        <div class="ec-text">
+                            <h6><a href="{{ asset('#') }}">Facebook wants to read your thoughts with its augmented...</a>
+                            </h6>
+                            <ul>
+                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                <li><i class="fa fa-comment-o"></i> 12</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="tags-cloud">
+                    <div class="section-title">
+                        <h5>Tags Cloud</h5>
+                    </div>
+                    <div class="tag-list">
+                        <a href="{{ asset('#') }}"><span>Gaming</span></a>
+                        <a href="{{ asset('#') }}"><span>Platform</span></a>
+                        <a href="{{ asset('#') }}"><span>Playstation</span></a>
+                        <a href="{{ asset('#') }}"><span>Hardware</span></a>
+                        <a href="{{ asset('#') }}"><span>Reviews</span></a>
+                        <a href="{{ asset('#') }}"><span>Simulation</span></a>
+                        <a href="{{ asset('#') }}"><span>Strategy</span></a>
+                        <a href="{{ asset('#') }}"><span>Scientific</span></a>
+                        <a href="{{ asset('#') }}"><span>References</span></a>
+                        <a href="{{ asset('#') }}"><span>Role-playing</span></a>
+                        <a href="{{ asset('#') }}"><span>Adventurea</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+<!--- Footer Section End -->
+<!-- Search model end -->
+
+<!-- Js Plugins -->
+{% block js %}
+
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('js/circle-progress.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.barfiller.js') }}"></script>
+    <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}
+</body>
+
+</html>
