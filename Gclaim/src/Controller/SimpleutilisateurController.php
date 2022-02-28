@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\Coach;
 use App\Entity\SimpleUtilisateur;
+use App\Entity\Utilisateur;
+use App\Form\CoachType;
 use App\Form\SimpleUtilisateurType;
 use App\Repository\SimpleUtilisateurRepository;
 use App\Repository\UtilisateurRepository;
@@ -96,6 +99,92 @@ class SimpleutilisateurController extends AbstractController
         }
         return $this->render("simpleutilisateur/modif.html.twig",['form'=>$form->createView(),'user'=>$simpleutilisateur,'error'=>'']);
     }
+    /**
+     * @Route("/simpleutilisateur/tri", name="tri")
+     */
+    public function Tri(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
 
 
+        $query = $em->createQuery(
+            'SELECT a FROM App\Entity\SimpleUtilisateur a 
+            ORDER BY a.username'
+        );
+
+        $activites = $query->getResult();
+        return $this->render('simpleutilisateur/list.html.twig',
+            array('l' => $activites));
+
+    }
+    /**
+     * @Route("/demandecoach/{id}", name="demandecoach")
+     */
+    public function demandecoach(Request $request,$id,UtilisateurRepository $utilisateurRepository)
+    {    $user=$utilisateurRepository->find($id);
+         $user->setIsVerified(1);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute("profile");
+    }
+    /**
+     * @Route("/listedesdemandes", name="listedesdemandes")
+     */
+    public function listedesdemandes()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery(
+            'SELECT a FROM App\Entity\SimpleUtilisateur a 
+            where a.isVerified = 1'
+        );
+
+        $u = $query->getResult();
+        return $this->render('simpleutilisateur/listdesdemandes.html.twig',
+            array('l' => $u));
+    }
+
+    /**
+     * @Route("/devenircoach/{id}", name="devenircoach")
+     */
+    public function devenircoach($id,SimpleUtilisateurRepository  $utilisateurRepository)
+    {$user=$utilisateurRepository->find($id);
+        $this->container->get('security.token_storage')->setToken(null);
+        $coach = new Coach();
+        $coach->setIsVerified(0);
+        $coach->setUserName($user->getUserName());
+        $coach->setVerifPassword($user->getVerifPassword());
+        $coach->setEmail($user->getEmail());
+        $coach->setPassword($user->getPassword());
+
+        $coach->setRoles(['ROLE_COACH']);
+        $coach->setSpecialite("rien");
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($coach);
+        $em->remove($user);
+        $em->flush();
+
+
+        return $this->redirectToRoute('affichecoach');
+
+    }
+    /**
+     * @Route("/annulerlademande/{id}", name="annulerlademande")
+     */
+    public function annulerlademande($id,SimpleUtilisateurRepository  $utilisateurRepository)
+    {$user=$utilisateurRepository->find($id);
+       $user->setIsVerified(0);
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($user);
+
+        $em->flush();
+
+
+        return $this->redirectToRoute('affichecoach');
+
+    }
 }

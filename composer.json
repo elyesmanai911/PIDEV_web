@@ -1,0 +1,5 @@
+{
+    "require": {
+        "cmen/google-charts-bundle": "^5.0"
+    }
+}

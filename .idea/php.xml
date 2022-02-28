@@ -131,6 +131,11 @@
       <path value="$PROJECT_DIR$/Gclaim/vendor/phpunit/php-code-coverage" />
       <path value="$PROJECT_DIR$/Gclaim/vendor/egulias/email-validator" />
       <path value="$PROJECT_DIR$/Gclaim/vendor/symfonycasts/verify-email-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/cmen/google-charts-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfonycasts/reset-password-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/google-mailer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

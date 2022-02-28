@@ -29,7 +29,7 @@
                             <td>{{ s.password }}</td>
                             <td>{{ s.email }}</td>
                             <td>{{ s.fullname }}</td>
-                            <td> <a href="{{ path('deletesimpleutilisateur1',{'id':s.id}) }}">Delete</a></td>
+                            <td> <a href="{{ path('deletesimpleutilisateur1',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Delete</a></td>
 
 
                             </td>
@@ -38,6 +38,8 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    <td>  <a href="{{ path('tri') }}" class="btn btn-block btn-outline-warning btn-xs">trié les Utilisateurs</a></td>
+
                 </div>
                 <!-- /.card-body -->
             </div>

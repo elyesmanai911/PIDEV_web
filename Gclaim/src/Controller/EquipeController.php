@@ -9,10 +9,12 @@ use App\Form\CoachType;
 use App\Form\EquipeType;
 use App\Repository\EquipeRepository;
 use App\Repository\SimpleUtilisateurRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 
 class EquipeController extends AbstractController
 {
@@ -30,17 +32,53 @@ class EquipeController extends AbstractController
     /**
      * @Route("/affichetoutequipe", name="affichetoutequipe")
      */
-    public function readequipe(EquipeRepository  $repository)
+    public function readequipe(EquipeRepository  $repository,Request $request,PaginatorInterface $paginator)
     {
-        $equipe=$repository->findall();
+        $donnee=$repository->findall();
+        $equipe=$paginator->paginate(
+            $donnee,
+            $request->query->getInt('page',1),
+            4
+
+        );
         return $this->render('equipe/list.html.twig',["equipe"=>$equipe,]);
+    }
+    /**
+     * @Route("/equipe/tri", name="tridate")
+     */
+    public function Tridate(Request $request,PaginatorInterface $paginator)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $query = $em->createQuery(
+            'SELECT a FROM App\Entity\Equipe a 
+            ORDER BY a.dateCreation DESC'
+        );
+
+        $activites = $query->getResult();
+        $activites=$paginator->paginate(
+            $activites,
+            $request->query->getInt('page',1),
+            4
+
+        );
+        return $this->render('equipe/list.html.twig',
+            array('equipe' => $activites));
+
     }
     /**
      * @Route("/afficheequipe", name="afficheequipe")
      */
-    public function afficheequipe(EquipeRepository  $repository)
+    public function afficheequipe(EquipeRepository  $repository,Request $request,PaginatorInterface $paginator)
     {$user = $this->getUser();
-        $equipe=$repository->findall();
+        $donnee=$repository->findall();
+        $equipe=$paginator->paginate(
+            $donnee,
+            $request->query->getInt('page',1),
+            4
+
+        );
         return $this->render('equipe/showequipe.html.twig',["equipe"=>$equipe,'user' => $user]);
     }
     /**
@@ -118,4 +156,49 @@ class EquipeController extends AbstractController
         }
         return $this->render("equipe/add.html.twig",array('form'=>$form->createView(),'user' => $user));
     }
+
+    /**
+     * @Route("/stat", name="stat")
+     */
+    public function indexAction(){
+        $repository = $this->getDoctrine()->getRepository(Equipe::class);
+        $Equipe = $repository->findAll();
+        $em = $this->getDoctrine()->getManager();
+
+        $rd=0;
+        $qu=0;
+
+
+
+        foreach ($Equipe as $Equipe)
+        {
+            if (  $Equipe->getEtat()==1):
+                $rd+=1;
+            else :
+
+                $qu+=1;
+            endif;
+
+        }
+
+$pieChart=new PieChart();
+
+        $pieChart->getData()->setArrayToDataTable(
+            [['Etat', 'nombres'],
+                ['Overte',     $rd],
+                ['Fermé',      $qu]
+            ]
+        );
+        $pieChart->getOptions()->setTitle('Top categories');
+        $pieChart->getOptions()->setHeight(500);
+        $pieChart->getOptions()->setWidth(900);
+        $pieChart->getOptions()->getTitleTextStyle()->setBold(true);
+        $pieChart->getOptions()->getTitleTextStyle()->setColor('#009900');
+        $pieChart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $pieChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
+
+        return $this->render('equipe/stat.html.twig', array('piechart' => $pieChart));
+    }
+
 }

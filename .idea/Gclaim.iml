@@ -135,6 +135,11 @@
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfonycasts/verify-email-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/knplabs/knp-paginator-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/knplabs/knp-components" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/cmen/google-charts-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfonycasts/reset-password-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfony/google-mailer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

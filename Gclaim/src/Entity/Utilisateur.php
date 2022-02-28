@@ -79,7 +79,7 @@ abstract class Utilisateur implements UserInterface
     {
         $roles = $this->roles;
 
-        return [];
+        return $roles;
     }
 
     public function setRoles(array $roles): self

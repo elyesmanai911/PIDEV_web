@@ -287,9 +287,9 @@
 
                     <div class="ip-text">
 
-                        {% if user.isVerified==0 %}
+                        {% if user.roles==["ROLE_USER"] %}
                             <div class="label"><span>{{ user.username }}</span> </div>
-                        {% elseif user.isVerified==1 %}
+                        {% elseif user.roles==["ROLE_COACH"] %}
                             <div class="label"><span>BIENVENUE COACH!! :  {{ user.username }}</span> </div>
                         {% endif %}
 
@@ -315,13 +315,13 @@
                                             <a ><span>{{ user.username }}</span></a>
                                         </div>
 
-                                        {% if user.isVerified==0 %}
+                                        {% if user.roles==["ROLE_USER"] %}
                                         <div class="section-title">
                                             <h5>NOM ET PRENOM</h5>
 
                                             <a ><span>{{ user.fullname }}</span></a>
                                         </div>
-                                            {% elseif user.isVerified==1 %}
+                                            {% elseif user.roles==["ROLE_COACH"] %}
                                                 <div class="section-title">
                                                     <h5>SPECIALITE</h5>
 
@@ -336,12 +336,16 @@
                                         <div class="section-title">
                                             <h5>ROLE</h5>
 
-                                            {% if user.isVerified==0 %}
+                                            {% if user.roles==["ROLE_USER"] %}
 
 
                                                     <a ><span>Simple Utilisateur </span></a>
-
-                                            {% elseif user.isVerified==1 %}
+                                            {% if user.isVerified()==0 %}
+                                                <div class="label"><span><a href="{{ path('demandecoach',{'id':user.id}) }}">Demande de devenir COACH</a></span> </div>
+                                            {% elseif user.isVerified()==1 %}
+                                                <a ><span>DEMANDE EN COURS  </span></a>
+                                            {% endif %}
+                                            {% elseif user.roles==["ROLE_COACH"] %}
 
                                                     <a ><span>Coach </span></a>
 
@@ -357,9 +361,9 @@
                         <div class="ip-text">
 
 
-                            {% if user.isVerified==0 %}
+                            {% if user.roles==["ROLE_USER"] %}
                                 <div class="label"><span><a href="{{ path('updateUtilisateur',{'id':user.id}) }}">Modifier</a></span> </div>
-                            {% elseif user.isVerified==1 %}
+                            {% elseif user.roles==["ROLE_COACH"] %}
                                 <div class="label"><span><a href="{{ path('updatecoach1',{'id':user.id}) }}">Modifier le Profil de COACH</a></span> </div>
                             {% endif %}
 

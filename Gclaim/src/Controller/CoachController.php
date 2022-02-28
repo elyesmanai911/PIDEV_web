@@ -63,7 +63,6 @@ class CoachController extends AbstractController
                 ]);
             }else{
             $coach->setRoles(['ROLE_COACH']);
-            $coach->setIsVerified(1);
             $em = $this->getDoctrine()->getManager();
             $em->persist($coach);
             $em->flush();
@@ -130,5 +129,24 @@ class CoachController extends AbstractController
         $em->remove($simpleutilisateur);
         $em->flush();
         return $this->redirectToRoute("affichesimpleutilisateur");
+    }
+
+    /**
+     * @Route("/coach/tri", name="tri1")
+     */
+    public function Tri(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $query = $em->createQuery(
+            'SELECT a FROM App\Entity\Coach a 
+            ORDER BY a.username'
+        );
+
+        $activites = $query->getResult();
+        return $this->render('coach/list.html.twig',
+            array('l' => $activites));
+
     }
 }

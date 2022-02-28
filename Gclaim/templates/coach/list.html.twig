@@ -31,8 +31,8 @@
                                 <td>{{ s.verifpassword }}</td>
                                 <td>{{ s.email }}</td>
                                 <td>{{ s.specialite }}</td>
-                                <td> <a href="{{ path('deletecoach',{'id':s.id}) }}">Delete</a></td>
-                                <td>  <a href="{{ path('updatecoach',{'id':s.id}) }}">Update</a></td>
+                                <td> <a href="{{ path('deletecoach',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Delete</a></td>
+                                <td>  <a href="{{ path('updatecoach',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Update</a></td>
 
 
 
@@ -40,6 +40,10 @@
                         {% endfor %}
                         </tbody>
                     </table>
+
+                        <td>  <a href="{{ path('tri1') }}" class="btn btn-block btn-outline-warning btn-xs">trié les coachs</a></td>
+
+
                 </div>
                 <!-- /.card-body -->
             </div>
