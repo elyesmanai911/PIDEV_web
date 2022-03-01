@@ -21,6 +21,7 @@ class LigneCommandeController extends AbstractController
      */
     public function index(LigneCommandeRepository $ligneCommandeRepository): Response
     {
+        
         //dd($ligneCommandeRepository->findAll());
         return $this->render('ligne_commande/index.html.twig', [
             'ligne_commandes' => $ligneCommandeRepository->findAll(),

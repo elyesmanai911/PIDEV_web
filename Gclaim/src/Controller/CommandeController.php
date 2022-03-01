@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\LigneCommandeRepository;
+// Include Dompdf required namespaces
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 /**
@@ -42,6 +45,7 @@ class CommandeController extends AbstractController
     public function TopCart(CommandeRepository $commandeRepository): Response
     {
       //dd($commandeRepository);
+      
         return $this->render('commande/index.html.twig', [
             'commandes' => $commandeRepository->findTopCart(),
 
@@ -132,6 +136,34 @@ class CommandeController extends AbstractController
 
     public function show(LigneCommandeRepository $ligneCommandeRepository,Commande $commande): Response
     {
+         // Configure Dompdf according to your needs
+         $pdfOptions = new Options();
+         $pdfOptions->set('defaultFont', 'Arial');
+         
+         // Instantiate Dompdf with our options
+         $dompdf = new Dompdf($pdfOptions);
+         
+         // Retrieve the HTML generated in our twig file
+         $html = $this->renderView('ligne_commande/content.html.twig', [
+            'ligne_commandes' => $ligneCommandeRepository->findByCommandeID($commande),
+
+        ]);
+        $html .='<link rel="stylesheet" type="text/css" media="screen" href="styles.css" />';
+
+         // Load HTML to Dompdf
+         $dompdf->loadHtml($html);
+         
+         // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+         $dompdf->setPaper('A4', 'portrait');
+ 
+         // Render the HTML as PDF
+         $dompdf->render();
+ 
+         // Output the generated PDF to Browser (force download)
+         $dompdf->stream("mypdf.pdf", [
+             "Attachment" => false
+         ]);
+ 
         return $this->render('ligne_commande/index.html.twig', [
             'ligne_commandes' => $ligneCommandeRepository->findByCommandeID($commande),
 
