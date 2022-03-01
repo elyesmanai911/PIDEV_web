@@ -30,8 +30,33 @@ class CommandeController extends AbstractController
      */
     public function index(CommandeRepository $commandeRepository): Response
     {
+        
         return $this->render('commande/index.html.twig', [
             'commandes' => $commandeRepository->findAll(),
+        ]);
+    }
+    /**
+     * @Route("/top", name="top", methods={"GET"})
+     */
+
+    public function TopCart(CommandeRepository $commandeRepository): Response
+    {
+      //dd($commandeRepository);
+        return $this->render('commande/index.html.twig', [
+            'commandes' => $commandeRepository->findTopCart(),
+
+        ]);
+    }
+    /**
+     * @Route("/least", name="least", methods={"GET"})
+     */
+
+    public function LeastCart(CommandeRepository $commandeRepository): Response
+    {
+        //dd($commandeRepository->findLeastCart());
+        return $this->render('commande/index.html.twig', [
+            'commandes' => $commandeRepository->findLeastCart(),
+
         ]);
     }
 
@@ -112,6 +137,8 @@ class CommandeController extends AbstractController
 
         ]);
     }
+
+    
 
     /**
      * @Route("/{id}/edit", name="commande_edit", methods={"GET", "POST"})

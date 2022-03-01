@@ -22,19 +22,42 @@ class CommandeRepository extends ServiceEntityRepository
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function findTopCart()
     {
+        $max =$this->createQueryBuilder('c')
+        ->select('MAX(c.total)')
+        ->andWhere('c.total > 0')
+        ->getQuery()
+        ->getResult()
+        ;
+        //dd($least);
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        ->select('c')
+        ->andWhere('c.total = :max')
+        ->setParameter('max' , $max['0'])
+        ->getQuery()
+        ->getResult()
         ;
     }
-    */
+    public function findLeastCart()
+    {
+        $least =$this->createQueryBuilder('c')
+        ->select('MIN(c.total)')
+        ->andWhere('c.total > 0')
+        ->getQuery()
+        ->getResult()
+        ;
+        //dd($least);
+        return $this->createQueryBuilder('c')
+        ->select('c')
+        ->andWhere('c.total = :least')
+        ->setParameter('least' , $least['0'])
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Commande
