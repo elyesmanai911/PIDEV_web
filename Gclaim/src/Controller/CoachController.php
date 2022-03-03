@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Coach;
 use App\Entity\SimpleUtilisateur;
+use App\Form\CoachsType;
 use App\Form\CoachType;
 use App\Form\SimpleUtilisateurType;
 use App\Repository\CoachRepository;
@@ -63,6 +64,7 @@ class CoachController extends AbstractController
                 ]);
             }else{
             $coach->setRoles(['ROLE_COACH']);
+            $coach->setIsVerified(1);
             $em = $this->getDoctrine()->getManager();
             $em->persist($coach);
             $em->flush();
@@ -118,6 +120,23 @@ class CoachController extends AbstractController
                 return $this->redirectToRoute('profile');
             }}
         return $this->render("coach/modifcoach.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach]);
+    }
+    /**
+     * @Route("/modifspecialite/{id}", name="modifspecialite")
+     */
+    public function modifspecialite($id,Request $request,CoachRepository $repository)
+    {
+        $coach=$repository->find($id);
+        $form = $this->createForm(CoachsType::class, $coach);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($coach);
+                $em->flush();
+                return $this->redirectToRoute('profile');
+            }
+        return $this->render("simpleutilisateur/modifspecialite.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach]);
     }
     /**
      * @Route("/deletesimpleutilisateur1/{id}", name="deletesimpleutilisateur1")

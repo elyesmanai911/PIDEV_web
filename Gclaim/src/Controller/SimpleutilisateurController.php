@@ -8,16 +8,32 @@ use App\Form\CoachType;
 use App\Form\SimpleUtilisateurType;
 use App\Repository\SimpleUtilisateurRepository;
 use App\Repository\UtilisateurRepository;
+use App\Security\EmailVerifier;
+use App\Security\UsersAuthenticator;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder;
 
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class SimpleutilisateurController extends AbstractController
 {
+
+
+   private EmailVerifier $emailVerifier;
+
+    public function __construct(EmailVerifier $emailVerifier)
+    {
+        $this->emailVerifier = $emailVerifier;
+    }
     /**
      * @Route("/profile", name="profile")
      */
@@ -43,6 +59,42 @@ class SimpleutilisateurController extends AbstractController
     }
 
     /**
+     * @Route("/activitesimpleutilisateur/{id}", name="activitesimpleutilisateur")
+     */
+    public function activitesimpleutilisateur($id,UtilisateurRepository $repository)
+    {
+        $simpleutilisateur=$repository->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $simpleutilisateur->setIsVerified(true);
+        $em->persist($simpleutilisateur);
+        $em->flush();
+        return $this->redirectToRoute("afficheactive");
+    }
+    /**
+     * @Route("/desactiveutilisateur/{id}", name="desactiveutilisateur")
+     */
+    public function desactiveutilisateur($id,UtilisateurRepository $repository)
+    {
+        $simpleutilisateur=$repository->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $simpleutilisateur->setIsVerified(false);
+        $em->persist($simpleutilisateur);
+        $em->flush();
+        return $this->redirectToRoute("app_login");
+    }
+    /**
+     * @Route("/desactivesimpleutilisateur/{id}", name="desactivesimpleutilisateur")
+     */
+    public function desactivesimpleutilisateur($id,UtilisateurRepository $repository)
+    {
+        $simpleutilisateur=$repository->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $simpleutilisateur->setIsVerified(false);
+        $em->persist($simpleutilisateur);
+        $em->flush();
+        return $this->redirectToRoute("affichedesactive");
+    }
+    /**
      * @Route("/deletesimpleutilisateur/{id}", name="deletesimpleutilisateur")
      */
     public function deletesimpleutilisateur($id,SimpleUtilisateurRepository $repository)
@@ -57,7 +109,7 @@ class SimpleutilisateurController extends AbstractController
      * @Route("/addUtilisateur", name="addUtilisateur")
      */
 
-   public function addUtilisateur(Request $request)
+    public function addUtilisateur(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager)
     {
         $Utilisateur = new SimpleUtilisateur();
         $form = $this->createForm(SimpleUtilisateurType::class, $Utilisateur);
@@ -70,16 +122,25 @@ class SimpleutilisateurController extends AbstractController
                     "user"=>$Utilisateur
                 ]);
             }
-                else {
-                 //$Utilisateur->setPassword(MD5($Utilisateur->getPassword(), PASSWORD_DEFAULT));
-                 // $Utilisateur->setVerifPassword(password_hash($Utilisateur->getVerifPassword(), PASSWORD_DEFAULT));
-                    $Utilisateur->setRoles(['ROLE_USER']);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($Utilisateur);
-            $em->flush();
-                    return $this->redirectToRoute("app_login");
-        }
-            }
+            else {
+                //$Utilisateur->setPassword(MD5($Utilisateur->getPassword(), PASSWORD_DEFAULT));
+                // $Utilisateur->setVerifPassword(password_hash($Utilisateur->getVerifPassword(), PASSWORD_DEFAULT));
+                $Utilisateur->setRoles(['ROLE_USER']);
+                $Utilisateur->setIsVerified(true);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($Utilisateur);
+                $em->flush();
+              /*  $this->emailVerifier->sendEmailConfirmation('app_verify_email', $Utilisateur,
+                    (new TemplatedEmail())
+                        ->from(new Address('Gclaim.Gclaim@esprit.tn', 'G_Claim'))
+                        ->to($Utilisateur->getEmail())
+                        ->subject('Please Confirm your Email')
+                        ->htmlTemplate('registration/confirmation_email.html.twig')
+                );*/
+                // do anything else you need here, like send an email
+
+                return $this->redirectToRoute("app_login");
+            }}
         return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),"user"=>$Utilisateur,'error'=>'']);
     }
     /**
@@ -122,7 +183,7 @@ class SimpleutilisateurController extends AbstractController
      */
     public function demandecoach(Request $request,$id,UtilisateurRepository $utilisateurRepository)
     {    $user=$utilisateurRepository->find($id);
-         $user->setIsVerified(1);
+         $user->setRole(1);
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
@@ -138,22 +199,54 @@ class SimpleutilisateurController extends AbstractController
 
         $query = $em->createQuery(
             'SELECT a FROM App\Entity\SimpleUtilisateur a 
-            where a.isVerified = 1'
+            where a.role = 1'
         );
 
         $u = $query->getResult();
         return $this->render('simpleutilisateur/listdesdemandes.html.twig',
             array('l' => $u));
     }
+    /**
+     * @Route("/afficheactive", name="afficheactive")
+     */
+    public function afficheactive()
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $query = $em->createQuery(
+            'SELECT a FROM App\Entity\Utilisateur a 
+            where a.isVerified = 1'
+        );
+
+        $u = $query->getResult();
+        return $this->render('simpleutilisateur/listdactivie.html.twig',
+            array('l' => $u));
+    }
+    /**
+     * @Route("/affichedesactive", name="affichedesactive")
+     */
+    public function affichedesactive()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery(
+            'SELECT a FROM App\Entity\Utilisateur a 
+            where a.isVerified = 0'
+        );
+
+        $u = $query->getResult();
+        return $this->render('simpleutilisateur/listdesactive.html.twig',
+            array('l' => $u));
+    }
     /**
      * @Route("/devenircoach/{id}", name="devenircoach")
      */
+
     public function devenircoach($id,SimpleUtilisateurRepository  $utilisateurRepository)
     {$user=$utilisateurRepository->find($id);
         $this->container->get('security.token_storage')->setToken(null);
         $coach = new Coach();
-        $coach->setIsVerified(0);
+        $coach->setRole(0);
         $coach->setUserName($user->getUserName());
         $coach->setVerifPassword($user->getVerifPassword());
         $coach->setEmail($user->getEmail());
@@ -176,7 +269,7 @@ class SimpleutilisateurController extends AbstractController
      */
     public function annulerlademande($id,SimpleUtilisateurRepository  $utilisateurRepository)
     {$user=$utilisateurRepository->find($id);
-       $user->setIsVerified(0);
+       $user->setRole(0);
         $em = $this->getDoctrine()->getManager();
 
         $em->persist($user);
@@ -186,5 +279,26 @@ class SimpleutilisateurController extends AbstractController
 
         return $this->redirectToRoute('affichecoach');
 
+    }
+    /**
+     * @Route("/verify/email", name="app_verify_email")
+     */
+    public function verifyUserEmail(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        // validate email confirmation link, sets User::isVerified=true and persists
+        try {
+            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+        } catch (VerifyEmailExceptionInterface $exception) {
+            $this->addFlash('verify_email_error', $exception->getReason());
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        // @TODO Change the redirect on success and handle or remove the flash message in your templates
+        $this->addFlash('success', 'Your email address has been verified.');
+
+        return $this->redirectToRoute('app_login');
     }
 }

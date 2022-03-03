@@ -55,6 +55,7 @@ class UsersAuthenticator extends AbstractFormLoginAuthenticator
         $credentials = [
             'email' => $request->request->get('username'),
             'password' => $request->request->get('password'),
+            'isVerified' => $request->request->get('role'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
@@ -87,14 +88,18 @@ class UsersAuthenticator extends AbstractFormLoginAuthenticator
     {
         return $credentials['password'];
     }
+    public function getValidation($credentials): ?string
+    {
+        return $credentials['isVerified'];
+    }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
 
 //dd(password_hash($credentials['password'], PASSWORD_DEFAULT));
-
-        if($user->getPassword()==$credentials['password'])
-return true;
+    //dd($credentials['isVerified']);
+        if($user->getPassword()==$credentials['password'] && $user->getSalt()== true )
+        return true;
         else
             return false;
 //return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);

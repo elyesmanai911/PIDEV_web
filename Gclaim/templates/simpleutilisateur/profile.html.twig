@@ -326,6 +326,9 @@
                                                     <h5>SPECIALITE</h5>
 
                                                     <a ><span>{{ user.specialite }}</span></a>
+                                                    {% if user.getRole()==0 %}
+                                                    <div class="label"><span><a href="{{ path('modifspecialite',{'id':user.id}) }}">Modifier Spécialité</a></span> </div>
+                                                    {% endif %}
                                                 </div>
                                         {% endif %}
                                         <div class="section-title">
@@ -340,9 +343,9 @@
 
 
                                                     <a ><span>Simple Utilisateur </span></a>
-                                            {% if user.isVerified()==0 %}
+                                            {% if user.getRole()==0 %}
                                                 <div class="label"><span><a href="{{ path('demandecoach',{'id':user.id}) }}">Demande de devenir COACH</a></span> </div>
-                                            {% elseif user.isVerified()==1 %}
+                                            {% elseif user.getRole()==1 %}
                                                 <a ><span>DEMANDE EN COURS  </span></a>
                                             {% endif %}
                                             {% elseif user.roles==["ROLE_COACH"] %}
@@ -366,7 +369,7 @@
                             {% elseif user.roles==["ROLE_COACH"] %}
                                 <div class="label"><span><a href="{{ path('updatecoach1',{'id':user.id}) }}">Modifier le Profil de COACH</a></span> </div>
                             {% endif %}
-
+                            <div class="label"><span><a href="{{ path('desactiveutilisateur',{'id':user.id}) }}">DESACTIVER MON COMPTE</a></span> </div>
 
                                                </div>
 

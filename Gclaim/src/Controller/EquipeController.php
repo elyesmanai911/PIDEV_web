@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class EquipeController extends AbstractController
 {
@@ -82,6 +84,15 @@ class EquipeController extends AbstractController
         return $this->render('equipe/showequipe.html.twig',["equipe"=>$equipe,'user' => $user]);
     }
     /**
+     * @Route("/equipe/AllEquipes", name="AllEquipes")
+     */
+    public function AllEquipes(EquipeRepository  $repository,Request $request,NormalizerInterface $normalizable)
+    {
+        $equipe=$repository->findall();
+        $jsonContent =$normalizable->normalize($equipe,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+    }
+    /**
      * @Route("/addequipe", name="addequipe")
      */
 
@@ -104,6 +115,7 @@ class EquipeController extends AbstractController
         }
         return $this->render("equipe/add.html.twig",['form'=>$form->createView(),'user' => $user]);
     }
+
     /**
      * @Route("/afficheparequipe/{id}", name="afficheparequipe")
      */

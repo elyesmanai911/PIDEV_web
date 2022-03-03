@@ -67,6 +67,10 @@ abstract class Utilisateur implements UserInterface
      */
     protected $isVerified = false;
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $role = false;
+    /**
      * @ORM\ManyToMany(targetEntity=Equipe::class, mappedBy="simpleutilisateurs")
      */
     protected $membreEquipes;
@@ -90,8 +94,9 @@ abstract class Utilisateur implements UserInterface
     }
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+        return $this->isVerified;
     }
+
 
     public function eraseCredentials()
     {
@@ -109,7 +114,17 @@ abstract class Utilisateur implements UserInterface
 
         return $this;
     }
+    public function getRole(): bool
+    {
+        return $this->role;
+    }
 
+    public function setRole(bool $role): self
+    {
+        $this->role = $role;
+
+        return $this;
+    }
     public function getActivationToken(): ?string
     {
         return $this->activation_token;

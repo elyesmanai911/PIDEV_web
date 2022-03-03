@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">LES DEMMANDES POUR DEVENIR COACH</h3>
+                    <h3 class="card-title">LES UTILISATEURS ACTIVES</h3>
                 </div>
                 <!-- ./card-header -->
                 <div class="card-body">
@@ -16,10 +16,10 @@
                             <td>USER_NAME</td>
                             <td>PASSWORD</td>
                             <td>EMAIL</td>
-                            <td>Full_NAME</td>
+                            <td>Full_NAME ou SPECIALITE</td>
                             <td>SUPPRIMER</td>
-                            <td>ACCEPTER </td>
-                            <td>REFUSER </td>
+                            <td>DESACTIVE </td>
+
 
                         </tr>
                         </thead>
@@ -30,11 +30,15 @@
                                 <td>{{ s.username }}</td>
                                 <td>{{ s.password }}</td>
                                 <td>{{ s.email }}</td>
+                                {% if s.roles==["ROLE_USER"]  %}
                                 <td>{{ s.fullname }}</td>
+                                {% elseif s.roles==["ROLE_COACH"]  %}
+                                <td>{{ s.specialite }}</td>
+                                {% endif  %}
                                 <td> <a href="{{ path('deletesimpleutilisateur1',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Delete</a></td>
 
-                                <td> <a href="{{ path('devenircoach',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">accepter</a></td>
-                                <td> <a href="{{ path('annulerlademande',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">refuser</a></td>
+                                <td> <a href="{{ path('desactivesimpleutilisateur',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Desactiver</a></td>
+
 
                             </tr>
                         {% endfor %}
