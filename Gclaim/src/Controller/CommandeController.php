@@ -36,6 +36,7 @@ class CommandeController extends AbstractController
         
         return $this->render('commande/index.html.twig', [
             'commandes' => $commandeRepository->findAll(),
+            'user'=>$this->getUser(),
         ]);
     }
     /**
@@ -47,7 +48,7 @@ class CommandeController extends AbstractController
       //dd($commandeRepository);
       
         return $this->render('commande/index.html.twig', [
-            'commandes' => $commandeRepository->findTopCart(),
+            'commandes' => $commandeRepository->findTopCart(),'user'=>$this->getUser(),
 
         ]);
     }
@@ -59,7 +60,7 @@ class CommandeController extends AbstractController
     {
         //dd($commandeRepository->findLeastCart());
         return $this->render('commande/index.html.twig', [
-            'commandes' => $commandeRepository->findLeastCart(),
+            'commandes' => $commandeRepository->findLeastCart(),'user'=>$this->getUser(),
 
         ]);
     }
@@ -72,7 +73,7 @@ class CommandeController extends AbstractController
     {
        
         return $this->render('commande/indexFront.html.twig', [
-            'produits' =>  $produitRepository->findAll(),
+            'produits' =>  $produitRepository->findAll(),'user'=>$this->getUser(),
         ]);
     }
 
@@ -127,6 +128,7 @@ class CommandeController extends AbstractController
         return $this->render('commande/new.html.twig', [
             'commande' => $commande,
             'form' => $form->createView(),
+            'user'=>$this->getUser(),
         ]);
     }
 
@@ -165,7 +167,7 @@ class CommandeController extends AbstractController
          ]);
  
         return $this->render('ligne_commande/index.html.twig', [
-            'ligne_commandes' => $ligneCommandeRepository->findByCommandeID($commande),
+            'ligne_commandes' => $ligneCommandeRepository->findByCommandeID($commande),'user'=>$this->getUser(),
 
         ]);
     }
@@ -232,6 +234,7 @@ class CommandeController extends AbstractController
         return $this->render('panier/form.html.twig', [
             'achat' => $achat,
             'form' => $form->createView(),
+            'user'=>$this->getUser(),
         ]);
     
     }

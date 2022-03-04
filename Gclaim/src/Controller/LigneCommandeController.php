@@ -25,6 +25,7 @@ class LigneCommandeController extends AbstractController
         //dd($ligneCommandeRepository->findAll());
         return $this->render('ligne_commande/index.html.twig', [
             'ligne_commandes' => $ligneCommandeRepository->findAll(),
+            'user'=>$this->getUser(),
         ]);
     }
 
@@ -47,6 +48,7 @@ class LigneCommandeController extends AbstractController
         return $this->render('ligne_commande/new.html.twig', [
             'ligne_commande' => $ligneCommande,
             'form' => $form->createView(),
+            'user'=>$this->getUser(),
         ]);
     }
 
@@ -57,6 +59,7 @@ class LigneCommandeController extends AbstractController
     {
         return $this->render('ligne_commande/show.html.twig', [
             'ligne_commande' => $ligneCommande,
+            'user'=>$this->getUser(),
         ]);
     }
 
@@ -77,6 +80,7 @@ class LigneCommandeController extends AbstractController
         return $this->render('ligne_commande/edit.html.twig', [
             'ligne_commande' => $ligneCommande,
             'form' => $form->createView(),
+            'user'=>$this->getUser(),
         ]);
     }
 

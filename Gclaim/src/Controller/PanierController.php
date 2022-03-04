@@ -32,7 +32,7 @@ class PanierController extends AbstractController
         }
         $session->set('cart',$dataPanier);
         return $this->render('panier/indexPanier.html.twig', [
-            'paniers' => $dataPanier,
+            'paniers' => $dataPanier,'user'=>$this->getUser(),
             
         ]);
     }

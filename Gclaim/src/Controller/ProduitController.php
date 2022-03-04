@@ -26,6 +26,7 @@ class ProduitController extends AbstractController
     {
         return $this->render('produit/index.html.twig', [
             'produits' => $produitRepository->findAll(),
+            'user' => $this->getUser(),
 
         ]);
     }
@@ -122,6 +123,7 @@ class ProduitController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$produit->getId_produit(), $request->request->get('_token'))) {
             $entityManager->remove($produit);
             $entityManager->flush();
+            
         }
 
         return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
@@ -134,7 +136,8 @@ class ProduitController extends AbstractController
     {
         return $this->render('produit/indexFrontP.html.twig', [
             'produits' => $produitRepository->findAll(),
-            'categories' => $categorieRepository->findAll(),
+            'categories' => $categorieRepository->findAll()
+            ,'user'=>$this->getUser(),
         ]);
     }
     /**
