@@ -1,0 +1,10 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}LigneCommande index{% endblock %}
+
+{% block content %}
+    <h1>Ligne Commande</h1>
+{{ include('ligne_commande/content.html.twig') }}
+ 
+    <a href="{{ path('ligne_commande_new') }}">Create new</a>
+{% endblock %}

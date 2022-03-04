@@ -1,0 +1,35 @@
+{% extends 'test.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+    <h1>Commande index</h1>
+
+   
+                                <div class="hardware-guides">
+
+                                
+                                    <h5>Hardware guides</h5>
+                                {% for produit in produits %}
+
+                                <div class="trending-item">
+                                    <div class="ti-pic">
+                                        <img src="{{ asset('img/trending/trending-5.jpg') }}" alt="">
+                                    </div>
+                                    <div class="ti-text">
+                                        <h6><a href="#">A Monster Prom poster got hijacked for a Papa Roach concert...</a>
+                                        </h6>
+                                        <ul>
+                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                            <li><i class="fa fa-comment-o"></i> 12</li>
+                                            <input type="number" class="form-control" style="width: 150px;" value="1">
+                                            <a href="{{ path('add' ,{id :produit.id_produit})}}" class="nav-link" type="button">Add To Cart
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                
+                            </div>
+                            <a href="{{path("panier")}}" type="button">Proceed To Cart
+
+{% endblock %}

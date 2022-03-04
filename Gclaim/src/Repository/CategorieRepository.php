@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Coach;
+use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Coach|null find($id, $lockMode = null, $lockVersion = null)
- * @method Coach|null findOneBy(array $criteria, array $orderBy = null)
- * @method Coach[]    findAll()
- * @method Coach[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Categorie|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Categorie|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Categorie[]    findAll()
+ * @method Categorie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CoachRepository extends ServiceEntityRepository
+class CategorieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Coach::class);
+        parent::__construct($registry, Categorie::class);
     }
 
     // /**
-    //  * @return Coach[] Returns an array of Coach objects
+    //  * @return Categorie[] Returns an array of Categorie objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CoachRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Coach
+    public function findOneBySomeField($value): ?Categorie
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

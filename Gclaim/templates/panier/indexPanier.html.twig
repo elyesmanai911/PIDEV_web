@@ -1,0 +1,65 @@
+{% extends 'test.html.twig' %}
+
+{% block title %}LigneCommande index{% endblock %}
+
+{% block body %}
+
+<div class="row">
+<div class="col-12">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Cart</h3>
+    <div class="card-tools">
+    <div class="input-group input-group-sm" style="width: 150px;">
+    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+    </div>
+    </div>
+    </div>
+
+<div class="card-body table-responsive " style="height: 300px;">
+<table class="table table-head text-nowrap">
+<thead>
+<tr>
+<th>Nom</th>
+<th>Quantite</th>
+<th>Total</th>
+<th>Actions</th>
+
+</tr>
+</thead>
+<tbody>
+  {% for panier in paniers %}
+
+    <tr>
+      <td>{{panier.produit}}</td>
+      <td>{{panier.quantite}}</td>
+      <td>{{panier.total}}
+      <td class="edd_cart_actions">
+                                    <a class="edd_cart_remove_item_btn" href="#">
+                                        <a href="{{ path('cart_delete',{id :panier.id}) }}"><i class="fa fa-trash"></i></a>
+
+                                    </a>
+                                </td>
+                                <td class="edd_cart_actions">
+                                    <a class="edd_cart_remove_item_btn" href="#">
+                                        <a  id="subtract" href="{{ path('cart_plus',{id :panier.id}) }}"><i class="fa fa-plus"></i></a>
+
+                                    </a>
+                                </td>
+                                {% if panier.quantite!=1 %}
+                                <td class="edd_cart_actions">
+                                    <a class="edd_cart_remove_item_btn" href="#">
+
+                                        <a id="add" href="{{ path('cart_moins',{id :panier.id}) }}"><i class="fa fa-minus"></i></a>
+                                    </a>
+                                </td>
+                                {% endif %}
+                                </td>
+    </tr>
+{% endfor %}
+
+</tbody>
+</table>
+</div>
+<a href="{{ path('form')}}" class="nav-link" type="button"><button type="button" class="btn btn-block btn-primary">Valider</button></a>
+{% endblock %}
