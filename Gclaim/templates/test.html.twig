@@ -115,12 +115,12 @@
                             <li><i class="fa fa-clock-o"></i>   {{"now"|date('F j, Y')}} </li>
 
 
-                            {% if user is not null %}
-                                <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>
-                                <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
-                            {% else%}
-                                <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
-                            {% endif %}
+{#                            {% if user is not null %}#}
+{#                                <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>#}
+{#                                <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>#}
+{#                            {% else%}#}
+{#                                <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>#}
+{#                            {% endif %}#}
 
                             </a>
                         </ul>
@@ -234,12 +234,18 @@
                         </div>
                     </li>
 
-                    <li><a href="{{ asset('#') }}"><span>Actualités <i class="active"></i></span></a></li>
+                    <li>
+                        <a href="{{ path('affichage') }}" ><span>Actualités <i class="active"></i></span></a>
+
+
+
+                    </li>
+
                     <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="fa fa-angle-down"></i></span></a>
-                    <ul class="dropdown">
-                        <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>
-                        </li>
-                    </ul>
+{#                        <ul class="dropdown">#}
+{#                            <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>#}
+{#                            </li>#}
+{#                        </ul>#}
                     <li>
                         <a href="{{ asset('#') }}"><span>Produits <i class="fa fa-angle-down"></i></span></a>
                         <ul class="dropdown">
@@ -1939,8 +1945,8 @@
         </div>
     </div>
 </section> #}
-    {% endblock%}
-    {% endblock %}
+{% endblock%}
+{% endblock %}
 
 
 <!-- Instagram Post Section End -->

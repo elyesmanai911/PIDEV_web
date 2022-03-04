@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -32,10 +33,18 @@ class ArticleController extends AbstractController
     /**
      * @Route("/affichage", name="affichage", methods={"GET"})
      */
-    public function affichage(ArticleRepository $articleRepository): Response
+    public function affichage(Request $request ,PaginatorInterface $paginator)
     {
+        $donnees = $this->getDoctrine()->getRepository(Article::class)->findBy([],['createAt' => 'desc']);
+
+        $articles = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1),
+            3
+        );
+
         return $this->render('article/affichage.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articles,
         ]);
     }
 
@@ -96,7 +105,7 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $new=$form->getData();
+            $new = $form->getData();
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -143,7 +152,7 @@ class ArticleController extends AbstractController
     public function afficheA(ArticleRepository $articleRepository,CommentaireRepository $commentaireRepository,$id ,Request $request, EntityManagerInterface $entityManager): Response
     {
         $article=$this->getDoctrine()->getRepository(Article::class)->find($id);
-        $commentaire =new Commentaire();
+        $commentaire = new Commentaire();
         $commentaire->setCreation(new \DateTime('now'));
         $commentaire->setArticle($article);
 

@@ -234,21 +234,40 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ path('affichesimpleutilisateur') }}" class="nav-link">
+{#                                <a href="{{ path('affichesimpleutilisateur') }}" class="nav-link">#}
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Les simples utilisateurs</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ path('affichecoach') }}" class="nav-link">
+{#                                <a href="{{ path('affichecoach') }}" class="nav-link">#}
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>les coachs</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ path('affichetoutequipe') }}" class="nav-link">
+{#                                <a href="{{ path('afficheactive') }}" class="nav-link">#}
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>les utilisateurs Activés</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+{#                                <a href="{{ path('affichedesactive') }}" class="nav-link">#}
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>les utilisateurs Désactivés</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+{#                                <a href="{{ path('affichetoutequipe') }}" class="nav-link">#}
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Les équipes</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+{#                                <a href="{{ path('listedesdemandes') }}" class="nav-link">#}
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>les demandes</p>
                                 </a>
                             </li>
                         </ul>
@@ -263,7 +282,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ path('addcoach') }}" class="nav-link">
+{#                                <a href="{{ path('addcoach') }}" class="nav-link">#}
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>l'ajout d'un coach</p>
                                 </a>
@@ -281,7 +300,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages/forms/validation.html" class="nav-link">
+                                <a href="{{ path('article_new') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>l'ajout d'une actualité</p>
                                 </a>
@@ -289,6 +308,35 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Les Statistiques
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+{#                                <a href="{{ path('stat') }}" class="nav-link">#}
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>PIE CHART </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>balbla</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>blabla</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
                 </ul>
             </nav>
@@ -320,28 +368,28 @@
         <section class="content">
 
             <!-- Default box -->
-{#            <div class="card">#}
-{#                <div class="card-header">#}
-{#                    <h3 class="card-title">Title</h3>#}
+            {#            <div class="card">#}
+            {#                <div class="card-header">#}
+            {#                    <h3 class="card-title">Title</h3>#}
 
-{#                    <div class="card-tools">#}
-{#                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">#}
-{#                            <i class="fas fa-minus"></i>#}
-{#                        </button>#}
-{#                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">#}
-{#                            <i class="fas fa-times"></i>#}
-{#                        </button>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="card-body">#}
-{#                    Start creating your amazing application!#}
-{#                </div>#}
-{#                <!-- /.card-body -->#}
-{#                <div class="card-footer">#}
-{#                    Footer#}
-{#                </div>#}
-{#                <!-- /.card-footer-->#}
-{#            </div>#}
+            {#                    <div class="card-tools">#}
+            {#                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">#}
+            {#                            <i class="fas fa-minus"></i>#}
+            {#                        </button>#}
+            {#                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">#}
+            {#                            <i class="fas fa-times"></i>#}
+            {#                        </button>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#                <div class="card-body">#}
+            {#                    Start creating your amazing application!#}
+            {#                </div>#}
+            {#                <!-- /.card-body -->#}
+            {#                <div class="card-footer">#}
+            {#                    Footer#}
+            {#                </div>#}
+            {#                <!-- /.card-footer-->#}
+            {#            </div>#}
             <!-- /.card -->
 
         </section>
