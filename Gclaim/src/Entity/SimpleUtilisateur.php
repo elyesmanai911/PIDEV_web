@@ -3,16 +3,20 @@
 namespace App\Entity;
 
 use App\Repository\SimpleUtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Mapping\Entity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SimpleUtilisateurRepository::class)
  * @ORM\Table(name="SimpleUtilisateur")
+ * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet email")
+ * @UniqueEntity(fields={"username"}, message="Il existe déjà un compte avec ce login")
  */
-
-
 class SimpleUtilisateur extends Utilisateur
 {
 
@@ -27,8 +31,6 @@ class SimpleUtilisateur extends Utilisateur
      */
     private $fullname;
 
-
-
     public function getFullName(): ?string
     {
         return $this->fullname;
@@ -40,4 +42,8 @@ class SimpleUtilisateur extends Utilisateur
 
         return $this;
     }
+
+
+
+
 }

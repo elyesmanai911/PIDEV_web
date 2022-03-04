@@ -45,7 +45,7 @@
             <li><a href="{{ asset('./index.html') }}">Home</a></li>
             <li><a href="{{ asset('#') }}">Pages <i class="fa fa-angle-down"></i></a>
                 <ul class="dropdown">
-                    <li><a href="{{ asset('./categories-list.html') }}">Categories</a></li>
+                    <li><a href="{{ asset('#') }}">Equipes</a></li>
                     <li><a href="{{ asset('./categories-grid.html') }}">Categories grid</a></li>
                     <li><a href="{{ asset('./typography.html') }}">Typography</a></li>
                     <li><a href="{{ asset('./details-post-default.html') }}">Post default</a></li>
@@ -112,9 +112,16 @@
                 <div class="col-lg-6 col-md-8">
                     <div class="ht-widget">
                         <ul>
-                            <li><i class="fa fa-sun-o"></i> <span>20<sup>c</sup></span> London</li>
-                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                            <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i>
+                            <li><i class="fa fa-clock-o"></i>   {{"now"|date('F j, Y')}} </li>
+
+
+                            {% if user is not null %}
+                                <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>
+                                <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
+                            {% else%}
+                                <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
+                            {% endif %}
+
                             </a>
                         </ul>
                     </div>
@@ -228,7 +235,11 @@
                     </li>
 
                     <li><a href="{{ asset('#') }}"><span>Actualités <i class="active"></i></span></a></li>
-                    <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="active"></i></span></a></li>
+                    <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="fa fa-angle-down"></i></span></a>
+                    <ul class="dropdown">
+                        <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>
+                        </li>
+                    </ul>
                     <li>
                         <a href="{{ asset('#') }}"><span>Produits <i class="fa fa-angle-down"></i></span></a>
                         <ul class="dropdown">
@@ -241,6 +252,7 @@
                             <li><a href="{{ asset('./contact.html') }}">Contact</a></li>
                         </ul>
                     <li><a href="{{ asset('#') }}"><span> Paniers<i class="active"></i></span></a></li>
+
                     </li>
                 </ul>
             </div>

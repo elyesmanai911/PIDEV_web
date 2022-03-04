@@ -47,4 +47,17 @@ class SimpleUtilisateurRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function loadUserByIdentifier(string $usernameOrEmail): ?User
+    {
+        $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery(
+            'SELECT u
+                FROM App\Entity\SimpleUtilisateur u
+                WHERE u.username = :query
+                OR u.email = :query'
+        )
+            ->setParameter('query', $usernameOrEmail)
+            ->getOneOrNullResult();
+    }
 }
