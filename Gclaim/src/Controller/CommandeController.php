@@ -144,7 +144,7 @@ class CommandeController extends AbstractController
          $dompdf = new Dompdf($pdfOptions);
          
          // Retrieve the HTML generated in our twig file
-         $html = $this->renderView('ligne_commande/content.html.twig', [
+         $html = $this->renderView('ligne_commande/index.html.twig', [
             'ligne_commandes' => $ligneCommandeRepository->findByCommandeID($commande),
 
         ]);
