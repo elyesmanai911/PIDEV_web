@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\TournoiRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Jeu;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TournoiRepository::class)
@@ -16,6 +19,7 @@ class Tournoi
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -32,17 +36,20 @@ class Tournoi
      * @Assert\Type(
      * type={"alpha"},
      * message="Nom Tournoi  {{ value }} doit contenir seulement des lettres alphabétiques")
+     * @Groups("post:read")
      */
     private $nomtournoi;
 
 
     /**
      * @ORM\Column(type="string", length=200, nullable=true)
+     * @Groups("post:read")
      */
     private $description;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("post:read")
      * @Assert\NotBlank(message="la date est obligatoire")
      * @Assert\GreaterThan("Today",message="Saisir une date à partir de la date d'aujourd'hui")
 
@@ -51,6 +58,7 @@ class Tournoi
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("post:read")
      *  @Assert\NotBlank(message="la date est obligatoire")
      * @Assert\GreaterThan("Today",message="Saisir une date à partir de la date d'aujourd'hui")
      * @Assert\Expression("this.getDatec() < this.getDateev()", message="Veuillez vérifier la date de creation")
@@ -59,7 +67,7 @@ class Tournoi
 
     /**
      * @ORM\Column(type="time")
-
+     * @Groups("post:read")
      */
     private $heureev;
 
@@ -67,6 +75,22 @@ class Tournoi
      * @ORM\ManyToOne(targetEntity=Jeu::class, inversedBy="tournois")
      */
     private $jeu;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Equipe::class, inversedBy="Tournois")
+     */
+    private $equipes;
+
+    /**
+     * @ORM\Column(type="string", length=500)
+     * @Groups("post:read")
+     */
+    private $image;
+
+    public function __construct()
+    {
+        $this->equipes = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -144,6 +168,42 @@ class Tournoi
     public function setJeu(?Jeu $jeu): self
     {
         $this->jeu = $jeu;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Equipe[]
+     */
+    public function getEquipes(): Collection
+    {
+        return $this->equipes;
+    }
+
+    public function addEquipe(Equipe $equipe): self
+    {
+        if (!$this->equipes->contains($equipe)) {
+            $this->equipes[] = $equipe;
+        }
+
+        return $this;
+    }
+
+    public function removeEquipe(Equipe $equipe): self
+    {
+        $this->equipes->removeElement($equipe);
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image)
+    {
+        $this->image = $image;
 
         return $this;
     }

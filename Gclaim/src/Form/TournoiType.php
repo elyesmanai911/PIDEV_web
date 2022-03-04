@@ -6,6 +6,7 @@ use App\Entity\Jeu;
 use App\Entity\Tournoi;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,6 +22,8 @@ class TournoiType extends AbstractType
             ->add('dateev')
             ->add('heureev')
             ->add('jeu')
+            ->add('image',FileType::class,['label' => 'charger une image ','required' => false,
+                'data_class' => null])
         ;
     }
 

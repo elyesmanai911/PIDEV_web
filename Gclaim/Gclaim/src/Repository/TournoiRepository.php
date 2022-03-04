@@ -47,4 +47,14 @@ class TournoiRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function listTournoiByJeu($id)
+    {
+        return $this->createQueryBuilder('s')
+            ->join('s.jeu','c')
+            ->addSelect('c')
+            ->where('c.id=:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
 }

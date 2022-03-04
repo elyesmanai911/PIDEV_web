@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Coach;
 use App\Entity\SimpleUtilisateur;
+use App\Entity\Tournoi;
 use App\Form\CoachType;
 use App\Form\SimpleUtilisateurType;
 use App\Repository\CoachRepository;
@@ -22,8 +23,9 @@ class CoachController extends AbstractController
      */
     public function index(): Response
     {
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         return $this->render('coach/index.html.twig', [
-            'controller_name' => 'CoachController',
+            'controller_name' => 'CoachController',"tournois" => $tournois,
         ]);
     }
     /**

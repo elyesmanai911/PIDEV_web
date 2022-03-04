@@ -6,7 +6,7 @@
 
 parameters:
 
-    images_directory: 'F:\XAMPPPPP\htdocs\Gclaim\Gclaim\public\'
+    images_directory: 'F:\XAMPPPPP\htdocs\Gclaim\Gclaim\public\img'
 services:
     # default configuration for services in this file
     _defaults:

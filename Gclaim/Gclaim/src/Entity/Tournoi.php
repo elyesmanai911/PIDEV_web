@@ -35,11 +35,6 @@ class Tournoi
      */
     private $nomtournoi;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Jeu::class, inversedBy="tournois")
-     */
-
-    private $idjeu;
 
     /**
      * @ORM\Column(type="string", length=200, nullable=true)
@@ -48,7 +43,7 @@ class Tournoi
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\NotBlank(message="la date et l heure du vol sont obligatoires")
+     * @Assert\NotBlank(message="la date est obligatoire")
      * @Assert\GreaterThan("Today",message="Saisir une date à partir de la date d'aujourd'hui")
 
      */
@@ -56,7 +51,7 @@ class Tournoi
 
     /**
      * @ORM\Column(type="date")
-     *  @Assert\NotBlank(message="la date et l heure du vol sont obligatoires")
+     *  @Assert\NotBlank(message="la date est obligatoire")
      * @Assert\GreaterThan("Today",message="Saisir une date à partir de la date d'aujourd'hui")
      * @Assert\Expression("this.getDatec() < this.getDateev()", message="Veuillez vérifier la date de creation")
      */
@@ -67,6 +62,12 @@ class Tournoi
 
      */
     private $heureev;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Jeu::class, inversedBy="tournois")
+     */
+    private $jeu;
+
 
     public function getId(): ?int
     {
@@ -85,17 +86,7 @@ class Tournoi
         return $this;
     }
 
-    public function getIdjeu(): ?int
-    {
-        return $this->idjeu;
-    }
 
-    public function setIdjeu(int $idjeu): self
-    {
-        $this->idjeu = $idjeu;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -141,6 +132,18 @@ class Tournoi
     public function setHeureev(\DateTimeInterface $heureev): self
     {
         $this->heureev = $heureev;
+
+        return $this;
+    }
+
+    public function getJeu(): ?Jeu
+    {
+        return $this->jeu;
+    }
+
+    public function setJeu(?Jeu $jeu): self
+    {
+        $this->jeu = $jeu;
 
         return $this;
     }

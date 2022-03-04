@@ -4,10 +4,10 @@ namespace App\Form;
 
 use App\Entity\Jeu;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 class JeuType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -17,7 +17,8 @@ class JeuType extends AbstractType
             ->add('description')
             ->add('createur')
             ->add('dateS')
-            ->add('image')
+            ->add('image',FileType::class,['label' => 'charger une image ','required' => false,
+                'data_class' => null])
             ->add('save',SubmitType::class,['label' => 'Enregistrer'])
         ;
     }

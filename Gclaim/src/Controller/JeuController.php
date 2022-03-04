@@ -20,8 +20,9 @@ class JeuController extends AbstractController
      */
     public function index(): Response
     {
+        $user = $this->getUser();
         return $this->render('jeu/index.html.twig', [
-            'controller_name' => 'JeuController',
+            'controller_name' => 'JeuController','user' => $user
         ]);
     }
     /**
@@ -43,14 +44,7 @@ class JeuController extends AbstractController
             'controller_name' => 'JeuController',
         ]);
     }
-    /**
-     * @Route("/listtJeu", name="listtJeu")
-     */
-    public function listtJeu()
-    {
-        $jeus=$this->getDoctrine()->getRepository(Jeu::class)->findAll();
-        return $this->render('jeu/show.html.twig', array("jeus" => $jeus));
-    }
+
     /**
      * @Route("/listTournoisByJeu/{id}", name="listTournoisByJeu")
      */
@@ -67,7 +61,16 @@ class JeuController extends AbstractController
         $jeus=$this->getDoctrine()->getRepository(Jeu::class)->findAll();
         return $this->render('jeu/list.html.twig', array("jeus" => $jeus));
     }
-
+    /**
+     * @Route("/listtJeu", name="listtJeu")
+     */
+    public function listtJeu()
+    {
+        $user = $this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+        $jeus=$this->getDoctrine()->getRepository(Jeu::class)->findAll();
+        return $this->render('jeu/show.html.twig', array("jeus" => $jeus,"tournois" => $tournois, 'user' => $user));
+    }
     /**
      * @Route("/deleteJeu/{id}", name="deleteJeu")
      */

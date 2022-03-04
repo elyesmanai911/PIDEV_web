@@ -48,6 +48,7 @@ class SimpleUtilisateur extends Utilisateur implements UserInterface
      */
     private $membreEquipes;
 
+
     public function __construct()
     {
         $this->membreEquipes = new ArrayCollection();
@@ -134,6 +135,18 @@ class SimpleUtilisateur extends Utilisateur implements UserInterface
         if ($this->membreEquipes->removeElement($membreEquipe)) {
             $membreEquipe->removeSimpleutilisateur($this);
         }
+
+        return $this;
+    }
+
+    public function getMembreEquipe(): ?MembreEquipe
+    {
+        return $this->membreEquipe;
+    }
+
+    public function setMembreEquipe(?MembreEquipe $membreEquipe): self
+    {
+        $this->membreEquipe = $membreEquipe;
 
         return $this;
     }

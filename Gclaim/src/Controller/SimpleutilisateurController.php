@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\SimpleUtilisateur;
+use App\Entity\Tournoi;
 use App\Form\SimpleUtilisateurType;
 use App\Repository\SimpleUtilisateurRepository;
 use App\Repository\UtilisateurRepository;
@@ -56,6 +57,7 @@ class SimpleutilisateurController extends AbstractController
 
     public function addUtilisateur(Request $request)
     {
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $Utilisateur = new SimpleUtilisateur();
         $form = $this->createForm(SimpleUtilisateurType::class, $Utilisateur);
         $form->handleRequest($request);
@@ -77,7 +79,7 @@ class SimpleutilisateurController extends AbstractController
                 return $this->redirectToRoute("app_login");
             }
         }
-        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),"user"=>$Utilisateur,'error'=>'']);
+        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),"user"=>$Utilisateur,'error'=>'',"tournois" => $tournois]);
     }
     /**
      * @Route("/updateUtilisateur/{id}", name="updateUtilisateur")

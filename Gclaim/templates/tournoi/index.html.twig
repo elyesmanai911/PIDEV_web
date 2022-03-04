@@ -14,7 +14,7 @@
                         <img src="{{ asset('img/megamenu/mm-1.jpg') }}" alt="">
                     </div>
                     <div class="mw-text">
-                        <h6><a href="{{ path('traff') }}">{{ tournoi.nomtournoi }}</a></h6>
+                        <h6><a href="{{ path('traff',{'id':tournoi.id} ) }}">{{ tournoi.nomtournoi }}</a></h6>
                         <ul>
                             <li><i class="fa fa-clock-o"></i> {{ tournoi.dateev|date("m/d/Y") }}
                                 : {{ tournoi.heureev ? tournoi.heureev|date('H:i')}}</li>

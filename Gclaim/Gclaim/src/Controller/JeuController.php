@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Tournoi;
 use App\Entity\Jeu;
 use App\Form\JeuType;
+use App\Repository\TournoiRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+
 class JeuController extends AbstractController
 {
     /**
@@ -48,7 +51,14 @@ class JeuController extends AbstractController
         $jeus=$this->getDoctrine()->getRepository(Jeu::class)->findAll();
         return $this->render('jeu/show.html.twig', array("jeus" => $jeus));
     }
-
+    /**
+     * @Route("/listTournoisByJeu/{id}", name="listTournoisByJeu")
+     */
+    public function listTournoisByJeu(TournoiRepository  $repository,$id)
+    {
+        $tournois=$repository->listTournoiByJeu($id);
+        return $this->render("tournoi/list.html.twig",array("tournois"=>$tournois));
+    }
     /**
      * @Route("/listJeu", name="listJeu")
      */
@@ -78,8 +88,13 @@ class JeuController extends AbstractController
         $jeu = new Jeu();
         $form = $this->createForm(JeuType::class, $jeu);
         $form->handleRequest($request);
-        if ($form->isSubmitted()&&$form->isValid()) {
+        if ($form->isSubmitted()&&$form->isValid()){
+            $file = $jeu->getImage();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('images_directory'),$fileName);
+
             $em = $this->getDoctrine()->getManager();
+            $jeu->setImage($fileName);
             $em->persist($jeu);
             $em->flush();
             return $this->redirectToRoute('listJeu');
@@ -95,8 +110,12 @@ class JeuController extends AbstractController
         $jeu = $this->getDoctrine()->getRepository(Jeu::class)->find($id);
         $form = $this->createForm(JeuType::class, $jeu);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted()&&$form->isValid()) {
+            $file = $jeu->getImage();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('images_directory'),$fileName);
             $em = $this->getDoctrine()->getManager();
+            $jeu->setImage($fileName);
             $em->flush();
             return $this->redirectToRoute('listJeu');
         }

@@ -1,0 +1,51 @@
+
+                            <li><i class="fa fa-clock-o"></i>   {{"now"|date('F j, Y')}} </li>
+                            {% if user is not null %}
+                                <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>
+                                <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
+                            {% else%}
+                                <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
+                            {% endif %}
+
+                            </a>
+
+                    </li>
+
+
+
+                            <div class="card-body">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <td>Id</td>
+                                        <td>NOM_ut</td>
+                                        <td>NOM_JEU</td>
+                                        <td>DESCRIPTION</td>
+                                        <td>DATE_CREATION</td>
+                                        <td>DATE_EVENEMENT</td>
+                                        <td>HEURE_EVENEMENT</td>
+                                        <td>SUPPRIMER</td>
+                                        <td>MODIFIER</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for ut in uts %}
+                                        <tr data-widget="expandable-table" aria-expanded="false">
+                                            <td>{{ ut.id }}</td>
+                                            <td>{{ ut.nomutilisateur }}</td>
+                                            <td>{{ ut.jeu }}</td>
+                                            <td>{{ ut.description}}</td>
+                                            <td>{{ ut.datec|date("m/d/Y") }}</td>
+                                            <td>{{ ut.dateev|date("m/d/Y") }}</td>
+                                            <td>{{ ut.heureev ? ut.heureev|date('H:i')}}</td>
+                                            <td>  <a href="{{ path('deleteut',{'id':ut.id},{'attr':{'class':'btn btn-primary'}}) }}">Delete</a></td>
+                                            <td>    <a href="{{ path('updateut',{'id':ut.id},{'attr':{'class':'btn btn-primary'}}) }}">Update</a>
+
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <a href="{{ path('addut',{'attr':{'class':'btn btn-primary'}}) }}">Add ut</a>
+                                </table>
+                            </div>

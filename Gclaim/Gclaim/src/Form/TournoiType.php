@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Jeu;
 use App\Entity\Tournoi;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,13 +16,11 @@ class TournoiType extends AbstractType
     {
         $builder
             ->add('nomtournoi')
-            ->add('idjeu')
             ->add('description')
             ->add('datec')
             ->add('dateev')
             ->add('heureev')
-            ->add('save',SubmitType::class,['label' => 'Enregistrer'])
-
+            ->add('jeu')
         ;
     }
 

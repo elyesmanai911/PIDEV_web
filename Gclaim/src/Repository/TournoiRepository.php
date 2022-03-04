@@ -57,4 +57,10 @@ class TournoiRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function Equipe($id){
+        $query=$this->getEntityManager()
+                 ->createQuery("SELECT s FROM App\Entity\Equipe s INNER JOIN s.simpleutilisateurs c WHERE c.id=:id ")
+                 ->setParameter('id',$id);
+        return $query->getSingleScalarResult();
+    }
 }

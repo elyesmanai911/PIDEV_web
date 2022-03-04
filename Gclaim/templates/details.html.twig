@@ -263,17 +263,23 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="details-hero-text">
-                        <div class="label"><span>Playstation</span></div>
-                        <div class="label"><span>Hardware</span></div>
-                        <h3>Jupiter Hell, the spiritual successor to a Doom roguelike week</h3>
+                        <div class="label"><span>{{ tournoi.jeu}}</span></div>
+
+                        <h3>{{ tournoi.nomtournoi }}</h3>
+                        <div class="dt-desc">
+                            <p>{{ tournoi.description }}</p>
+                        </div>
                         <ul>
                             <li>by <span>Admin</span></li>
-                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                            <li><i class="fa fa-clock-o"></i> {{ tournoi.dateev|date("m/d/Y") }}
+                                : {{ tournoi.heureev ? tournoi.heureev|date('H:i')}}</li>
                             <li><i class="fa fa-comment-o"></i> 20</li>
                             <div class="col-lg-8 p-0">
                             <div class="details-tex"t>
                             <div class="dt-leave-comment">
-                                <button class="label" type="submit">Rejoindre</button></div></div></div>
+                                <br>
+                                <br>
+                                <a href="{{ path('rejoindre',{'id':tournoi.id}) }}" class="label" type="submit" style="color: #f8f9fa;">Rejoindre</a></div></div></div>
                         </ul>
                     </div>
                 </div>
@@ -283,7 +289,7 @@
     </section>
     <!-- Details Hero Section End -->
 {% block exe %}
-    <!-- Details Post Section Begin -->
+    <!-- Details Post Section Begin
     <section class="details-post-section spad">
         <div class="container">
             <div class="row">
@@ -760,7 +766,7 @@
         </div>
 
     </section>
-    <!-- Details Post Section End -->
+    <!-- Details Post Section End -->-->
 {% endblock %}
     <!-- Footer Section Begin -->
     <footer class="footer-section">

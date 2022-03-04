@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\Jeu;
 use App\Entity\Tournoi;
 use App\Form\TournoiType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TournoiController extends AbstractController
 {
@@ -30,6 +31,16 @@ class TournoiController extends AbstractController
             'controller_name' => 'TournoiController',
         ]);
     }
+    /**
+     * @Route("/traff", name="traff")
+     */
+    public function traff(): Response
+    {
+        $user = $this->getUser();
+        return $this->render('tournoi/tournoi.html.twig', [
+            'controller_name' => 'TournoiController', 'user' => $user
+        ]);
+    }
 
     /**
      * @Route("/show", name="show")
@@ -45,8 +56,9 @@ class TournoiController extends AbstractController
      */
     public function listtTournoi()
     {
+        $user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
-        return $this->render('tournoi/show.html.twig', array("tournois" => $tournois));
+        return $this->render('tournoi/show.html.twig', array("tournois" => $tournois, 'user' => $user));
     }
 
     /**
@@ -77,6 +89,7 @@ class TournoiController extends AbstractController
     {
         $tournoi = new Tournoi();
         $form = $this->createForm(TournoiType::class, $tournoi);
+        $form->add('save',SubmitType::class,['label' => 'Enregistrer']);
         $form->handleRequest($request);
         if ($form->isSubmitted()&&$form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -94,8 +107,9 @@ class TournoiController extends AbstractController
     {
         $tournoi = $this->getDoctrine()->getRepository(Tournoi::class)->find($id);
         $form = $this->createForm(TournoiType::class, $tournoi);
+        $form->add('save',SubmitType::class,['label' => 'Enregistrer']);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted()&&$form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute('listTournoi');

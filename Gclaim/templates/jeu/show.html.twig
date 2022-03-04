@@ -8,20 +8,20 @@
             <li><a href="{{ asset('#') }}"><span>Xbox</span></a></li>
         </ul>
         <div class="mw-post">
-            {% for jeu in jeus %}
-            <div class="mw-post-item">
-                <div class="mw-pic">
-                    <img src="{{ asset('img/megamenu/mm-1.jpg') }}" alt="">
+            {% for tournoi in tournois %}
+                <div class="mw-post-item">
+                    <div class="mw-pic">
+                        <img src="{{ asset('img/megamenu/mm-1.jpg') }}" alt="">
+                    </div>
+                    <div class="mw-text">
+                        <h6><a href="{{ path('traff',{'id':tournoi.id}) }}">{{ tournoi.nomtournoi }}</a></h6>
+                        <ul>
+                            <li><i class="fa fa-clock-o"></i> {{ tournoi.dateev|date("m/d/Y") }}
+                                : {{ tournoi.heureev ? tournoi.heureev|date('H:i')}}</li>
+                            <li><i class="fa fa-comment-o"></i> {{ tournoi.jeu }}</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="mw-text">
-                    <h6><a href="{{ asset('#') }}">{{ jeu.nomjeu }}</a></h6>
-                    <ul>
-                        <li><i class="fa fa-clock-o"></i> {{ jeu.dateev|date("m/d/Y") }}
-                            : {{ jeu.heureev ? jeu.heureev|date('H:i')}}</li>
-                        <li><i class="fa fa-comment-o"></i> {{ jeu.idjeu }}</li>
-                    </ul>
-                </div>
-            </div>
             {% endfor %}
             <!--<div class="mw-post-item">
                 <div class="mw-pic">
@@ -98,15 +98,14 @@
             {% for jeu in jeus %}
             <div class="ip-item">
                 <div class="ip-pic">
-                    <img src="{{ asset('img/instagram/insta-1.jpg') }}" alt="">
+                    <img src ="{{ asset(jeu.image )}}" alt="" height="300" width="400">
                 </div>
                 <div class="ip-text">
-                    <div class="label"><span>{{ jeu.idjeu }}</span></div>
+                    <div class="label"><span>{{ jeu.createur }}</span></div>
                     <h5><a href="{{ asset('#') }}">{{ jeu.nomjeu }}</a></h5>
                     <ul>
                         <li>by <span>Admin</span></li>
-                        <li><i class="fa fa-clock-o"></i>{{ jeu.dateev|date("m/d/Y") }}
-                            : {{ jeu.heureev ? jeu.heureev|date('H:i')}}</li>
+                        <li><i class="fa fa-clock-o"></i>{{ jeu.dateS |date("m/d/Y") }}</li>
 
                     </ul>
                     <p>{{ jeu.description}}</p>
