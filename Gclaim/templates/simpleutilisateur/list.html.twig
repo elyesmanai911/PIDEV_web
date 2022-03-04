@@ -1,12 +1,29 @@
 {% extends 'back.html.twig' %}
 {% block body %}
     <!-- /.row -->
+
+        <!-- Navbar Search -->
+
+
+
+
+
     <div class="row">
+
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">LES SIMPLES UTILISATEURS</h3>
                 </div>
+                <div class="nav-search-block" >
+                    <form class="form-inline" action="" method="GET">
+                        <div class="btn btn-block btn-outline-warning btn-xs">
+                            <input class="form-control form-control-navbar" type="search" name="searchname"  placeholder="recherche ">
+
+                        </div>
+                    </form>
+                </div>
+
                 <!-- ./card-header -->
                 <div class="card-body">
                     <table class="table table-bordered table-hover">

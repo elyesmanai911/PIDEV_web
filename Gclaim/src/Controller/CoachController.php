@@ -28,12 +28,35 @@ class CoachController extends AbstractController
         ]);
     }
     /**
-     * @Route("/affichecoach", name="affichecoach")
+     * @Route("/affichecoach", name="affichecoach"  , methods={"GET"})
      */
-    public function readcoach(CoachRepository $repository)
-    {
-        $simple=$repository->findall();
-        return $this->render('coach/list.html.twig',["l"=>$simple]);
+    public function readcoach(CoachRepository $repository,Request $request)
+    { if (null != $request->get('searchname') && null != $request->get('searchspecialite')) {
+        $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['username' => $request->get('searchname'), 'specialite' => $request->get('searchspecialite')]);
+
+        return $this->render('/coach/list.html.twig', [
+            'l' => $evenement,
+        ]);
+    }
+        if (null != $request->get('searchspecialite')) {
+        $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['specialite' => $request->get('searchspecialite')]);
+
+        return $this->render('/coach/list.html.twig', [
+            'l' => $evenement,
+        ]);
+    }
+        if (null != $request->get('searchname')) {
+            $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['username' => $request->get('searchname')]);
+
+            return $this->render('/coach/list.html.twig', [
+                'l' => $evenement,
+            ]);
+        }
+        $evenement = $repository->findAll();
+
+        return $this->render('/coach/list.html.twig', [
+            'l' => $evenement,
+        ]);
     }
     /**
      * @Route("/deletecoach/{id}", name="deletecoach")

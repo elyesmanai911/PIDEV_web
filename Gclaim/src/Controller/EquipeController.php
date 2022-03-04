@@ -142,11 +142,11 @@ class EquipeController extends AbstractController
     {
         $user = $this->getUser();
         $equipe = $repository->find($id);
-    $equipe->addSimpleutilisateur($user);
-    $em = $this->getDoctrine()->getManager();
-    $em->persist($equipe);
-    $em->flush();
-            return $this->redirectToRoute('afficheequipe');
+        $equipe->addSimpleutilisateur($user);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($equipe);
+        $em->flush();
+        return $this->redirectToRoute('afficheequipe');
 
 
     }
@@ -163,7 +163,7 @@ class EquipeController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($equipe);
             $em->flush();
-           return $this->redirectToRoute('afficheequipe');
+            return $this->redirectToRoute('afficheequipe');
 
         }
         return $this->render("equipe/add.html.twig",array('form'=>$form->createView(),'user' => $user));
@@ -193,7 +193,7 @@ class EquipeController extends AbstractController
 
         }
 
-$pieChart=new PieChart();
+        $pieChart=new PieChart();
 
         $pieChart->getData()->setArrayToDataTable(
             [['Etat', 'nombres'],

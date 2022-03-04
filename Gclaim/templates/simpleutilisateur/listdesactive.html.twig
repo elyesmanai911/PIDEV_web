@@ -17,7 +17,6 @@
                             <td>PASSWORD</td>
                             <td>EMAIL</td>
                             <td>Full_NAME ou SPECIALITE</td>
-                            <td>SUPPRIMER</td>
                             <td>ACTIVER </td>
 
 
@@ -35,7 +34,6 @@
                                 {% elseif s.roles==["ROLE_COACH"]  %}
                                     <td>{{ s.specialite }}</td>
                                 {% endif  %}
-                                <td> <a href="{{ path('deletesimpleutilisateur1',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Delete</a></td>
 
                                 <td> <a href="{{ path('activitesimpleutilisateur',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Activer</a></td>
 

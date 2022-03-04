@@ -28,12 +28,13 @@ class SimpleutilisateurController extends AbstractController
 {
 
 
-   private EmailVerifier $emailVerifier;
+    private EmailVerifier $emailVerifier;
 
     public function __construct(EmailVerifier $emailVerifier)
     {
         $this->emailVerifier = $emailVerifier;
     }
+
     /**
      * @Route("/profile", name="profile")
      */
@@ -41,7 +42,7 @@ class SimpleutilisateurController extends AbstractController
     {
         $user = $this->getUser();
 
-        if(!$user){
+        if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
@@ -49,62 +50,77 @@ class SimpleutilisateurController extends AbstractController
             'user' => $user
         ]);
     }
+
     /**
-     * @Route("/affichesimpleutilisateur", name="affichesimpleutilisateur")
+     * @Route("/affichesimpleutilisateur", name="affichesimpleutilisateur"  , methods={"GET"})
      */
-    public function readsimpleutilisateur(SimpleUtilisateurRepository  $repository)
+    public function readsimpleutilisateur(SimpleUtilisateurRepository $repository, Request $request)
     {
-        $simple=$repository->findall();
-        return $this->render('simpleutilisateur/list.html.twig',["l"=>$simple]);
+        if (null != $request->get('searchname')) {
+            $evenement = $this->getDoctrine()->getRepository(SimpleUtilisateur::class)->findBy(['username' => $request->get('searchname')]);
+
+            return $this->render('/simpleutilisateur/list.html.twig', [
+                'l' => $evenement,
+            ]);
+        }
+        $evenement = $repository->findAll();
+
+        return $this->render('/simpleutilisateur/list.html.twig', [
+            'l' => $evenement,
+        ]);
     }
 
     /**
      * @Route("/activitesimpleutilisateur/{id}", name="activitesimpleutilisateur")
      */
-    public function activitesimpleutilisateur($id,UtilisateurRepository $repository)
+    public function activitesimpleutilisateur($id, UtilisateurRepository $repository)
     {
-        $simpleutilisateur=$repository->find($id);
+        $simpleutilisateur = $repository->find($id);
         $em = $this->getDoctrine()->getManager();
         $simpleutilisateur->setIsVerified(true);
         $em->persist($simpleutilisateur);
         $em->flush();
         return $this->redirectToRoute("afficheactive");
     }
+
     /**
      * @Route("/desactiveutilisateur/{id}", name="desactiveutilisateur")
      */
-    public function desactiveutilisateur($id,UtilisateurRepository $repository)
+    public function desactiveutilisateur($id, UtilisateurRepository $repository)
     {
-        $simpleutilisateur=$repository->find($id);
+        $simpleutilisateur = $repository->find($id);
         $em = $this->getDoctrine()->getManager();
         $simpleutilisateur->setIsVerified(false);
         $em->persist($simpleutilisateur);
         $em->flush();
         return $this->redirectToRoute("app_login");
     }
+
     /**
      * @Route("/desactivesimpleutilisateur/{id}", name="desactivesimpleutilisateur")
      */
-    public function desactivesimpleutilisateur($id,UtilisateurRepository $repository)
+    public function desactivesimpleutilisateur($id, UtilisateurRepository $repository)
     {
-        $simpleutilisateur=$repository->find($id);
+        $simpleutilisateur = $repository->find($id);
         $em = $this->getDoctrine()->getManager();
         $simpleutilisateur->setIsVerified(false);
         $em->persist($simpleutilisateur);
         $em->flush();
         return $this->redirectToRoute("affichedesactive");
     }
+
     /**
      * @Route("/deletesimpleutilisateur/{id}", name="deletesimpleutilisateur")
      */
-    public function deletesimpleutilisateur($id,SimpleUtilisateurRepository $repository)
+    public function deletesimpleutilisateur($id, SimpleUtilisateurRepository $repository)
     {
-        $simpleutilisateur=$repository->find($id);
+        $simpleutilisateur = $repository->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($simpleutilisateur);
         $em->flush();
         return $this->redirectToRoute("profile");
     }
+
     /**
      * @Route("/addUtilisateur", name="addUtilisateur")
      */
@@ -119,10 +135,9 @@ class SimpleutilisateurController extends AbstractController
                 return $this->render('simpleutilisateur/add.html.twig', [
                     "form" => $form->createView(),
                     "error" => "Les mots de passe ne correspondent pas!",
-                    "user"=>$Utilisateur
+                    "user" => $Utilisateur
                 ]);
-            }
-            else {
+            } else {
                 //$Utilisateur->setPassword(MD5($Utilisateur->getPassword(), PASSWORD_DEFAULT));
                 // $Utilisateur->setVerifPassword(password_hash($Utilisateur->getVerifPassword(), PASSWORD_DEFAULT));
                 $Utilisateur->setRoles(['ROLE_USER']);
@@ -130,26 +145,28 @@ class SimpleutilisateurController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($Utilisateur);
                 $em->flush();
-              /*  $this->emailVerifier->sendEmailConfirmation('app_verify_email', $Utilisateur,
-                    (new TemplatedEmail())
-                        ->from(new Address('Gclaim.Gclaim@esprit.tn', 'G_Claim'))
-                        ->to($Utilisateur->getEmail())
-                        ->subject('Please Confirm your Email')
-                        ->htmlTemplate('registration/confirmation_email.html.twig')
-                );*/
+                  $this->emailVerifier->sendEmailConfirmation('app_verify_email', $Utilisateur,
+                      (new TemplatedEmail())
+                          ->from(new Address('Gclaim.Gclaim@esprit.tn', 'G_Claim'))
+                          ->to($Utilisateur->getEmail())
+                          ->subject('Please Confirm your Email')
+                          ->htmlTemplate('registration/confirmation_email.html.twig')
+                  );
                 // do anything else you need here, like send an email
 
                 return $this->redirectToRoute("app_login");
-            }}
-        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),"user"=>$Utilisateur,'error'=>'']);
+            }
+        }
+        return $this->render("simpleutilisateur/add.html.twig", ['form' => $form->createView(), "user" => $Utilisateur, 'error' => '']);
     }
+
     /**
      * @Route("/updateUtilisateur/{id}", name="updateUtilisateur")
      */
 
-    public function updateUtilisateur($id,Request $request,UtilisateurRepository $repository)
+    public function updateUtilisateur($id, Request $request, UtilisateurRepository $repository)
     {
-        $simpleutilisateur=$repository->find($id);
+        $simpleutilisateur = $repository->find($id);
         $form = $this->createForm(SimpleUtilisateurType::class, $simpleutilisateur);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -158,8 +175,9 @@ class SimpleutilisateurController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('profile');
         }
-        return $this->render("simpleutilisateur/modif.html.twig",['form'=>$form->createView(),'user'=>$simpleutilisateur,'error'=>'']);
+        return $this->render("simpleutilisateur/modif.html.twig", ['form' => $form->createView(), 'user' => $simpleutilisateur, 'error' => '']);
     }
+
     /**
      * @Route("/simpleutilisateur/tri", name="tri")
      */
@@ -178,18 +196,21 @@ class SimpleutilisateurController extends AbstractController
             array('l' => $activites));
 
     }
+
     /**
      * @Route("/demandecoach/{id}", name="demandecoach")
      */
-    public function demandecoach(Request $request,$id,UtilisateurRepository $utilisateurRepository)
-    {    $user=$utilisateurRepository->find($id);
-         $user->setRole(1);
+    public function demandecoach(Request $request, $id, UtilisateurRepository $utilisateurRepository)
+    {
+        $user = $utilisateurRepository->find($id);
+        $user->setRole(1);
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 
         return $this->redirectToRoute("profile");
     }
+
     /**
      * @Route("/listedesdemandes", name="listedesdemandes")
      */
@@ -206,6 +227,7 @@ class SimpleutilisateurController extends AbstractController
         return $this->render('simpleutilisateur/listdesdemandes.html.twig',
             array('l' => $u));
     }
+
     /**
      * @Route("/afficheactive", name="afficheactive")
      */
@@ -222,6 +244,7 @@ class SimpleutilisateurController extends AbstractController
         return $this->render('simpleutilisateur/listdactivie.html.twig',
             array('l' => $u));
     }
+
     /**
      * @Route("/affichedesactive", name="affichedesactive")
      */
@@ -238,12 +261,14 @@ class SimpleutilisateurController extends AbstractController
         return $this->render('simpleutilisateur/listdesactive.html.twig',
             array('l' => $u));
     }
+
     /**
      * @Route("/devenircoach/{id}", name="devenircoach")
      */
 
-    public function devenircoach($id,SimpleUtilisateurRepository  $utilisateurRepository)
-    {$user=$utilisateurRepository->find($id);
+    public function devenircoach($id, SimpleUtilisateurRepository $utilisateurRepository)
+    {
+        $user = $utilisateurRepository->find($id);
         $this->container->get('security.token_storage')->setToken(null);
         $coach = new Coach();
         $coach->setRole(0);
@@ -264,12 +289,14 @@ class SimpleutilisateurController extends AbstractController
         return $this->redirectToRoute('affichecoach');
 
     }
+
     /**
      * @Route("/annulerlademande/{id}", name="annulerlademande")
      */
-    public function annulerlademande($id,SimpleUtilisateurRepository  $utilisateurRepository)
-    {$user=$utilisateurRepository->find($id);
-       $user->setRole(0);
+    public function annulerlademande($id, SimpleUtilisateurRepository $utilisateurRepository)
+    {
+        $user = $utilisateurRepository->find($id);
+        $user->setRole(0);
         $em = $this->getDoctrine()->getManager();
 
         $em->persist($user);
@@ -280,6 +307,7 @@ class SimpleutilisateurController extends AbstractController
         return $this->redirectToRoute('affichecoach');
 
     }
+
     /**
      * @Route("/verify/email", name="app_verify_email")
      */
@@ -289,7 +317,7 @@ class SimpleutilisateurController extends AbstractController
 
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser(),);
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
 
