@@ -369,7 +369,7 @@
                             {% elseif user.roles==["ROLE_COACH"] %}
                                 <div class="label"><span><a href="{{ path('updatecoach1',{'id':user.id}) }}">Modifier le Profil de COACH</a></span> </div>
                             {% endif %}
-                            <div class="label"><span><a href="{{ path('desactiveutilisateur',{'id':user.id}) }}">DESACTIVER MON COMPTE</a></span> </div>
+                            <div class="label"><span><a href="{{ path('desactivationcompteparmail') }}">DESACTIVER MON COMPTE</a></span> </div>
 
                                                </div>
 

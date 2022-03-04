@@ -145,14 +145,7 @@ class SimpleutilisateurController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($Utilisateur);
                 $em->flush();
-                  $this->emailVerifier->sendEmailConfirmation('app_verify_email', $Utilisateur,
-                      (new TemplatedEmail())
-                          ->from(new Address('Gclaim.Gclaim@esprit.tn', 'G_Claim'))
-                          ->to($Utilisateur->getEmail())
-                          ->subject('Please Confirm your Email')
-                          ->htmlTemplate('registration/confirmation_email.html.twig')
-                  );
-                // do anything else you need here, like send an email
+
 
                 return $this->redirectToRoute("app_login");
             }
@@ -329,4 +322,21 @@ class SimpleutilisateurController extends AbstractController
 
         return $this->redirectToRoute('app_login');
     }
+
+    /**
+     * @Route("desactivationcompteparmail", name="desactivationcompteparmail")
+     */
+    public function desactivationcompteparmail(Request $request): Response
+    {$Utilisateur=$this->getUser();
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $Utilisateur,
+            (new TemplatedEmail())
+                ->from(new Address('Gclaim.Gclaim@esprit.tn', 'G_Claim'))
+                ->to($Utilisateur->getEmail())
+                ->subject('Please Confirm your Email')
+                ->htmlTemplate('simpleutilisateur/confirmation_email.html.twig')
+        );
+        return $this->redirectToRoute('profile');
+    }
+
+    // do anything else you need here, like send an email
 }
