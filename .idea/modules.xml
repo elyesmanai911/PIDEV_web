@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Gclaim.iml" filepath="$PROJECT_DIR$/.idea/Gclaim.iml" />
+      <module fileurl="file://D:/Users/Lenovo/Downloads/bootstrap-datepicker-master/.idea/bootstrap-datepicker-master.iml" filepath="D:/Users/Lenovo/Downloads/bootstrap-datepicker-master/.idea/bootstrap-datepicker-master.iml" />
     </modules>
   </component>
 </project>

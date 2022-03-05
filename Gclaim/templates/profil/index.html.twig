@@ -1,0 +1,96 @@
+{% extends 'test.html.twig' %}
+
+{% block title %}Hello ProfilcoachController!{% endblock %}
+
+{% block body %}
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg spad" data-setbg="{{ asset('img/breadcrumb-bg.jpg') }}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb-text">
+                        <h3>Categories: <span>hardware</span></h3>
+                        <div class="bt-option">
+                            <a href="#">Home</a>
+                            <a href="#">Latest posts</a>
+                            <span>Hardware</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    {% set verif = 0 %}
+    {% for p in profils %}
+        {% if user.isVerified is defined %}
+        {% if user.id ==p.user.id %}
+{% set verif = 1 %}
+{{ verif }}
+        {% endif %}  {% endif %}
+    {% endfor %}
+    <section class="categories-grid-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 p-0">
+
+                    <div class="row">
+
+                        {% if user.isVerified is defined %}
+                        {% if user.isVerified ==1 %}
+                        {% if verif ==0 %}
+                        <div class="col-lg-6">
+                            <div class="cg-item">
+                                <div class="cg-pic set-bg" data-setbg="{{ asset('img/categories-grid/plus.jpg') }}">
+
+                                </div>
+
+                                <div class="cg-text">
+                                    <h5><a href="{{ path('profil_new') }}">Become a coach!</a></h5>
+
+                                    <p>Here is where your journey start as a new trainer in our WONDERFUL website</p>
+                                </div>
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                            </div>
+
+                        </div>
+                        {% for p in profils %}
+                        <div class="col-lg-6">
+                            <div class="cg-item">
+                                <div class="cg-pic set-bg" data-setbg="{{ asset('img/categories-grid/cg-2.jpg') }}">
+
+                                </div>
+                                <div class="cg-text">
+                                    <h5><a href="{{ path('profil_show', {'id': p.id}) }}">{{ p.username }}</a></h5>
+                                    <p>Game:{{ p.game }}</p>
+                                    <br>
+                                    <p>{{ p.description }}</p>
+                                </div>
+                            </div>
+                            <div class="bottom-area d-flex" style="justify-content: space-evenly;align-items: center">
+                                {% if user.isVerified is defined %}
+                                {% if user.id ==p.user.id %}
+                                <a href="{{ path('profil_edit',{'id':p.id}) }}" class="cmn-btn" >Update</a>
+                                <a href="{{ path('profil_delete',{'id':p.id}) }}" class="cmn-btn">Delete</a>
+                                {% endif %} {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+<br>
+                        <div class="pagination-item">
+
+                            <span>{{ knp_pagination_render(profils) }}</span>
+                        </div>
+                </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Categories Grid Section End -->
+
+{% endblock %}

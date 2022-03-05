@@ -1,0 +1,93 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.myapp.services;
+
+import com.mycompany.myapp.entities.Profil;
+import com.codename1.ui.List;
+import java.util.Date;
+import com.codename1.io.CharArrayReader;
+import com.codename1.io.ConnectionRequest;
+import com.codename1.io.JSONParser;
+import com.codename1.io.NetworkEvent;
+import com.codename1.io.NetworkManager;
+import com.codename1.ui.events.ActionListener;
+import com.mycompany.myapp.utils.Statics;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+
+/**
+ *
+ * @author souma
+ */
+public class ServiceProfil {
+  public ArrayList<Profil> Profils;
+
+    public static ServiceProfil instance = null;
+    public boolean resultOK;
+    private ConnectionRequest req;
+
+    private ServiceProfil() {
+        req = new ConnectionRequest();
+    }
+
+    public static ServiceProfil getInstance() {
+        if (instance == null) {
+            instance = new ServiceProfil();
+        }
+        return instance;
+    }
+public ArrayList<Profil> parseProfils(String jsonText) {
+        try {
+            Profils = new ArrayList<>();
+            JSONParser j = new JSONParser();
+            Map<String, Object> ProfilListJson
+                    = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+
+            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) ProfilListJson.get("root");
+            for(Map<String,Object> obj :list){
+           
+                Profil h = new Profil();
+
+                float id = Float.parseFloat(obj.get("id").toString());
+                h.setId((int) id);
+
+                h.setNomProfil(obj.get("nomProfil").toString());
+                h.setDescription(obj.get("description").toString());
+                h.setChef(obj.get("chef").toString());
+                h.setEtat(obj.get("Etat").toString());
+            
+               
+
+              //  h.setDateCreation((Date) Date.parseDate(obj.get("DateCreation").toString()));
+               
+
+                Profils.add(h);
+            }
+
+        } catch (IOException ex) {
+
+        }
+        return Profils;
+    }
+      public ArrayList<Profil> getAllHotels() {
+        
+ req = new ConnectionRequest();
+        String url = Statics.BASE_URL +"Profil/AllProfils";
+        System.out.println("===>" + url);
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                Profils = parseProfils(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return Profils;
+    }
+    }
+

@@ -1,0 +1,55 @@
+
+{% extends 'back.html.twig' %}
+{% block body %}
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">LES EQUIPES</h3>
+                </div>
+                <!-- ./card-header -->
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <td>NOM DE L'EQUIPE</td>
+                            <td>DESCRIPTION</td>
+                            <td>DATE DE LA CREATION </td>
+                            <td>ETAT </td>
+                            <td>CHEF EQUIPE </td>
+                            <td>UTILISATEURS </td>
+                            <td>MODIFIER</td>
+
+                            <td>SUPPRIMER</td>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for equipe in equipe %}
+                            <tr>
+                                <td>{{ equipe.nomEquipe }}</td>
+                                <td>{{ equipe.description }}</td>
+                                <td>{{ equipe.dateCreation|date }}</td>
+                                <td>{{ equipe.etat }}</td>
+                                <td>{{ equipe.chef }}</td>
+                                <td>
+                                    {% for e in equipe.getSimpleutilisateurs() %}
+                                        {{ e.email }}
+                                        <br>
+                                    {% endfor %}
+                                </td>
+                                <td><a href="{{ path('updateequipe',{'id':equipe.id}) }}">Modifier</a></td>
+                                <td>   <a href="{{ path('deleteequipe',{'id':equipe.id}) }}">Supprimer</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+{% endblock %}
