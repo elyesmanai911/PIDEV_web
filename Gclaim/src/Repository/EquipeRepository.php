@@ -47,4 +47,20 @@ class EquipeRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function listEquipeparuti($id)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin('s.simpleutilisateurs','c')
+            ->where('c.id=:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
+    public function equip()
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.nb<5')
+            ->getQuery()
+            ->getResult();
+    }
 }

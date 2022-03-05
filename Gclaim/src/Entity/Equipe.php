@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=EquipeRepository::class)
  */
@@ -17,6 +17,7 @@ class Equipe
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -28,17 +29,20 @@ class Equipe
 
     /**
      * @ORM\Column(type="string", length=100)
-     * * @Assert\NotBlank(message="Il faut écrire une déscription")
+     * @Assert\NotBlank(message="Il faut écrire une déscription")
+     * @Groups("post:read")
      */
     private $description;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("post:read")
      */
     private $dateCreation;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups("post:read")
      */
     private $Etat;
 
@@ -49,13 +53,32 @@ class Equipe
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups("post:read")
      */
     private $chef;
+
+    /**
+     * @ORM\OneToMany(targetEntity=MembreEquipe::class, mappedBy="idE")
+     */
+    private $membreEquipes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tournoi::class, mappedBy="equipes")
+     */
+    private $Tournois;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nb;
 
     public function __construct()
     {
         $this->simpleutilisateurs = new ArrayCollection();
+        $this->membreEquipes = new ArrayCollection();
+        $this->Tournois = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -142,6 +165,75 @@ class Equipe
     public function setChef(string $chef): self
     {
         $this->chef = $chef;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MembreEquipe[]
+     */
+    public function getMembreEquipes(): Collection
+    {
+        return $this->membreEquipes;
+    }
+
+    public function addMembreEquipe(MembreEquipe $membreEquipe): self
+    {
+        if (!$this->membreEquipes->contains($membreEquipe)) {
+            $this->membreEquipes[] = $membreEquipe;
+            $membreEquipe->setIdE($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMembreEquipe(MembreEquipe $membreEquipe): self
+    {
+        if ($this->membreEquipes->removeElement($membreEquipe)) {
+            // set the owning side to null (unless already changed)
+            if ($membreEquipe->getIdE() === $this) {
+                $membreEquipe->setIdE(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tournoi[]
+     */
+    public function getTournois(): Collection
+    {
+        return $this->Tournois;
+    }
+
+    public function addTournoi(Tournoi $tournoi): self
+    {
+        if (!$this->Tournois->contains($tournoi)) {
+            $this->Tournois[] = $tournoi;
+            $tournoi->addEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTournoi(Tournoi $tournoi): self
+    {
+        if ($this->Tournois->removeElement($tournoi)) {
+            $tournoi->removeEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function getNb(): ?int
+    {
+        return $this->nb;
+    }
+
+    public function setNb(?int $nb): self
+    {
+        $this->nb = $nb;
 
         return $this;
     }

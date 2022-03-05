@@ -60,4 +60,21 @@ class SimpleUtilisateurRepository extends ServiceEntityRepository
             ->setParameter('query', $usernameOrEmail)
             ->getOneOrNullResult();
     }
+    public function utilisateurbyname($username)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.username=:username')
+            ->setParameter('username',$username)
+            ->getQuery()
+            ->getResult();
+    }
+    public function listutiparequip($id)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin('s.membreEquipes','c')
+            ->where('c.id=:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
 }

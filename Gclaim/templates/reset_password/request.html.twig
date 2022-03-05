@@ -1,0 +1,47 @@
+{% extends 'test.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+
+    <div style="background: #0d0909;
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	z-index: 99;
+	color: white;
+	border: 2px solid #c24400;
+
+	">
+
+        <a href="{{ path("gclaim") }}" style="color:#c24400; ">ACCUEIL</a>
+
+        <div class="signup-text">
+            {% for flashError in app.flashes('reset_password_error') %}
+                <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+            {% endfor %}
+            <div class="container">
+
+                {{ form_start(requestForm) }}
+                <div class="signup-title">
+                    <h2>Réinitialisez votre mot de passe</h2>
+                    <p>Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.</p>
+                </div>
+                {{ form_widget(requestForm.email,{'attr':{'placeholder':'EMAIL*','style':'border-color: #c24400;background:transparent;width:100%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+                                       	transform: skewX(-15deg);'}}) }}
+                <br>
+
+                <button class="btn btn-lg btn-primary" type="submit" style="background: #c24400">
+                    Envoyer un e-mail
+                </button>
+
+                {{ form_end(requestForm) }}
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

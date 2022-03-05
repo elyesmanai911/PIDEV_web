@@ -134,9 +134,13 @@
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/phpunit/phpunit" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/egulias/email-validator" />
-      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfonycasts/verify-email-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/animsition/js" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/animsition/css" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/bootstrap/js" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/bootstrap/css" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="bootstrap-datepicker-master" />
   </component>
 </module>

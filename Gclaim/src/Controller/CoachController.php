@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Coach;
 use App\Entity\SimpleUtilisateur;
+use App\Entity\Tournoi;
+use App\Form\CoachsType;
 use App\Form\CoachType;
 use App\Form\SimpleUtilisateurType;
 use App\Repository\CoachRepository;
@@ -27,12 +29,35 @@ class CoachController extends AbstractController
         ]);
     }
     /**
-     * @Route("/affichecoach", name="affichecoach")
+     * @Route("/affichecoach", name="affichecoach"  , methods={"GET"})
      */
-    public function readcoach(CoachRepository $repository)
-    {
-        $simple=$repository->findall();
-        return $this->render('coach/list.html.twig',["l"=>$simple]);
+    public function readcoach(CoachRepository $repository,Request $request)
+    { if (null != $request->get('searchname') && null != $request->get('searchspecialite')) {
+        $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['username' => $request->get('searchname'), 'specialite' => $request->get('searchspecialite')]);
+
+        return $this->render('/coach/list.html.twig', [
+            'l' => $evenement,
+        ]);
+    }
+        if (null != $request->get('searchspecialite')) {
+        $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['specialite' => $request->get('searchspecialite')]);
+
+        return $this->render('/coach/list.html.twig', [
+            'l' => $evenement,
+        ]);
+    }
+        if (null != $request->get('searchname')) {
+            $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['username' => $request->get('searchname')]);
+
+            return $this->render('/coach/list.html.twig', [
+                'l' => $evenement,
+            ]);
+        }
+        $evenement = $repository->findAll();
+
+        return $this->render('/coach/list.html.twig', [
+            'l' => $evenement,
+        ]);
     }
     /**
      * @Route("/deletecoach/{id}", name="deletecoach")
@@ -101,7 +126,8 @@ class CoachController extends AbstractController
      */
 
     public function updatecoach1($id,Request $request,CoachRepository $repository)
-    {
+    {        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $coach=$repository->find($id);
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
@@ -118,7 +144,25 @@ class CoachController extends AbstractController
                 $em->flush();
                 return $this->redirectToRoute('profile');
             }}
-        return $this->render("coach/modifcoach.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach]);
+        return $this->render("coach/modifcoach.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach,"tournois" => $tournois,]);
+    }
+    /**
+     * @Route("/modifspecialite/{id}", name="modifspecialite")
+     */
+    public function modifspecialite($id,Request $request,CoachRepository $repository)
+    {        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
+        $coach=$repository->find($id);
+        $form = $this->createForm(CoachsType::class, $coach);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($coach);
+                $em->flush();
+                return $this->redirectToRoute('profile');
+            }
+        return $this->render("simpleutilisateur/modifspecialite.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach,"tournois" => $tournois,]);
     }
     /**
      * @Route("/deletesimpleutilisateur1/{id}", name="deletesimpleutilisateur1")
@@ -130,5 +174,24 @@ class CoachController extends AbstractController
         $em->remove($simpleutilisateur);
         $em->flush();
         return $this->redirectToRoute("affichesimpleutilisateur");
+    }
+
+    /**
+     * @Route("/coach/tri", name="tri1")
+     */
+    public function Tri(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $query = $em->createQuery(
+            'SELECT a FROM App\Entity\Coach a 
+            ORDER BY a.username'
+        );
+
+        $activites = $query->getResult();
+        return $this->render('coach/list.html.twig',
+            array('l' => $activites));
+
     }
 }

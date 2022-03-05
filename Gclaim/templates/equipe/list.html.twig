@@ -41,11 +41,19 @@
                                     {% endfor %}
                                 </td>
 
-                                <td>   <a href="{{ path('deleteequipe',{'id':equipe.id}) }}">Supprimer</a></td>
+                                <td>
+                                   <a href="{{ path('deleteequipe',{'id':equipe.id}) }}" class="btn btn-block btn-warning btn-sm">Supprimer</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
+                    <td>  <a href="{{ path('tridate') }}" class="btn btn-block btn-outline-warning btn-xs">Trié les équipes par date</a></td>
+                    <div class="nav navbar navbar-expand navbar-white navbar-light border-bottom p-0">
+                       {{ knp_pagination_render(equipe)}}
+                    </div>
+
+                </div>
+                    </div>
                 </div>
                 <!-- /.card-body -->
             </div>

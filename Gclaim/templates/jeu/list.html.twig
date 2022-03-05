@@ -1,0 +1,70 @@
+
+{% extends 'data.html.twig' %}
+{% block body %}
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">LES Jeux</h3>
+                </div>
+                <!-- ./card-header -->
+                <div class="card-body">
+                    <p style="100px" > <input  id="myInput"  type="text" placeholder="Rechercher Jeu......">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <td>Id</td>
+                            <td>NOM_jeu</td>
+                            <td>CREATEUR</td>
+                            <td>DESCRIPTION</td>
+                            <td>DATE_SORTIE</td>
+                            <td>IMAGE</td>
+                            <td>SUPPRIMER</td>
+                            <td>MODIFIER</td>
+                            <td>LISTE TOURNOIS</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tbody  id="myTable">
+                        {% for jeu in jeus %}
+                            <tr data-widget="expandable-table" aria-expanded="false">
+                                <td>{{ jeu.id }}</td>
+                                <td>{{ jeu.nomjeu }}</td>
+                                <td>{{ jeu.createur }}</td>
+                                <td>{{ jeu.description}}</td>
+                                <td>{{ jeu.dateS |date("m/d/Y") }}</td>
+                                <td><img src ="{{ asset(jeu.image )}}"
+                                         alt="" height="80" width="80">
+                                </td>
+
+                                <td>  <a href="{{ path('deleteJeu',{'id':jeu.id},{'attr':{'class':'btn btn-primary'}}) }}">Delete</a></td>
+                                <td>    <a href="{{ path('updateJeu',{'id':jeu.id},{'attr':{'class':'btn btn-primary'}}) }}">Update</a>
+                                <td>    <a href="{{ path('listTournoisByJeu',{'id':jeu.id},{'attr':{'class':'btn btn-primary'}}) }}">Afficher</a>
+
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <a href="{{ path('addJeu',{'attr':{'class':'btn btn-primary'}}) }}">Add jeu</a>
+                    </table>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    <script>
+                        $(document).ready(function(){
+                            $("#myInput").on("keyup", function() {
+                                var value = $(this).val().toLowerCase();
+                                $("#myTable tr").filter(function() {
+                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                });
+                            });
+                        });
+                    </script>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+{% endblock %}

@@ -1,12 +1,29 @@
 {% extends 'back.html.twig' %}
 {% block body %}
     <!-- /.row -->
+
+        <!-- Navbar Search -->
+
+
+
+
+
     <div class="row">
+
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">LES SIMPLES UTILISATEURS</h3>
                 </div>
+                <div class="nav-search-block" >
+                    <form class="form-inline" action="" method="GET">
+                        <div class="btn btn-block btn-outline-warning btn-xs">
+                            <input class="form-control form-control-navbar" type="search" name="searchname"  placeholder="recherche ">
+
+                        </div>
+                    </form>
+                </div>
+
                 <!-- ./card-header -->
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
@@ -19,6 +36,7 @@
                             <td>Full_NAME</td>
                             <td>SUPPRIMER</td>
 
+
                         </tr>
                         </thead>
                         <tbody>
@@ -29,15 +47,18 @@
                             <td>{{ s.password }}</td>
                             <td>{{ s.email }}</td>
                             <td>{{ s.fullname }}</td>
-                            <td> <a href="{{ path('deletesimpleutilisateur1',{'id':s.id}) }}">Delete</a></td>
+                            <td> <a href="{{ path('deletesimpleutilisateur1',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Delete</a></td>
 
 
                             </td>
+
 
                         </tr>
                         {% endfor %}
                         </tbody>
                     </table>
+                    <td>  <a href="{{ path('tri') }}" class="btn btn-block btn-outline-warning btn-xs">trié les Utilisateurs</a></td>
+
                 </div>
                 <!-- /.card-body -->
             </div>
