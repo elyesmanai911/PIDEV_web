@@ -12,6 +12,14 @@
     <!-- Google Font -->
     {% block css%}
 
+        <link rel="preconnect" href="{{ asset('https://fonts.gstatic.com') }}" />
+
+        <link rel="stylesheet" href="{{ asset('css/button.css') }}" />
+        <!-- Css Styles -->
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.midnight-blue.css') }}"/>
+
         <link href="{{ asset('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap') }}"
               rel="stylesheet">
         <link href="{{ asset('https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap') }}" rel="stylesheet">
@@ -27,14 +35,6 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
 
 
-
-        <link rel="preconnect" href="{{ asset('https://fonts.gstatic.com') }}" />
-
-        <link rel="stylesheet" href="{{ asset('css/button.css') }}" />
-        <!-- Css Styles -->
-
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.css') }}"/>
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.midnight-blue.css') }}"/>
 
     {% endblock %}
 </head>
@@ -201,7 +201,7 @@
                     </li>
 
                     <li><a href="{{ asset('#') }}"><span>Actualités <i class="active"></i></span></a></li>
-                    <li><a href="{{ asset('profil_index') }}"><span>Entraineurs <i class="fa fa-angle-down"></i></span></a>
+                    <li><a href="{{ path('profil_index')}}"><span>Entraineurs <i class="fa fa-angle-down"></i></span></a>
                     <ul class="dropdown">
                         <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>
                         </li>

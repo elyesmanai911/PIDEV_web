@@ -24,7 +24,8 @@
 
     {% set verif = 0 %}
     {% for p in profils %}
-        {% if user.isVerified is defined %}
+
+        {% if user.roles is defined %}
         {% if user.id ==p.user.id %}
 {% set verif = 1 %}
 {{ verif }}
@@ -37,8 +38,8 @@
 
                     <div class="row">
 
-                        {% if user.isVerified is defined %}
-                        {% if user.isVerified ==1 %}
+                        {% if user.roles is defined %}
+                        {% if user.roles==["ROLE_COACH"] %}
                         {% if verif ==0 %}
                         <div class="col-lg-6">
                             <div class="cg-item">
@@ -71,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="bottom-area d-flex" style="justify-content: space-evenly;align-items: center">
-                                {% if user.isVerified is defined %}
+                                {% if user.roles is defined %}
                                 {% if user.id ==p.user.id %}
                                 <a href="{{ path('profil_edit',{'id':p.id}) }}" class="cmn-btn" >Update</a>
                                 <a href="{{ path('profil_delete',{'id':p.id}) }}" class="cmn-btn">Delete</a>

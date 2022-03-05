@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Profil;
 use App\Entity\Rdv;
+use App\Entity\Tournoi;
 use App\Form\RdvType;
 use App\Repository\ProfilRepository;
 use App\Repository\RdvRepository;
@@ -23,12 +24,12 @@ class RdvController extends AbstractController
      * @Route("/", name="rdv_index", methods={"GET"})
      */
     public function index(RdvRepository $rdvRepository): Response
-    {
+    {$tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
 
         $user=$this->getUser();
         return $this->render('rdv/index.html.twig', [
             'rdvs' => $rdvRepository->findAll(),
-            'user' => $user,
+            'user' => $user,"tournois" => $tournois,
         ]);
     }
 
@@ -37,7 +38,7 @@ class RdvController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $entityManager, ProfilRepository $repository,$id, RdvRepository $rep): Response
     {
-
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $coach=$repository->find($id);
 $error='safe';
         $rdv = new Rdv();
@@ -65,7 +66,7 @@ $error='safe';
 
             'form' => $form->createView(),
             'user'=> $this->getUser(),
-            'error' => $error,
+            'error' => $error,"tournois" => $tournois,
         ]);
     }
 
@@ -87,7 +88,7 @@ $error='safe';
      * @Route("/{id}/edit", name="rdv_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Rdv $rdv, EntityManagerInterface $entityManager): Response
-    {
+    {$tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $form = $this->createForm(RdvType::class, $rdv);
         $form->handleRequest($request);
 
@@ -100,7 +101,7 @@ $error='safe';
         return $this->render('rdv/edit.html.twig', [
             'rdv' => $rdv,
             'form' => $form->createView(),
-            'user'=> $this->getUser(),
+            'user'=> $this->getUser(),"tournois" => $tournois,
         ]);
     }
     /**

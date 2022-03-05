@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Profil;
 use App\Entity\Rdv;
+use App\Entity\Tournoi;
 use App\Form\ProfilType;
 use App\Repository\ProfilRepository;
 use ContainerXwnxeG5\PaginatorInterface_82dac15;
@@ -24,7 +25,7 @@ class ProfilController extends AbstractController
      * @Route("/", name="profil_index", methods={"GET"})
      */
     public function index(ProfilRepository $profilRepository, PaginatorInterface $paginator, Request $request): Response
-    {
+    { $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $donnee=$profilRepository->findAll();
         $profil=$paginator->paginate(
             $donnee,
@@ -34,7 +35,7 @@ class ProfilController extends AbstractController
         );
         return $this->render('profil/index.html.twig', [
             'profils' => $profil,
-            'user'=> $this->getUser()
+            'user'=> $this->getUser(),"tournois" => $tournois,
 
         ]);
     }
@@ -55,7 +56,7 @@ class ProfilController extends AbstractController
      * @Route("/new", name="profil_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    {$tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $user=$this->getUser();
         $profil = new Profil();
         $form = $this->createForm(ProfilType::class, $profil);
@@ -73,7 +74,8 @@ class ProfilController extends AbstractController
         return $this->render('profil/new.html.twig', [
             'profil' => $profil,
             'form' => $form->createView(),
-            'user'=> $this->getUser()
+            'user'=> $this->getUser(),"tournois" => $tournois,
+
         ]);
     }
 
@@ -81,13 +83,14 @@ class ProfilController extends AbstractController
      * @Route("/{id}", name="profil_show", methods={"GET"})
      */
     public function show(Profil $profil): Response
-    {
+    {$tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $coach = $this->getDoctrine()->getRepository(Rdv::class)->findBycoach($profil->getId());
 
         return $this->render('profil/show.html.twig', [
             'profil' => $profil,
             'coach' =>$coach,
-            'user'=> $this->getUser()
+            'user'=> $this->getUser(),"tournois" => $tournois,
+
         ]);
     }
 
@@ -95,7 +98,7 @@ class ProfilController extends AbstractController
      * @Route("/{id}/edit", name="profil_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Profil $profil, EntityManagerInterface $entityManager): Response
-    {
+    {$tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $form = $this->createForm(ProfilType::class, $profil);
         $form->handleRequest($request);
 
@@ -108,7 +111,7 @@ class ProfilController extends AbstractController
         return $this->render('profil/edit.html.twig', [
             'profil' => $profil,
             'form' => $form->createView(),
-            'user'=> $this->getUser(),
+            'user'=> $this->getUser(),"tournois" => $tournois,
         ]);
     }
 
