@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Coach;
 use App\Entity\Equipe;
 use App\Entity\SimpleUtilisateur;
+use App\Entity\Tournoi;
 use App\Form\CoachType;
 use App\Form\EquipeType;
 use App\Repository\EquipeRepository;
@@ -25,8 +26,9 @@ class EquipeController extends AbstractController
      */
     public function index(): Response
     { $user = $this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         return $this->render('equipe/index.html.twig', [
-            'controller_name' => 'EquipeController', 'user' => $user
+            'controller_name' => 'EquipeController', "tournois" => $tournois,'user' => $user
         ]);
     }
 
@@ -43,7 +45,7 @@ class EquipeController extends AbstractController
             4
 
         );
-        return $this->render('equipe/list.html.twig',["equipe"=>$equipe,]);
+        return $this->render('equipe/list.html.twig',["equipe"=>$equipe,"tournois" => $tournois]);
     }
     /**
      * @Route("/equipe/tri", name="tridate")
@@ -97,9 +99,11 @@ class EquipeController extends AbstractController
      */
 
     public function addequipe(Request $request)
-    { $user = $this->getUser();
+    {
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+        $user = $this->getUser();
         $equipe = new Equipe();
-
+        $equipe->setNb(1);
         $form = $this->createForm(EquipeType::class, $equipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -113,9 +117,8 @@ class EquipeController extends AbstractController
             $em->flush();
             return $this->redirectToRoute("gclaim");
         }
-        return $this->render("equipe/add.html.twig",['form'=>$form->createView(),'user' => $user]);
+        return $this->render("equipe/add.html.twig",['form'=>$form->createView(),'user' => $user, "tournois" => $tournois]);
     }
-
     /**
      * @Route("/afficheparequipe/{id}", name="afficheparequipe")
      */
@@ -143,6 +146,7 @@ class EquipeController extends AbstractController
         $user = $this->getUser();
         $equipe = $repository->find($id);
         $equipe->addSimpleutilisateur($user);
+        $equipe->setNb($equipe->getNb()+1);
         $em = $this->getDoctrine()->getManager();
         $em->persist($equipe);
         $em->flush();

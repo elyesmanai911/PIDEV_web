@@ -24,7 +24,6 @@ class Equipe
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="Nom de Equipe est obligatoire")
-     * @Groups("post:read")
      */
     private $nomEquipe;
 
@@ -58,10 +57,28 @@ class Equipe
      */
     private $chef;
 
+    /**
+     * @ORM\OneToMany(targetEntity=MembreEquipe::class, mappedBy="idE")
+     */
+    private $membreEquipes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tournoi::class, mappedBy="equipes")
+     */
+    private $Tournois;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nb;
+
     public function __construct()
     {
         $this->simpleutilisateurs = new ArrayCollection();
+        $this->membreEquipes = new ArrayCollection();
+        $this->Tournois = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -148,6 +165,75 @@ class Equipe
     public function setChef(string $chef): self
     {
         $this->chef = $chef;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MembreEquipe[]
+     */
+    public function getMembreEquipes(): Collection
+    {
+        return $this->membreEquipes;
+    }
+
+    public function addMembreEquipe(MembreEquipe $membreEquipe): self
+    {
+        if (!$this->membreEquipes->contains($membreEquipe)) {
+            $this->membreEquipes[] = $membreEquipe;
+            $membreEquipe->setIdE($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMembreEquipe(MembreEquipe $membreEquipe): self
+    {
+        if ($this->membreEquipes->removeElement($membreEquipe)) {
+            // set the owning side to null (unless already changed)
+            if ($membreEquipe->getIdE() === $this) {
+                $membreEquipe->setIdE(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tournoi[]
+     */
+    public function getTournois(): Collection
+    {
+        return $this->Tournois;
+    }
+
+    public function addTournoi(Tournoi $tournoi): self
+    {
+        if (!$this->Tournois->contains($tournoi)) {
+            $this->Tournois[] = $tournoi;
+            $tournoi->addEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTournoi(Tournoi $tournoi): self
+    {
+        if ($this->Tournois->removeElement($tournoi)) {
+            $tournoi->removeEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function getNb(): ?int
+    {
+        return $this->nb;
+    }
+
+    public function setNb(?int $nb): self
+    {
+        $this->nb = $nb;
 
         return $this;
     }

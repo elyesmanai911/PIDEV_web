@@ -3,10 +3,13 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+
 parameters:
     upload_directory: '%kernel.project_dir%/public/uploads'
+
+    images_directory: 'F:\XAMPPPPP\htdocs\Gclaim\Gclaim\public\img'
 services:
-    # default configuration for services in *this* file
+    # default configuration for services in this file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -27,4 +30,4 @@ services:
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    # please note that last definitions always replace previous ones
