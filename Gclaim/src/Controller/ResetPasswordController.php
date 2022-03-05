@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Tournoi;
 use App\Entity\Utilisateur;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
@@ -41,7 +42,8 @@ class ResetPasswordController extends AbstractController
      * @Route("", name="app_forgot_password_request")
      */
     public function request(Request $request, MailerInterface $mailer): Response
-    {
+    {        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
@@ -53,7 +55,7 @@ class ResetPasswordController extends AbstractController
         }
 
         return $this->render('reset_password/request.html.twig', [
-            'requestForm' => $form->createView(),'user'=>$this->getUser(),
+            'requestForm' => $form->createView(),'user'=>$this->getUser(),"tournois" => $tournois,
         ]);
     }
 
@@ -63,7 +65,7 @@ class ResetPasswordController extends AbstractController
      * @Route("/check-email", name="app_check_email")
      */
     public function checkEmail(): Response
-    {
+    {$tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         // Generate a fake token if the user does not exist or someone hit this page directly.
         // This prevents exposing whether or not a user was found with the given email address or not
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
@@ -71,7 +73,7 @@ class ResetPasswordController extends AbstractController
         }
 
         return $this->render('reset_password/check_email.html.twig', [
-            'resetToken' => $resetToken,'user'=>$this->getUser(),
+            'resetToken' => $resetToken,'user'=>$this->getUser(),"tournois" => $tournois,
         ]);
     }
 
@@ -81,7 +83,7 @@ class ResetPasswordController extends AbstractController
      * @Route("/reset/{token}", name="app_reset_password")
      */
     public function reset(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, string $token = null): Response
-    {
+    {$tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
@@ -129,12 +131,12 @@ class ResetPasswordController extends AbstractController
         }
 
         return $this->render('reset_password/reset.html.twig', [
-            'resetForm' => $form->createView(),'user'=>$this->getUser(),
+            'resetForm' => $form->createView(),'user'=>$this->getUser(),"tournois" => $tournois,
         ]);
     }
 
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
-    {
+    {  $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $user = $this->entityManager->getRepository(Utilisateur::class)->findOneBy([
             'email' => $emailFormData,
         ]);

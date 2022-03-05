@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Coach;
 use App\Entity\SimpleUtilisateur;
+use App\Entity\Tournoi;
 use App\Form\CoachsType;
 use App\Form\CoachType;
 use App\Form\SimpleUtilisateurType;
@@ -125,7 +126,8 @@ class CoachController extends AbstractController
      */
 
     public function updatecoach1($id,Request $request,CoachRepository $repository)
-    {
+    {        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $coach=$repository->find($id);
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
@@ -142,13 +144,14 @@ class CoachController extends AbstractController
                 $em->flush();
                 return $this->redirectToRoute('profile');
             }}
-        return $this->render("coach/modifcoach.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach]);
+        return $this->render("coach/modifcoach.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach,"tournois" => $tournois,]);
     }
     /**
      * @Route("/modifspecialite/{id}", name="modifspecialite")
      */
     public function modifspecialite($id,Request $request,CoachRepository $repository)
-    {
+    {        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $coach=$repository->find($id);
         $form = $this->createForm(CoachsType::class, $coach);
         $form->handleRequest($request);
@@ -159,7 +162,7 @@ class CoachController extends AbstractController
                 $em->flush();
                 return $this->redirectToRoute('profile');
             }
-        return $this->render("simpleutilisateur/modifspecialite.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach]);
+        return $this->render("simpleutilisateur/modifspecialite.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach,"tournois" => $tournois,]);
     }
     /**
      * @Route("/deletesimpleutilisateur1/{id}", name="deletesimpleutilisateur1")

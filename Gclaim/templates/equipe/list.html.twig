@@ -19,7 +19,7 @@
                             <td>ETAT </td>
                             <td>CHEF EQUIPE </td>
                             <td>UTILISATEURS </td>
-                            <td>MODIFIER</td>
+
 
                             <td>SUPPRIMER</td>
 
@@ -47,7 +47,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                    <td>  <a href="{{ path('tridate') }}" class="btn btn-block btn-outline-warning btn-xs">tTrié les équipes par date</a></td>
+                    <td>  <a href="{{ path('tridate') }}" class="btn btn-block btn-outline-warning btn-xs">Trié les équipes par date</a></td>
                     <div class="nav navbar navbar-expand navbar-white navbar-light border-bottom p-0">
                        {{ knp_pagination_render(equipe)}}
                     </div>

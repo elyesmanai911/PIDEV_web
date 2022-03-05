@@ -268,7 +268,7 @@
                             <li class="nav-item">
                                 <a href="{{ path('affichesimpleutilisateur') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>les Utilisateurs </p>
+                                    <p>les Simple Utilisateurs </p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -302,16 +302,17 @@
                                     <p>les demandes</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                            <a href="{{ path('rdv_show') }}"class="nav-link">
-                                <i class="nav-icon fas fa-table"></i>
-                                <p>
-                                    Les rendez-vous
 
-                                </p>
-                            </a>
-                            </li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('rdv_show') }}" class="nav-link">
+                            <i class="nav-icon fas fa-edit"></i>
+                            <p>
+                                Les rendez-vous
+
+                            </p>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -406,34 +407,6 @@
         {% block body %} {% endblock %}
         <!-- Main content -->
         <section class="content">
-
-            <!-- Default box -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Title</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    {% block content%}{% endblock %}
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    Footer
-                </div>
-                <!-- /.card-footer-->
-            </div>
-
-
-            <!-- /.card -->
-
         </section>
         <!-- /.content -->
     </div>

@@ -37,7 +37,8 @@ class EquipeController extends AbstractController
      * @Route("/affichetoutequipe", name="affichetoutequipe")
      */
     public function readequipe(EquipeRepository  $repository,Request $request,PaginatorInterface $paginator)
-    {
+    {        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $donnee=$repository->findall();
         $equipe=$paginator->paginate(
             $donnee,
@@ -76,6 +77,8 @@ class EquipeController extends AbstractController
      */
     public function afficheequipe(EquipeRepository  $repository,Request $request,PaginatorInterface $paginator)
     {$user = $this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $donnee=$repository->findall();
         $equipe=$paginator->paginate(
             $donnee,
@@ -83,7 +86,7 @@ class EquipeController extends AbstractController
             4
 
         );
-        return $this->render('equipe/showequipe.html.twig',["equipe"=>$equipe,'user' => $user]);
+        return $this->render('equipe/showequipe.html.twig',["equipe"=>$equipe,'user' => $user,"tournois" => $tournois]);
     }
     /**
      * @Route("/equipe/AllEquipes", name="AllEquipes")
@@ -122,7 +125,7 @@ class EquipeController extends AbstractController
     /**
      * @Route("/afficheparequipe/{id}", name="afficheparequipe")
      */
-    public function afficheparclub($id,EquipeRepository  $repository)
+    public function afficheparEquipe($id,EquipeRepository  $repository)
     {
         $equipe = $repository->find($id);
         return $this->render('equipe/show.html.twig', array("equipe" => $equipe));

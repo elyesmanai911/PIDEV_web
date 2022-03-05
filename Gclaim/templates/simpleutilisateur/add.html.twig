@@ -19,38 +19,39 @@
         <div class="signup-close"><i class="fa fa-close"></i>
                <div class="signup-text">
                     <div class="container">
-                             <div class="signup-title">
-                                   <h2>S'inscrire</h2>
-                                   <p>REMPLIR LE FORMULAIRE</p>
-                                 {{ error }}
-                             </div>
+
                              {{ form_start(form,{'attr': {'novalidate': 'novalidate'}},{'attr': {'class': 'signup-form'}}) }}
+                        <div class="signup-title" style="'left=500'">
+                            <h2>S'inscrire</h2>
+                            <p>REMPLIR LE FORMULAIRE</p>
+                            {{ error }}
+                        </div>
                         <div class="sf-input-list">
                                     {{ form_errors(form.username) }}
-                                    {{ form_widget(form.username,{'attr':{'placeholder':'LOGIN*','style':'border-color: #c24400;background:transparent;width:60%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+                                    {{ form_widget(form.username,{'attr':{'placeholder':'LOGIN*','style':'border-color: #c24400;background:transparent;width:200%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
                                        	transform: skewX(-15deg);'}}) }}
 
                              <div class="input-value">
                                     {{ form_errors(form.password) }}
-                                    {{ form_widget(form.password,{'attr':{'placeholder':'MOT DE PASSE*','style':'border-color: #c24400;background:transparent;width:60%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+                                    {{ form_widget(form.password,{'attr':{'placeholder':'MOT DE PASSE*','style':'border-color: #c24400;background:transparent;width:200%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
 	                                 transform: skewX(-15deg);'}}) }}
                              </div>
                              <div class="input-value">
                                     {{ form_errors(form.verifpassword) }}
-                                    {{ form_widget(form.verifpassword,{'attr':{'placeholder':'MOT DE PASSE 2*','style':'border-color: #c24400;background:transparent;width:60%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+                                    {{ form_widget(form.verifpassword,{'attr':{'placeholder':'MOT DE PASSE 2*','style':'border-color: #c24400;background:transparent;width:200%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
 	                                  transform: skewX(-15deg);'}}) }}
                              </div>
                              <div class="input-value">
                                     {{ form_errors(form.email) }}
-                                    {{ form_widget(form.email,{'attr':{'placeholder':'EMAIL*','style':'border-color: #c24400;background:transparent;width:60%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+                                    {{ form_widget(form.email,{'attr':{'placeholder':'EMAIL*','style':'border-color: #c24400;background:transparent;width:200%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
 	                                transform: skewX(-15deg);'}}) }}
                              </div>
                              <div class="input-value">
                                     {{ form_errors(form.fullname) }}
-                                    {{ form_widget(form.fullname,{'attr':{'placeholder':'NOM ET PRENOM*','style':'border-color: #c24400;background:transparent;width:60%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+                                    {{ form_widget(form.fullname,{'attr':{'placeholder':'NOM ET PRENOM*','style':'border-color: #c24400;background:transparent;width:200%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
 	                                  transform: skewX(-15deg);'}}) }}
                              </div>
-                               {{ form_widget(form.confirmer,{'attr':{'style':'border-color: #c24400;background:#c24400;width:60%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+                               {{ form_widget(form.confirmer,{'attr':{'style':'border-color: #c24400;background:#c24400;width:200%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
 	                              transform: skewX(-15deg);'}}) }}
                                 <p>j'ai déjà un compte  <a href="{{ path("app_login") }}">   Se connecter   </a></p>
                         </div>
