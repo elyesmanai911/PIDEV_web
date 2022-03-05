@@ -7,7 +7,7 @@
 parameters:
     upload_directory: '%kernel.project_dir%/public/uploads'
 
-    images_directory: 'F:\XAMPPPPP\htdocs\Gclaim\Gclaim\public\img'
+    images_directory: 'C:\xampp\htdocs\PIDEV\Gclaim\public\'
 services:
     # default configuration for services in this file
     _defaults:
