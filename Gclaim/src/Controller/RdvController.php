@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Profil;
 use App\Entity\Rdv;
 use App\Form\RdvType;
 use App\Repository\ProfilRepository;
@@ -17,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class RdvController extends AbstractController
 {
+
     /**
      * @Route("/", name="rdv_index", methods={"GET"})
      */
@@ -39,6 +41,7 @@ class RdvController extends AbstractController
         $coach=$repository->find($id);
 $error='safe';
         $rdv = new Rdv();
+        $user=$this->getUser();
 
         $form = $this->createForm(RdvType::class, $rdv);
         $form->handleRequest($request);
@@ -46,6 +49,7 @@ $error='safe';
         if ($form->isSubmitted() && $form->isValid()) {
             if ($rep->verif($rdv->getDate(), $id) == null) {
                 $rdv->setCoach($coach);
+                $rdv->setUser($user);
                 $entityManager->persist($rdv);
                 $entityManager->flush();
 
@@ -99,17 +103,46 @@ $error='safe';
             'user'=> $this->getUser(),
         ]);
     }
+    /**
+     * @Route("/tri", name="tri1")
+     */
+    public function Tri(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $query = $em->createQuery(
+            'SELECT a FROM App\Entity\Rdv a 
+            ORDER BY a.date DESC '
+        );
+
+        $activites = $query->getResult();
+        return $this->render('rdv/list.html.twig',
+            array('rdv' => $activites));
+
+    }
+
 
     /**
-     * @Route("/{id}", name="rdv_delete", methods={"POST"})
+     * @Route("/{id}", name="rdv_delete", methods={"GET" , "POST"})
      */
     public function delete(Request $request, Rdv $rdv, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$rdv->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($rdv);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($rdv);
+            $em->flush();
+
+            $repo =$this->getDoctrine()->getRepository(Rdv::class);
+            return $this->redirectToRoute("rdv_index");
+
+            /*$em = $this->getDoctrine()->getManager();
+            $em->remove($profil);
+            $em->flush();
+
+            $repo =$this->getDoctrine()->getRepository(Profil::class);
+            return $this->redirectToRoute("profil_index");*/
+
         }
 
-        return $this->redirectToRoute('rdv_index', [], Response::HTTP_SEE_OTHER);
-    }
+
 }

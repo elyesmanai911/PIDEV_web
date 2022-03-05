@@ -94,7 +94,7 @@ class SimpleutilisateurController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('profile');
         }
-        return $this->render("simpleutilisateur/add.html.twig",['form'=>$form->createView(),'user'=>$simpleutilisateur,'error'=>'']);
+        return $this->render("simpleutilisateur/modif.html.twig",['form'=>$form->createView(),'user'=>$simpleutilisateur,'error'=>'']);
     }
 
 

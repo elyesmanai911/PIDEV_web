@@ -6,9 +6,12 @@ use App\Repository\ProfilRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=ProfilRepository::class)
+ * @UniqueEntity(fields={"username"}, message="Il existe déjà un compte avec cet email")
  */
 class Profil
 {
@@ -16,37 +19,47 @@ class Profil
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=1000, nullable=true)
+     * @Assert\NotBlank (message="this field is required")
+     * @Groups("post:read")
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups("post:read")
      */
     private $rating;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank (message="this field is required")
+     * @Groups("post:read")
      */
     private $username;
 
     /**
-     * @ORM\OneToOne(targetEntity=Coach::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Coach::class)
      * @ORM\JoinColumn(nullable=true)
+     * @Groups("post:read")
      */
     private $user;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank (message="this field is required")
+     * @Groups("post:read")
      */
     private $game;
 
     /**
-     * @ORM\OneToMany(targetEntity=Rdv::class, mappedBy="coach")
+     * @ORM\OneToMany(targetEntity=Rdv::class, mappedBy="coach",cascade={"all"},orphanRemoval=true)
+     * @Groups("post:read")
      */
     private $rdvs;
 

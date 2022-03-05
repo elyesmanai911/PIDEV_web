@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\RdvRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=RdvRepository::class)
+ *
  */
 class Rdv
 {
@@ -19,6 +21,8 @@ class Rdv
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\GreaterThanOrEqual("today")
+     * * @Assert\NotBlank (message="this field is required")
      */
     private $date;
 

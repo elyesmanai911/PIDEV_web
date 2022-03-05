@@ -16,6 +16,7 @@ class ProfilType extends AbstractType
             ->add('description')
             ->add('game')
             ->add('username')
+
             ->add('Submit', SubmitType::class, ['attr'=>['class'=>'cmn-btn']]);
         ;
     }

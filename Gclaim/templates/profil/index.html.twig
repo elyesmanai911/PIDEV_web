@@ -22,23 +22,40 @@
     </section>
     <!-- Breadcrumb Section End -->
 
+    {% set verif = 0 %}
+    {% for p in profils %}
+        {% if user.isVerified is defined %}
+        {% if user.id ==p.user.id %}
+{% set verif = 1 %}
+{{ verif }}
+        {% endif %}  {% endif %}
+    {% endfor %}
     <section class="categories-grid-section spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 p-0">
+
                     <div class="row">
+
+                        {% if user.isVerified is defined %}
+                        {% if user.isVerified ==1 %}
+                        {% if verif ==0 %}
                         <div class="col-lg-6">
                             <div class="cg-item">
                                 <div class="cg-pic set-bg" data-setbg="{{ asset('img/categories-grid/plus.jpg') }}">
 
                                 </div>
+
                                 <div class="cg-text">
                                     <h5><a href="{{ path('profil_new') }}">Become a coach!</a></h5>
 
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua suspendisse ultrices...</p>
+                                    <p>Here is where your journey start as a new trainer in our WONDERFUL website</p>
                                 </div>
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
                             </div>
+
                         </div>
                         {% for p in profils %}
                         <div class="col-lg-6">
@@ -54,18 +71,19 @@
                                 </div>
                             </div>
                             <div class="bottom-area d-flex" style="justify-content: space-evenly;align-items: center">
+                                {% if user.isVerified is defined %}
+                                {% if user.id ==p.user.id %}
                                 <a href="{{ path('profil_edit',{'id':p.id}) }}" class="cmn-btn" >Update</a>
                                 <a href="{{ path('profil_delete',{'id':p.id}) }}" class="cmn-btn">Delete</a>
+                                {% endif %} {% endif %}
                             </div>
                         </div>
                         {% endfor %}
 <br>
-                    <div class="pagination-item">
-                        <a href="#"><span>1</span></a>
-                        <a href="#"><span>2</span></a>
-                        <a href="#"><span>3</span></a>
-                        <a href="#"><span>Next</span></a>
-                    </div>
+                        <div class="pagination-item">
+
+                            <span>{{ knp_pagination_render(profils) }}</span>
+                        </div>
                 </div>
 
                     </div>

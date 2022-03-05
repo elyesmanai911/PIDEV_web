@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -16,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "coach"="Coach"
  * })
  */
-abstract class Utilisateur
+abstract class Utilisateur implements UserInterface
 {
     /**
      * @ORM\Id
@@ -44,7 +47,7 @@ abstract class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank(message="mot de passe est incorrect")
+     * @Assert\NotBlank(message="mot de passe est obligatoire")
      */
     protected $verifpassword;
 
@@ -55,6 +58,69 @@ abstract class Utilisateur
      */
     protected $email;
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    protected $roles = [];
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isVerified = false;
+    /**
+     * @ORM\ManyToMany(targetEntity=Equipe::class, mappedBy="simpleutilisateurs")
+     */
+    protected $membreEquipes;
+
+    public function __construct()
+    {
+        $this->membreEquipes = new ArrayCollection();
+    }
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+
+        return [];
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(?string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
+
+        return $this;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +170,32 @@ abstract class Utilisateur
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+    /**
+     * @return Collection|Equipe[]
+     */
+    public function getMembreEquipes(): Collection
+    {
+        return $this->membreEquipes;
+    }
+
+    public function addMembreEquipe(Equipe $membreEquipe): self
+    {
+        if (!$this->membreEquipes->contains($membreEquipe)) {
+            $this->membreEquipes[] = $membreEquipe;
+            $membreEquipe->addSimpleutilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMembreEquipe(Equipe $membreEquipe): self
+    {
+        if ($this->membreEquipes->removeElement($membreEquipe)) {
+            $membreEquipe->removeSimpleutilisateur($this);
+        }
 
         return $this;
     }

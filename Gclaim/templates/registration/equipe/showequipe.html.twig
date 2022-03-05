@@ -1,0 +1,107 @@
+{% extends 'test.html.twig' %}
+{% block title %}les équipes{% endblock %}
+{% block body %}
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg spad" data-setbg="img/breadcrumb-bg.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb-text">
+                        <h3>LES EQUIPES: <span>DESCRIPTION</span></h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Grid Section Begin -->
+
+    <section class="categories-grid-section spad">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-lg-8 p-0">
+                    <div class="row">
+                        {% for equipe in equipe %}
+                        <div class="col-lg-6">
+                            <div class="cg-item">
+                                <div class="cg-pic set-bg" data-setbg="img/categories-grid/cg-1.jpg">
+                                </div>
+                                <div class="cg-text">
+
+                                    <h5><a href="#">{{equipe.nomEquipe }}</a></h5>
+                                    <ul>
+                                        {% set verif=0 %}
+                                        {% if user is not null %}
+                                                   {% if equipe.etat %}
+                                                       {% for e in equipe.getSimpleutilisateurs() %}
+                                                           {% if e.getUserName()==user.username %}
+                                                               {% set verif=1 %}
+                                                           {% endif %}
+                                                       {% endfor %}
+                                                       {% if verif==0 %}
+                                                          <li> <span><a href="{{ path('rejoindreequipe',{'id':equipe.id}) }}" style="color: #c24400">Rejoindre l'Equipe</a></span></li>
+                                                       {% endif %}
+                                                   {% else %}
+
+                                                    <li> <span>Equipe fermé</span></li>
+                                                   {% endif %}
+                                        {% else %}
+                                            <li> <span><a href="{{ path('app_login') }}" style="color: #c24400">Rejoindre l'Equipe</a></span></li>
+
+
+                                        {% endif %}
+                                        {% if user is not null %}
+                                        {% if user.username==equipe.getChef() %}
+                                            <li> <span><a href="{{ path('updateequipe',{'id':equipe.id}) }}" style="color: #c24400">Modifier l'Equipe</a></span></li>
+
+                                        {% endif %}
+
+                                        {% endif %}
+                                        <li><i class="fa fa-clock-o"></i> {{ equipe.dateCreation|date }}</li>
+                                    </ul>
+                                    <li><a style="color: #ffffff"> Description de l'équipe </a></li>
+                                    <p> {{equipe.description }}</p>
+                                    <li><a style="color: #ffffff"><span> Membres de l'équipe </span></a></li>
+                                    <ul class="dropdown">
+                                        {% for e in equipe.getSimpleutilisateurs() %}
+                                            <li> {{ e.email }}</li>
+
+                                            <br>
+                                        {% endfor %}
+                                    </ul>
+
+                                    <h7></h7>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+                    <div class="pagination-item">
+                        <a href="#"><span>1</span></a>
+                        <a href="#"><span>2</span></a>
+                        <a href="#"><span>3</span></a>
+                        <a href="#"><span>Next</span></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-7 p-0">
+                    <div class="sidebar-option">
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Categories Grid Section End -->
+
+
+    <!-- Breadcrumb Section End -->
+{% endblock %}

@@ -114,10 +114,10 @@
                             <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>
 
                             {% if user is not null %}
-                                <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
-                            {% else%}
-                                <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
-                            {% endif %}
+                            <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
+                               {% else%}
+                            <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
+                                {% endif %}
 
                         </ul>
                     </div>
@@ -231,12 +231,7 @@
                     </li>
 
                     <li><a href="{{ asset('#') }}"><span>Actualités <i class="active"></i></span></a></li>
-                    <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="active"></i></span></a>
-                        <ul class="dropdown">
-                            <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>
-                            </li>
-                        </ul>
-                    </li>
+                    <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="active"></i></span></a></li>
                     <li>
                         <a href="{{ asset('#') }}"><span>Produits <i class="fa fa-angle-down"></i></span></a>
                         <ul class="dropdown">
@@ -277,8 +272,8 @@
                                 <h5>Créer une équipe</h5>
                                 <div class="ip-text">
                                     <div class="label"><span><a href="{{ path('addequipe') }}">Créer</a></span> </div>
-                                    {#   <div class="label"><span><a href="{{ path('updateequipe',{'id':user.membreEquipes.id}) }} }}">Modifier l'equipe</a></span> </div>
-                                    #}
+                                  {#   <div class="label"><span><a href="{{ path('updateequipe',{'id':user.membreEquipes.id}) }} }}">Modifier l'equipe</a></span> </div>
+                                  #}
 
                                 </div>
                             </div>
@@ -287,15 +282,15 @@
 
                     <div class="ip-text">
 
-                        {% if user.isVerified==0 %}
+                        {% if user.roles=='["ROLE_USER"]' %}
                             <div class="label"><span>{{ user.username }}</span> </div>
-                        {% elseif user.isVerified==1 %}
-                            <div class="label"><span>BIENVENUE COACH!! :  {{ user.username }}</span> </div>
+                        {% elseif user.roles=='"[ROLE_COACH"]' %}
+                            <div class="label"><span>BIENVENUE MONSIEUR COACH :  {{ user.username }}</span> </div>
                         {% endif %}
 
 
 
-                        <br>
+                       <br>
                         <br>
                         <div class="container">
                             {% if user.isVerified %}
@@ -305,82 +300,66 @@
 
                             {% endif %}
 
-                            <div class="tags-cloud">
+                                <div class="tags-cloud">
 
-                                <div class="tag-list">
+                                    <div class="tag-list">
 
-                                    <div class="section-title">
-                                        <h5>LOGIN</h5>
+                                        <div class="section-title">
+                                            <h5>LOGIN</h5>
 
-                                        <a ><span>{{ user.username }}</span></a>
-                                    </div>
+                                            <a ><span>{{ user.username }}</span></a>
+                                        </div>
 
-                                    {% if user.isVerified==0 %}
+                                        {% if user.roles == ['ROLE_USER'] %}
                                         <div class="section-title">
                                             <h5>NOM ET PRENOM</h5>
 
                                             <a ><span>{{ user.fullname }}</span></a>
                                         </div>
-                                    {% elseif user.isVerified==1 %}
-                                        <div class="section-title">
-                                            <h5>SPECIALITE</h5>
+                                            {% elseif user.roles ==['ROLE_COACH'] %}
+                                                <div class="section-title">
+                                                    <h5>SPECIALITE</h5>
 
-                                            <a ><span>{{ user.specialite }}</span></a>
-                                        </div>
-                                    {% endif %}
-                                    <div class="section-title">
-                                        <h5>EMAIL</h5>
-
-                                        <a ><span>{{ user.email }}</span></a>
-                                    </div>
-                                    <div class="section-title">
-                                        <h5>ROLE</h5>
-
-                                        {% if user.isVerified==0 %}
-
-
-                                            <a ><span>Simple Utilisateur </span></a>
-
-                                        {% elseif user.isVerified==1 %}
-
-                                            <a ><span>Coach </span></a>
-
+                                                    <a ><span>{{ user.specialite }}</span></a>
+                                                </div>
                                         {% endif %}
+                                        <div class="section-title">
+                                            <h5>EMAIL</h5>
+
+                                            <a ><span>{{ user.email }}</span></a>
+                                        </div>
+                                        <div class="section-title">
+                                            <h5>MOT DE PASSE</h5>
+
+                                            <a ><span>{{ user.password }}</span></a>
+                                        </div>
                                     </div>
+
+
                                 </div>
 
-
-                            </div>
-
-                        </div>
+                                </div>
 
                         <div class="ip-text">
+                            <div class="label"><span><a href="{{ path('updateUtilisateur',{'id':user.id}) }}">Modifier</a></span> </div>
+
+                                               </div>
 
 
-                            {% if user.isVerified==0 %}
-                                <div class="label"><span><a href="{{ path('updateUtilisateur',{'id':user.id}) }}">Modifier</a></span> </div>
-                            {% elseif user.isVerified==1 %}
-                                <div class="label"><span><a href="{{ path('updatecoach1',{'id':user.id}) }}">Modifier le Profil de COACH</a></span> </div>
-                            {% endif %}
 
 
                         </div>
-
-
-
-
                     </div>
                 </div>
+
+
             </div>
 
+                </div>
+
+            </div>
 
         </div>
-
-    </div>
-
-    </div>
-
-    </div>
 
     </div>
 
