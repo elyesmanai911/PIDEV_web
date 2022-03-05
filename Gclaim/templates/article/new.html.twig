@@ -1,0 +1,145 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}New Article{% endblock %}
+
+{% block body %}
+
+    <h1>Create new Article</h1>
+    <body class="hold-transition sidebar-mini">
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- general form elements disabled -->
+        <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title">General Elements</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
+
+                <div class="row">
+
+
+                    <div class="col-sm-6">
+                        {{ form_errors(form.titre) }}
+                        {{ form_label(form.titre,"titre") }}
+                        {{ form_widget(form.titre,{'attr':{'placeholder':'titre'}}) }}
+                        <br>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        {{ form_errors(form.description) }}
+                        {#                                    <div class="form-group">#}
+                        {#                                        <label>content</label>#}
+                        {#                                        <input type="text" class="form-control" placeholder="Enter ...">#}
+                        {#                                    </div>#}
+                        {{ form_label(form.description,"description") }}
+                        {{ form_widget(form.description,{'attr':{'placeholder':'descripyion'}}) }}
+                        <br>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        {{ form_errors(form.image) }}
+                        {#                                    <div class="form-group">#}
+                        {#                                        <label>user</label>#}
+                        {#                                        <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>#}
+                        {#                                    </div>#}
+                        {{ form_label(form.image,"image") }}
+                        {{ form_widget(form.image,{'attr':{'placeholder':'image'}}) }}
+                        <br>
+                    </div>
+{#                    <div class="row">#}
+{#                        <div class="col-sm-6">#}
+{#                            {{ form_errors(form.createAt) }}#}
+{#                            #}{#                                    <div class="form-group">#}
+{#                            #}{#                                        <label>content</label>#}
+{#                            #}{#                                        <input type="text" class="form-control" placeholder="Enter ...">#}
+{#                            #}{#                                    </div>#}
+{#                            {{ form_label(form.createAt,"createAt") }}#}
+{#                            {{ form_widget(form.createAt,{'attr':{'placeholder':'createAt'}}) }}#}
+{#                            <br>#}
+{#                        </div>#}
+{#                        <div class="row">#}
+{#                            <div class="col-sm-6">#}
+{#                                {{ form_errors(form.commentaire) }}#}
+{#                                #}{#                                    <div class="form-group">#}
+{#                                #}{#                                        <label>content</label>#}
+{#                                #}{#                                        <input type="text" class="form-control" placeholder="Enter ...">#}
+{#                                #}{#                                    </div>#}
+{#                                {{ form_label(form.commentaire,"commentaire") }}#}
+{#                                {{ form_widget(form.commentaire,{'attr':{'placeholder':'commentaire'}}) }}#}
+{#                                <br>#}
+{#                            </div>#}
+
+
+
+                        </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        {{ include('article/_form.html.twig') }}
+
+                        <br>
+                    </div>
+
+                </div>
+
+
+
+                {#                        <div class="custom-file">#}
+                {#                                <input type="file" class="custom-file-input" id="customFile">#}
+                {#                                <label class="custom-file-label" for="customFile">Choose file</label>#}
+                {#                            </div>#}
+                <div class="row">
+                    <div class="col-sm-6">
+
+                        {{ form_widget(form.confirmer) }}
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        </div>
+        <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    {{ form_end(form) }}
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- ./wrapper -->
+
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- bs-custom-file-input -->
+    <script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../dist/js/demo.js"></script>
+    <!-- Page specific script -->
+    <script>
+        $(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+    </body>
+    </html>
+
+
+{% endblock %}

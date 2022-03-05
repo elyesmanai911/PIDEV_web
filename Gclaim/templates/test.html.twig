@@ -200,7 +200,7 @@
                         {% endblock %}
                     </li>
 
-                    <li><a href="{{ asset('#') }}"><span>Actualités <i class="active"></i></span></a></li>
+                    <li><a href="{{ path('affichage') }}"><span>Actualités <i class="active"></i></span></a></li>
                     <li><a href="{{ path('profil_index')}}"><span>Entraineurs <i class="fa fa-angle-down"></i></span></a>
                     <ul class="dropdown">
                         <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>
@@ -2044,12 +2044,16 @@
     <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+<<<<<<< HEAD
 
     <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js') }}"></script>
     <script src="{{ asset('js/evo-calendar.js') }}"></script>
 
 {% endblock %}
 {% block script %}{% endblock %}
+=======
+{% endblock %}
+>>>>>>> gestion-des-actualités
 </body>
 
 </html>
