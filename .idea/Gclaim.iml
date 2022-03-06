@@ -138,6 +138,20 @@
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/animsition/css" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/bootstrap/js" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/bootstrap/css" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfony/google-mailer" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/sabberworm/php-css-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/jms/metadata" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/phenx/php-font-lib" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfonycasts/verify-email-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/knplabs/knp-components" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/phenx/php-svg-lib" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfonycasts/reset-password-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/knplabs/knp-paginator-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/cmen/google-charts-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/vich/uploader-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/dompdf/dompdf" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
