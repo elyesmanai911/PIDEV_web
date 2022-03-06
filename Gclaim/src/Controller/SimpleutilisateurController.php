@@ -140,7 +140,7 @@ class SimpleutilisateurController extends AbstractController
                 ]);
             } else {
                 //$Utilisateur->setPassword(MD5($Utilisateur->getPassword(), PASSWORD_DEFAULT));
-                // $Utilisateur->setVerifPassword(password_hash($Utilisateur->getVerifPassword(), PASSWORD_DEFAULT));
+                 $Utilisateur->setVerifPassword(password_hash($Utilisateur->getVerifPassword(), PASSWORD_DEFAULT));
                 $Utilisateur->setRoles(['ROLE_USER']);
                 $Utilisateur->setIsVerified(true);
                 $em = $this->getDoctrine()->getManager();
@@ -266,6 +266,8 @@ class SimpleutilisateurController extends AbstractController
         $this->container->get('security.token_storage')->setToken(null);
         $coach = new Coach();
         $coach->setRole(0);
+        $coach->setIsVerified(true);
+
         $coach->setUserName($user->getUserName());
         $coach->setVerifPassword($user->getVerifPassword());
         $coach->setEmail($user->getEmail());
