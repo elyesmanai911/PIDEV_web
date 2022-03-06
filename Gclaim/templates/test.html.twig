@@ -12,13 +12,13 @@
     <!-- Google Font -->
     {% block css%}
 
-        <link rel="preconnect" href="{{ asset('https://fonts.gstatic.com') }}" />
+        {# <link rel="preconnect" href="{{ asset('https://fonts.gstatic.com') }}" />
 
         <link rel="stylesheet" href="{{ asset('css/button.css') }}" />
         <!-- Css Styles -->
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.css') }}"/>
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.midnight-blue.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.midnight-blue.css') }}"/> #}
 
         <link href="{{ asset('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap') }}"
               rel="stylesheet">
@@ -2044,16 +2044,13 @@
     <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-<<<<<<< HEAD
 
     <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js') }}"></script>
     <script src="{{ asset('js/evo-calendar.js') }}"></script>
 
 {% endblock %}
-{% block script %}{% endblock %}
-=======
-{% endblock %}
->>>>>>> gestion-des-actualités
+
+
 </body>
 
 </html>

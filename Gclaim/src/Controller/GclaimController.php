@@ -15,8 +15,6 @@ class GclaimController extends AbstractController
     public function index(): Response
     {
         $user = $this->getUser();
-
-
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         return $this->render('gclaim/index.html.twig', [
             'user' => $user,"tournois" => $tournois,

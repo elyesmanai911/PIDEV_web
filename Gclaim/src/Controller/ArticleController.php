@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Commentaire;
+use App\Entity\Tournoi;
 use App\Form\ArticleType;
 use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
@@ -34,7 +35,8 @@ class ArticleController extends AbstractController
      * @Route("/affichage", name="affichage", methods={"GET"})
      */
     public function affichage(Request $request ,PaginatorInterface $paginator)
-    {
+    {  $user = $this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $donnees = $this->getDoctrine()->getRepository(Article::class)->findBy([],['createAt' => 'desc']);
 
         $articles = $paginator->paginate(
@@ -44,7 +46,7 @@ class ArticleController extends AbstractController
         );
 
         return $this->render('article/affichage.html.twig', [
-            'articles' => $articles,
+            'articles' => $articles,'user' => $user,"tournois" => $tournois,
         ]);
     }
 
@@ -151,6 +153,9 @@ class ArticleController extends AbstractController
      */
     public function afficheA(ArticleRepository $articleRepository,CommentaireRepository $commentaireRepository,$id ,Request $request, EntityManagerInterface $entityManager): Response
     {
+
+        $user = $this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $article=$this->getDoctrine()->getRepository(Article::class)->find($id);
         $commentaire = new Commentaire();
         $commentaire->setCreation(new \DateTime('now'));
@@ -169,6 +174,7 @@ class ArticleController extends AbstractController
 
         return $this->render('article/afficheA.html.twig', [
             'articles' => $articleRepository->find($id),
+            'user' => $user,"tournois" => $tournois,
             'form' => $form->createView(),
             'commentaire'=>$commentaire,
            'commentaires' => $commentaireRepository->findAll(),
