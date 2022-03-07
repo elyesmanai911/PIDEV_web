@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
+use App\Entity\Produit;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/categorie")
@@ -89,5 +91,18 @@ class CategorieController extends AbstractController
         }
 
         return $this->redirectToRoute('categorie_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/categ/searchc", name="searchcateg", methods={"GET"})
+     */
+    public function searchcategorie(Request $request, NormalizerInterface $Normalizer)
+    {
+        dump($request->get('search'));
+        if (null != $request->get('search')) {
+            return $this->render('/categorie/index.html.twig', [
+                'categories' => $this->getDoctrine()->getRepository(Categorie::class)->findBy(['nom_categorie' => $request->get('search')]),
+            ]);
+        }
     }
 }

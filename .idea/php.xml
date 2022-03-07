@@ -134,6 +134,27 @@
       <path value="$PROJECT_DIR$/Gclaim/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/Gclaim/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/Gclaim/vendor/composer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfonycasts/verify-email-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/cmen/google-charts-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfonycasts/reset-password-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/google-mailer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/vich/uploader-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/dompdf/dompdf" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phenx/php-svg-lib" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/jms/metadata" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/captcha-com/symfony-captcha-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/captcha-com/captcha" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/endroid/qr-code" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/endroid/installer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/endroid/qr-code-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/bacon/bacon-qr-code" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/dasprid/enum" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

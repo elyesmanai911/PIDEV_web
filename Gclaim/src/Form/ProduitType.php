@@ -20,7 +20,7 @@ class ProduitType extends AbstractType
             ->add('description')
             ->add('prix_produit')
 //            ->add('dateAjout_produit')
-
+            ->add('Qte_produit')
             ->add('categorie', EntityType::class,['class'=>Categorie::class,'choice_label'=>'nom_categorie'])
             ->add('images', FileType::class, [
                 'label' => 'image',

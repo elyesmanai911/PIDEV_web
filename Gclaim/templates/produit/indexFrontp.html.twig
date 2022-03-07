@@ -2,7 +2,7 @@
 
 {% block title %} produit {% endblock %}
 
-{%  block body %}
+{%  block part %}
 {#    <div class="hero-slider owl-carousel">#}
 {#        <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-1.jpg') }}"></div>#}
 {#        <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-2.jpg') }}"></div>#}
@@ -10,7 +10,29 @@
 {#    </div>#}
     <!-- Instagram Post Section Begin -->
     <section class="instagram-post-section spad">
-        <div class="container">
+
+        <section class="content">
+            <div class="container-fluid">
+                <h6 class="text-center display-4" style="color: #e66a02">Chercher un produit</h6>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <form action="{{ path('searchprodfront')}}" method="GET">
+                            <div class="input-group">
+                                <input type="search" class="form-control form-control-lg" placeholder="Entrer le nom d'un produit" id="site-search" name="search">
+                                <div class="input-group-append">
+                                    <button  class="btn btn-lg btn-default">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr/>
+
+        <div class="container" id="all">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="section-title">
@@ -19,18 +41,28 @@
                      {% for produit in produits %}
                         <div class="ip-item">
                             <div class="ip-pic">
-                                 {% for image in produit.images  %}
-                                <img src="{{ asset('/uploads/' ~ image.UrlImage ) }}" alt="" width="300" height="250">
-                                {% endfor %}
+                                <div class="details-gallery-section">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="dg-slider owl-carousel">
+                                                    {% for image in produit.images  %}
+                                                        <img src="{{ asset('/uploads/' ~ image.UrlImage ) }}" width="900" height="250" >
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="ip-text">
                                 <div class="label"><span>{{ produit.prixProduit }} DT</span></div>
 
                                 <ul>
-                                    <h5><a href="{{ asset('#') }}">{{ produit.nomProduit }}</a></h5>
+                                    <h5><a href="{{ path('detailprod', {'id_produit': produit.Id_produit}) }}">{{ produit.nomProduit }}</a></h5>
                                     <li>by <span>Admin</span></li>
                                     <li><i class="fa fa-clock-o"></i> {{ produit.dateAjoutProduit ? produit.dateAjoutProduit|date('Y-m-d') : '' }}</li>
-
+                                   <li style="color: #9d1e15">{% if produit.QteProduit != 0 %}quantité: {{ produit.QteProduit }} {% else %}hors stock{% endif%} </li>
                                 </ul>
                                     <p>{{ produit.description }}</p>
                                   <div class="container">
@@ -39,7 +71,7 @@
 
                                             </div>
                                             <div class="tag-list">
-                                                <a href="{{ path('add' ,{id :produit.id_produit})}}"><span>Ajouter au panier</span></a>
+                                                <a href="{{ asset('#') }}"><span>Ajouter au panier</span></a>
 
                                             </div>
                                         </div>
@@ -51,12 +83,12 @@
 
 
 
-                    <div class="pagination-item">
-                        <a href="{{ asset('#') }}"><span>1</span></a>
-                        <a href="{{ asset('#') }}"><span>2</span></a>
-                        <a href="{{ asset('#') }}"><span>3</span></a>
-                        <a href="{{ asset('#') }}"><span>Next</span></a>
-                    </div>
+
+                        <div class="pagination-item">
+
+                            <span>{{ knp_pagination_render(produits) }}</span>
+                        </div>
+
                 </div>
                 <div class="col-lg-4 col-md-7">
                     <div class="sidebar-option">
@@ -72,86 +104,42 @@
                         </div>
                         <div class="best-of-post">
                             <div class="section-title">
-                                <h5>Best of</h5>
+                                <h5>Meilleur 5 produits</h5>
                             </div>
-                            <div class="bp-item">
-                                <div class="bp-loader">
-                                    <div class="loader-circle-wrap">
-                                        <div class="loader-circle">
-                                                <span class="circle-progress-1" data-cpid="id-1" data-cpvalue="10"
-                                                      data-cpcolor="#c20000"></span>
-                                            <div class="review-point">9.5</div>
+                            {% for p in prods %}
+                                <div class="bp-item">
+                                    <div class="bp-loader">
+                                        <div class="loader-circle-wrap">
+                                            <div class="loader-circle">
+                                                    <span class="circle-progress-1" data-cpid="id-1" data-cpvalue="{{ p.NbrVu*10 }}"
+                                                          data-cpcolor="#c20000"></span>
+                                                <div class="review-point">{{ p.NbrVu }}</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="bp-text">
-                                    <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
-                                    <ul>
-                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                        <li><i class="fa fa-comment-o"></i> 20</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="bp-item">
-                                <div class="bp-loader">
-                                    <div class="loader-circle-wrap">
-                                        <div class="loader-circle">
-                                                <span class="circle-progress-1" data-cpid="id-2" data-cpvalue="85"
-                                                      data-cpcolor="#c20000"></span>
-                                            <div class="review-point">8.5</div>
-                                        </div>
+
+                                    <div class="bp-text">
+                                        <h6><a href="{{ path('detailprod', {'id_produit': p.Id_produit}) }}">{{ p.NomProduit }}</a></h6>
+                                        <ul>
+
+                                            <li><i class="fa fa-clock-o"></i> {{ p.dateAjoutProduit ? p.dateAjoutProduit|date('Y-m-d') : '' }}</li>
+
+
+                                        </ul>
                                     </div>
                                 </div>
-                                <div class="bp-text">
-                                    <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
-                                    <ul>
-                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                        <li><i class="fa fa-comment-o"></i> 20</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="bp-item">
-                                <div class="bp-loader">
-                                    <div class="loader-circle-wrap">
-                                        <div class="loader-circle">
-                                                <span class="circle-progress-1" data-cpid="id-3" data-cpvalue="80"
-                                                      data-cpcolor="#c20000"></span>
-                                            <div class="review-point">8.0</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bp-text">
-                                    <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
-                                    <ul>
-                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                        <li><i class="fa fa-comment-o"></i> 20</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="bp-item">
-                                <div class="bp-loader">
-                                    <div class="loader-circle-wrap">
-                                        <div class="loader-circle">
-                                                <span class="circle-progress-1" data-cpid="id-4" data-cpvalue="75"
-                                                      data-cpcolor="#c20000"></span>
-                                            <div class="review-point">7.5</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bp-text">
-                                    <h6><a href="{{ asset('#') }}">This gaming laptop with a GTX 1660...</a></h6>
-                                    <ul>
-                                        <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
-                                        <li><i class="fa fa-comment-o"></i> 20</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            {% endfor %}
+
+
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
+    <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js') }}">
+    </script>
 
 {% endblock %}

@@ -177,7 +177,7 @@ class CoachController extends AbstractController
     }
 
     /**
-     * @Route("/coach/tri", name="tri1")
+     * @Route("/coach/tri", name="triii")
      */
     public function Tri(Request $request)
     {

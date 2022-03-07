@@ -3,7 +3,7 @@
 {% block title %}Produit{% endblock %}
 
 {% block body %}
-    <h1>Produit</h1>
+    <h1>{{ produit.nomProduit }}</h1>
 
     <table class="table">
         <tbody>
@@ -28,14 +28,19 @@
                 <td>{{ produit.dateAjoutProduit ? produit.dateAjoutProduit|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Image_produit</th>
-                <td>{{ produit.imageProduit }}</td>
+                <th>Quantité_produit</th>
+                <td>{{ produit.Qteproduit }}</td>
+            </tr>
+            <tr>
+                <th>nombre de vues</th>
+                <td>{{ produit.NbrVu }}</td>
             </tr>
         </tbody>
+        <center><td> <img height="200" width="200"  src="{{app.request.basepath}}/qr-code/{{produit.id_produit}}.png" alt="" ></td></center>
     </table>
-
+    <a href="{{ path('pdfd11', {'id_produit': produit.id_produit}) }}" class="btn btn-danger" >Telecharger En Pdf</a>
     <a href="{{ path('produit_index') }}" class="btn btn-primary">back to list</a>
-
+    <i class="fa-solid fa-pen-to-square"></i>
     <a href="{{ path('produit_edit', {'id_produit': produit.id_produit}) }}" class="btn btn-primary">edit</a>
 
     {{ include('produit/_delete_form.html.twig') }}

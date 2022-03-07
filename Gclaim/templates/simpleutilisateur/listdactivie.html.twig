@@ -34,6 +34,8 @@
                                 <td>{{ s.fullname }}</td>
                                 {% elseif s.roles==["ROLE_COACH"]  %}
                                 <td>{{ s.specialite }}</td>
+                                    {% elseif s.roles==["ROLE_ADMIN"]  %}
+                                        <td>{{ s.fullname }}</td>
                                 {% endif  %}
 
                                 <td> <a href="{{ path('desactivesimpleutilisateur',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Desactiver</a></td>

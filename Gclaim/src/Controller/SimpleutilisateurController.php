@@ -335,8 +335,9 @@ class SimpleutilisateurController extends AbstractController
             (new TemplatedEmail())
                 ->from(new Address('Gclaim.Gclaim@esprit.tn', 'G_Claim'))
                 ->to($Utilisateur->getEmail())
-                ->subject('Please Confirm your Email')
+                ->subject(' Confirmer la désactivation par mail ')
                 ->htmlTemplate('simpleutilisateur/confirmation_email.html.twig')
+            ->context(['user'=>$Utilisateur])
         );
         return $this->redirectToRoute('profile');
     }

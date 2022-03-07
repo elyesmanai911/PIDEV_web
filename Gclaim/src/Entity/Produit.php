@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=ProduitRepository::class)
  */
@@ -14,8 +15,9 @@ class Produit
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @Doctrine\ORM\Mapping\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id_produit;
 
@@ -28,6 +30,7 @@ class Produit
      *      minMessage = "Your first name must be at least 2 characters long",
      *      maxMessage = "Your first name cannot be longer than 20 characters"
      * )
+     * @Groups("post:read")
      */
     private $nom_produit;
 
@@ -40,18 +43,27 @@ class Produit
      *      minMessage = "Your first name must be at least 2 characters long",
      *      maxMessage = "Your first name cannot be longer than 20 characters"
      * )
+     * @Groups("post:read")
      */
     private $description;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Doctrine\ORM\Mapping\GeneratedValue
+     * * @Assert\Type(
+     *     type="float",
+     *     message="The value {{ value }} is not a valid {{ type }} you should put a float."
+     * )
      * @Assert\NotBlank
+     * @Groups("post:read")
+     * @Assert\Positive
      */
     private $prix_produit;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Assert\NotBlank
+     * @Groups("post:read")
      */
     private $dateAjout_produit;
 
@@ -60,33 +72,62 @@ class Produit
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="produits")
      * @ORM\JoinColumn(name="categorie", referencedColumnName="id_categorie")
+     * @Groups("post:read")
      */
     private $categorie;
 
     /**
-
      * @ORM\OneToMany(targetEntity=Images::class, mappedBy="imageproduit", orphanRemoval=true)
+     * @Groups("post:read")
      */
     private $images;
-    /** 
-     * @ORM\OneToMany(targetEntity=LigneCommande::class, mappedBy="Produit")
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups("post:read")
+     * @Assert\Positive
      */
-    private $ligneCommandes;
+    private $Qte_produit;
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups("post:read")
+     * @Assert\Positive
+     */
+    private $nbr_vu;
+
+
+    public function getNbrVu()
+    {
+        return $this->nbr_vu;
+    }
+
+
+    public function setNbrVu($nbr_vu): void
+    {
+        $this->nbr_vu = $nbr_vu;
+    }
+
+    public function getQteProduit()
+    {
+        return $this->Qte_produit;
+    }
+
+
+    public function setQteProduit($Qte_produit): void
+    {
+        $this->Qte_produit = $Qte_produit;
+    }
+
 
     public function __construct()
     {
-        $this->ligneCommandes = new ArrayCollection();
         $this->images = new ArrayCollection();
     }
 
-    public function getId_produit(): ?int
+    public function getid_produit(): ?int
     {
         return $this->id_produit;
     }
-
-   
-
-   
 
     public function getNomProduit(): ?string
     {
@@ -176,36 +217,6 @@ class Produit
             // set the owning side to null (unless already changed)
             if ($image->getImageproduit() === $this) {
                 $image->setImageproduit(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|LigneCommande[]
-     */
-    public function getLigneCommandes(): Collection
-    {
-        return $this->ligneCommandes;
-    }
-
-    public function addLigneCommande(LigneCommande $ligneCommande): self
-    {
-        if (!$this->ligneCommandes->contains($ligneCommande)) {
-            $this->ligneCommandes[] = $ligneCommande;
-            $ligneCommande->setProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLigneCommande(LigneCommande $ligneCommande): self
-    {
-        if ($this->ligneCommandes->removeElement($ligneCommande)) {
-            // set the owning side to null (unless already changed)
-            if ($ligneCommande->getProduit() === $this) {
-                $ligneCommande->setProduit(null);
             }
         }
 

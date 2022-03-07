@@ -138,6 +138,13 @@
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/animsition/css" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/bootstrap/js" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/bootstrap/css" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/captcha-com/symfony-captcha-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/captcha-com/captcha" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/endroid/qr-code" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/endroid/installer" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/endroid/qr-code-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/bacon/bacon-qr-code" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/dasprid/enum" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
