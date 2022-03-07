@@ -30,16 +30,9 @@
         </tbody>
     </table>
 
-<div class="container my-3 bg-light">
-    <div class="col-sm-4 col-md-2 text-center">
-    <a href="{{ path('commande_index') }}"><button type="button" class="btn btn-block btn-primary">Back</button></a>
-    </div>
-    </div>
-    <div class="container my-3 bg-light">
-    <div class="col-sm-4 col-md-2 text-center">
-    <a href="{{ path('commande_edit', {'id': commande.id}) }}"><button type="button" class="btn btn-block btn-info">Update Status</button></a>
-    </div>
-    </div>
+    <a href="{{ path('commande_index') }}"><div> Back </div> </a>
+
+    <a href="{{ path('commande_edit', {'id': commande.id}) }}"><div>Status Update </div></a>
 
     {{ include('commande/_delete_form.html.twig') }}
 {% endblock %}

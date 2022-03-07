@@ -26,6 +26,15 @@ class ProduitRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function findByN($value){
+        return $this-> createQueryBuilder('produit')
+            ->where('produit.nom_produit = :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return Produit[] Returns an array of Produit objects
     //  */

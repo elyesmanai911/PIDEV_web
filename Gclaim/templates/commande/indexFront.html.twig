@@ -7,11 +7,9 @@
 
    
                                 <div class="hardware-guides">
-
-                                
+                                <div class="section-title">
                                     <h5>Hardware guides</h5>
-                                {% for produit in produits %}
-
+                                </div>
                                 <div class="trending-item">
                                     <div class="ti-pic">
                                         <img src="{{ asset('img/trending/trending-5.jpg') }}" alt="">
@@ -22,14 +20,45 @@
                                         <ul>
                                             <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
                                             <li><i class="fa fa-comment-o"></i> 12</li>
-                                            <input type="number" class="form-control" style="width: 150px;" value="1">
-                                            <a href="{{ path('add' ,{id :produit.getId()})}}" class="nav-link" type="button">Add To Cart
                                         </ul>
                                     </div>
                                 </div>
-                                {% endfor %}
-                                
+                                <div class="trending-item">
+                                    <div class="ti-pic">
+                                        <img src="{{ asset('img/trending/trending-6.jpg') }}" alt="">
+                                    </div>
+                                    <div class="ti-text">
+                                        <h6><a href="#">Facebook wants to read your thoughts with its augmented...</a></h6>
+                                        <ul>
+                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                            <li><i class="fa fa-comment-o"></i> 12</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="trending-item">
+                                    <div class="ti-pic">
+                                        <img src="{{ asset('img/trending/trending-7.jpg') }}" alt="">
+                                    </div>
+                                    <div class="ti-text">
+                                        <h6><a href="#">This gaming laptop with a GTX 1660 Ti and 32GB of RAM is down...</a>
+                                        </h6>
+                                        <ul>
+                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                            <li><i class="fa fa-comment-o"></i> 12</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="trending-item">
+                                    <div class="ti-pic">
+                                        <img src="{{ asset('img/trending/trending-8.jpg') }}" alt="">
+                                    </div>
+                                    <div class="ti-text">
+                                        <h6><a href="#">Jalopy developer is making a game where you 'build stuff...</a></h6>
+                                        <ul>
+                                            <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                            <li><i class="fa fa-comment-o"></i> 12</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <a href="{{path("panier")}}" type="button">Proceed To Cart
-
 {% endblock %}
