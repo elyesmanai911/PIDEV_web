@@ -21,7 +21,13 @@ use App\Repository\LigneCommandeRepository;
 // Include Dompdf required namespaces
 use Dompdf\Dompdf;
 use Dompdf\Options;
-
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  * @Route("/commande")
@@ -31,11 +37,16 @@ class CommandeController extends AbstractController
     /**
      * @Route("/back", name="commande_index", methods={"GET"})
      */
-    public function index(CommandeRepository $commandeRepository): Response
+    public function index(CommandeRepository $commandeRepository, Request $request,PaginatorInterface $paginator): Response
     {
-        
+        $donnees=$commandeRepository->findAll();
+        $comm = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            5 // Nombre de résultats par page
+        );
         return $this->render('commande/index.html.twig', [
-            'commandes' => $commandeRepository->findAll(),
+            'commandes' => $comm,
             'user'=>$this->getUser(),
         ]);
     }
@@ -44,9 +55,7 @@ class CommandeController extends AbstractController
      */
 
     public function TopCart(CommandeRepository $commandeRepository): Response
-    {
-      //dd($commandeRepository);
-      
+    { 
         return $this->render('commande/index.html.twig', [
             'commandes' => $commandeRepository->findTopCart(),'user'=>$this->getUser(),
 
@@ -58,7 +67,7 @@ class CommandeController extends AbstractController
 
     public function LeastCart(CommandeRepository $commandeRepository): Response
     {
-        //dd($commandeRepository->findLeastCart());
+       
         return $this->render('commande/index.html.twig', [
             'commandes' => $commandeRepository->findLeastCart(),'user'=>$this->getUser(),
 
@@ -92,7 +101,7 @@ class CommandeController extends AbstractController
         }
         
         $commande = new Commande();
-        $commande->setIdUser(2);
+        $commande->setUser($this->getUser());
         $commande->setDateAchat(new \DateTime('now'));
         $commande->setTotal($somme);
        // $form = $this->createForm(CommandeType::class, $commande);
@@ -116,8 +125,7 @@ class CommandeController extends AbstractController
             $entityManager->flush();
             
             }
-           
-        
+            
         $session->set('cart',[]);
         $session->set('panier',[]);
     }
@@ -136,21 +144,41 @@ class CommandeController extends AbstractController
      * @Route("/{id}", name="commande_show", methods={"GET"})
      */
 
-    public function show(LigneCommandeRepository $ligneCommandeRepository,Commande $commande): Response
+    public function show(SessionInterface $s,LigneCommandeRepository $ligneCommandeRepository,CommandeRepository $commandeRepository,Commande $commande, Request $request,PaginatorInterface $paginator,MailerInterface $mailer): Response
     {
+        $somme=0;
+        $cart=$s->get('cart',[]);
+        if ($cart != []){
+            foreach ($cart as $c){
+                $somme=$somme+$c["total"];
+            }
+        }
+        $c=$commandeRepository->find($commande);
+        $username=$c->getUser()->getUserName();
+        $donnees=$ligneCommandeRepository->findByCommandeID($commande);
+        $comm = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            5 // Nombre de résultats par page
+        );
          // Configure Dompdf according to your needs
          $pdfOptions = new Options();
          $pdfOptions->set('defaultFont', 'Arial');
          
          // Instantiate Dompdf with our options
          $dompdf = new Dompdf($pdfOptions);
+         //$html= "";
          
+         
+         //dd($ligneCommandeRepository);
          // Retrieve the HTML generated in our twig file
-         $html = $this->renderView('ligne_commande/index.html.twig', [
-            'ligne_commandes' => $ligneCommandeRepository->findByCommandeID($commande),
-
+         $date=new \DateTime('now');
+         $html = $this->renderView('ligne_commande/toPDF.html.twig', [
+            'ligne_commandes' => $comm,
+            'commande'=> $c,
+            'total' => $somme,
+            'date' =>$date,
         ]);
-        $html .='<link rel="stylesheet" type="text/css" media="screen" href="styles.css" />';
 
          // Load HTML to Dompdf
          $dompdf->loadHtml($html);
@@ -162,14 +190,31 @@ class CommandeController extends AbstractController
          $dompdf->render();
  
          // Output the generated PDF to Browser (force download)
-         $dompdf->stream("mypdf.pdf", [
+         /*$dompdf->stream("mypdf.pdf", [
              "Attachment" => false
-         ]);
- 
-        return $this->render('ligne_commande/index.html.twig', [
-            'ligne_commandes' => $ligneCommandeRepository->findByCommandeID($commande),'user'=>$this->getUser(),
-
-        ]);
+         ]);*/
+         // Store PDF Binary Data
+        $output = $dompdf->output();
+        
+        // In this case, we want to write the file in the public directory
+        $publicDirectory = $this->getParameter('kernel.project_dir');
+        // e.g /var/www/project/public/mypdf.pdf
+        //dd($publicDirectory);
+        //$pdfFilepath =  ;
+        
+        // Write file to the desired path
+        file_put_contents($publicDirectory. '\\public\\pdf'.$commande->getId().'.pdf', $output);
+        $message = (new Email())
+        ->from('gclaimpidev@gmail.com')
+        ->to($c->getUser()->getEmail())
+        ->subject('Facture')
+        ->text(
+            "Bonjour Mr/Mme "
+        )
+        ->attachFromPath($publicDirectory. '\\public\\pdf'.$commande->getId().'.pdf', 'factre');
+        $mailer->send($message);
+        
+        return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
     }
 
     
@@ -239,6 +284,66 @@ class CommandeController extends AbstractController
     
     }
 
+    /**
+     * @Route("/cart/create-checkout-session", name="checkout")
+     */
+    public function checkout(SessionInterface $s)
+    {
+        
+        $somme=0;
+        $cart=$s->get('cart',[]);
+        if ($cart != []){
+            foreach ($cart as $c){
+                $somme=$somme+$c["total"];
+            }
+        }
+        //dd(count($cart));
+        \Stripe\Stripe::setApiKey('sk_test_51KaSl9LhSkNSJwhCDDrrsGKrsD2fN2yu3Wa2d71W0BrV5LIvDWFkvNxcGWJRaknLyz2WSkk2JyNHO0CN2BzHCe5L00tUwVIS0y');
+        $session = \Stripe\Checkout\Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => 'Total Commande',
+                    ],
+                    'unit_amount' => $somme*100,
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => $this->generateUrl('commande_new', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'cancel_url' => $this->generateUrl('error', [], UrlGeneratorInterface::ABSOLUTE_URL),
+        ]);
+        $this->addFlash('success', 'Your payment is succefull!');
+        return new JsonResponse([ 'id' => $session->id ]);
+
+
+    }
+
+    /**
+     * @Route("/cart/succes", name="success", methods={"GET"})
+     */
+    public function success()
+    {
+        return $this->render('panier/success.html.twig', [
+            
+            'user'=>$this->getUser(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/cart/error", name="error", methods={"GET"})
+     */
+    public function error()
+    {
+        $this->addFlash('warning', 'Your payment failed!');
+        return $this->render('panier/error.html.twig', [
+            
+            'user'=>$this->getUser(),
+        ]);
+    }
 
     /**
      * @Route("/add/{id}",name="add")
@@ -259,5 +364,7 @@ class CommandeController extends AbstractController
     
         return $this->redirectToRoute('produit', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 
 }
