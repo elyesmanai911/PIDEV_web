@@ -1,0 +1,77 @@
+
+{% extends 'back.html.twig' %}
+{% block body %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- jquery validation -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">COACH <small></small></h3>
+
+                    </div>
+
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+                        <div class="card-body">
+                            {{ error }}
+                            <div class="form-group">
+
+
+                                {{ form_label(form.username,"LOGIN") }}
+                                {{ form_widget(form.username,{'attr':{'placeholder':'LOGIN*','class':'form-control'}}) }}
+
+                            </div>
+                            <div class="form-group">
+
+
+                                {{ form_label(form.password,"MOT DE PASSE") }}
+                                {{ form_widget(form.password,{'attr':{'placeholder':'mot de passe*','class':'form-control'}}) }}
+
+                            </div>
+                            <div class="form-group">
+
+
+                                {{ form_label(form.verifpassword,"MOT DE PASSE 2") }}
+                                {{ form_widget(form.verifpassword,{'attr':{'placeholder':'mot de passe*','class':'form-control'}}) }}
+
+                            </div>
+                            <div class="form-group">
+
+
+                                {{ form_label(form.email,"ADRESSE EMAIL") }}
+                                {{ form_widget(form.email,{'attr':{'placeholder':'Adresse*','class':'form-control'}}) }}
+
+                            </div>
+                            <div class="form-group">
+
+                                {{ form_label(form.specialite,"SPECIALITE") }}
+                                {{ form_widget(form.specialite,{'attr':{'placeholder':'Specialite*','class':'form-control'}}) }}
+
+
+                            </div>
+
+
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+
+                            {{ form_widget(form.confirmer,{'attr':{'class':'btn btn-primary'}}) }}
+                        </div>
+                        {{ form_end(form) }}
+                </div>
+                <!-- /.card -->
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+
+            <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+{% endblock %}

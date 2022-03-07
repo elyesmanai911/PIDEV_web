@@ -1,0 +1,70 @@
+{% extends 'back.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">LES COACHS</h3>
+                </div>
+                <div class="nav-search-block" >
+                    <form class="form-inline" action="" method="GET">
+                        <div class="btn btn-block btn-outline-warning btn-xs">
+                            <input class="form-control form-control-navbar" type="search" name="searchspecialite"  placeholder="recherche par specialite ">
+
+                        </div>
+                    </form>
+                </div>
+                <div class="nav-search-block" >
+                    <form class="form-inline" action="" method="GET">
+                        <div class="btn btn-block btn-outline-warning btn-xs">
+                            <input class="form-control form-control-navbar" type="search" name="searchname"  placeholder="recherche par nom ">
+
+                        </div>
+                    </form>
+                </div>
+                <!-- ./card-header -->
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <td>Id</td>
+                            <td>USER_NAME</td>
+                            <td>PASSWORD</td>
+                            <td>VERIF_PASSWORD</td>
+                            <td>EMAIL</td>
+                            <td>SPECIALITE</td>
+                            <td>SUPPRIMER</td>
+                            <td>MODIFIER</td>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for s in l %}
+                            <tr data-widget="expandable-table" aria-expanded="false">
+                                <td>{{ s.id }}</td>
+                                <td>{{ s.username }}</td>
+                                <td>{{ s.password }}</td>
+                                <td>{{ s.verifpassword }}</td>
+                                <td>{{ s.email }}</td>
+                                <td>{{ s.specialite }}</td>
+                                <td> <a href="{{ path('deletecoach',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Delete</a></td>
+                                <td>  <a href="{{ path('updatecoach',{'id':s.id}) }}"class="btn btn-block btn-warning btn-sm">Update</a></td>
+
+
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                        <td>  <a href="{{ path('tri1') }}" class="btn btn-block btn-outline-warning btn-xs">trié les coachs</a></td>
+
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+{% endblock %}

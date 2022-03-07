@@ -16,11 +16,11 @@ class Commande
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="Utilisateur")
+     * @ORM\JoinColumn(name="User", referencedColumnName="id")
      */
-    private $idUser;
+    private $User;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -42,14 +42,14 @@ class Commande
         return $this->id;
     }
 
-    public function getIdUser(): ?int
+    public function getUser(): ?Utilisateur
     {
-        return $this->idUser;
+        return $this->User;
     }
 
-    public function setIdUser(int $idUser): self
+    public function setUser(Utilisateur $Utilisateur): self
     {
-        $this->idUser = $idUser;
+        $this->User = $Utilisateur;
 
         return $this;
     }

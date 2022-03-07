@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
 /**
  * @Route("/ligne/commande")
  */
@@ -19,12 +19,18 @@ class LigneCommandeController extends AbstractController
     /**
      * @Route("/", name="ligne_commande_index", methods={"GET"})
      */
-    public function index(LigneCommandeRepository $ligneCommandeRepository): Response
+    public function index(LigneCommandeRepository $ligneCommandeRepository, Request $request,PaginatorInterface $paginator): Response
     {
         
-        //dd($ligneCommandeRepository->findAll());
+        $donnees=$ligneCommandeRepository->findAll();
+        $comm = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            5 // Nombre de résultats par page
+        );
         return $this->render('ligne_commande/index.html.twig', [
-            'ligne_commandes' => $ligneCommandeRepository->findAll(),
+            'ligne_commandes' => $comm,
+            'user'=>$this->getUser(),
         ]);
     }
 
@@ -47,6 +53,7 @@ class LigneCommandeController extends AbstractController
         return $this->render('ligne_commande/new.html.twig', [
             'ligne_commande' => $ligneCommande,
             'form' => $form->createView(),
+            'user'=>$this->getUser(),
         ]);
     }
 
@@ -55,8 +62,10 @@ class LigneCommandeController extends AbstractController
      */
     public function show(LigneCommande $ligneCommande): Response
     {
+      
         return $this->render('ligne_commande/show.html.twig', [
             'ligne_commande' => $ligneCommande,
+            'user'=>$this->getUser(),
         ]);
     }
 
@@ -77,6 +86,7 @@ class LigneCommandeController extends AbstractController
         return $this->render('ligne_commande/edit.html.twig', [
             'ligne_commande' => $ligneCommande,
             'form' => $form->createView(),
+            'user'=>$this->getUser(),
         ]);
     }
 

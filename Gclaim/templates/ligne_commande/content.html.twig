@@ -20,10 +20,10 @@
                     <!--<a href="{{ path('ligne_commande_edit', {'id': ligne_commande.id}) }}"><button type="button" class="btn btn-block btn-info"><i class="fa fa-edit"></i>Edit</button></a>-->
                 </td>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
         {% endfor %}
+       
+
         </tbody>
     </table>
+    <div class="">{{ knp_pagination_render(ligne_commandes) }}</div>
+ 
