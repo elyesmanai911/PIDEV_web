@@ -195,52 +195,45 @@ class ProduitController extends AbstractController
     /**
      * @Route("/prod/filtreprod", name="filtre", methods={"GET", "POST"})
      */
-    public function filtreprod(ProduitRepository $produitRepository, CategorieRepository $categorieRepository,  PaginatorInterface $paginator, Request $request): Response
+    public function filtreprod(ProduitRepository $produitRepository, CategorieRepository $categorieRepository, Request $request,  PaginatorInterface $paginator): Response
     {$user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $cat = $request->get('cat');
-        $prod = $this->getDoctrine()
-            ->getManager()
-            ->createQuery('SELECT p FROM App\Entity\Produit p  WHERE p.categorie in (:list) ')
-            ->setParameter('list',$cat)
-            ->getResult();
+
+
         $products = $this->getDoctrine()
             ->getManager()
             ->createQuery('SELECT p FROM App\Entity\Produit p order by p.nbr_vu desc')
             ->setMaxResults(5)
             ->getResult();
-        $prod=$paginator->paginate(
-            $produitRepository->findAll(),
+        $products = $this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT p FROM App\Entity\Produit p  WHERE p.categorie in (:list) ')
+            ->setParameter('list',$cat)
+            ->getResult();
+        $produits=$paginator->paginate(
+            $products,
             $request->query->getInt('page',1),
             4
-
         );
-
-
         return $this->render('produit/indexFrontP.html.twig', [
-            'produits' => $prod,
+            'produits' => $produits,
             'categories' => $categorieRepository->findAll(),
-            'prods' => $products,'user' => $user,"tournois" => $tournois,
+            'prods' => $products,'user'=>$user,"tournois" => $tournois,
         ]);
 
     }
 
-
     /**
      * @Route("/prod/filtreprodprix", name="prixfiltre", methods={"GET", "POST"})
      */
-    public function filtreprodprix(ProduitRepository $produitRepository, CategorieRepository $categorieRepository,   PaginatorInterface $paginator, Request $request): Response
+    public function filtreprodprix(ProduitRepository $produitRepository, CategorieRepository $categorieRepository, Request $request,  PaginatorInterface $paginator): Response
     {
 
         $user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $min = $request->get('min');
         $max = $request->get('max');
-        $Produits = $this->getDoctrine()
-            ->getManager()
-            ->createQuery('SELECT p FROM App\Entity\Produit p order by p.nbr_vu desc')
-            ->setMaxResults(5)
-            ->getResult();
 
         $products = $this->getDoctrine()
             ->getManager()
@@ -248,20 +241,18 @@ class ProduitController extends AbstractController
             ->setParameter('min',$min)
             ->setParameter('max',$max)
             ->getResult();
-        $products=$paginator->paginate(
-            $produitRepository->findAll(),
+        $produits=$paginator->paginate(
+            $products,
             $request->query->getInt('page',1),
             4
-
         );
         return $this->render('produit/indexFrontP.html.twig', [
-            'produits' =>$products,
+            'produits' => $produits,
             'categories' => $categorieRepository->findAll(),
-            'prods' => $Produits,'user' => $user,"tournois" => $tournois,
+            'prods' => $products,'user' => $user,"tournois" => $tournois,
         ]);
 
     }
-
 
     /**
      * @Route("/prod/{id_produit}", name="detailprod", methods={"GET"})
@@ -372,10 +363,11 @@ class ProduitController extends AbstractController
         return $this->file($temp_file, $fileName, ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
-    /**
-     * @Route("/prod/prod1/orderbydate", name="orderdateproduit", methods={"GET"})
-     */
-    public function orderbydateproduit(ProduitRepository $produitRepository, CategorieRepository $categorieRepository, PaginatorInterface $paginator, Request $request ): Response
+
+        /**
+         * @Route("/prod/prod1/orderbydate", name="orderdateproduit", methods={"GET"})
+         */
+        public function orderbydateproduit(ProduitRepository $produitRepository, CategorieRepository $categorieRepository, PaginatorInterface $paginator, Request $request ): Response
     {$user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $products = $this->getDoctrine()
@@ -388,19 +380,17 @@ class ProduitController extends AbstractController
             ->createQuery('SELECT p FROM App\Entity\Produit p order by  p.dateAjout_produit desc')
             ->getResult();
         $produits=$paginator->paginate(
-            $produitRepository->findAll(),
+            $produits,
             $request->query->getInt('page',1),
             4
-
         );
-
-
         return $this->render('produit/indexFrontP.html.twig', [
             'produits' => $produits,
             'categories' => $categorieRepository->findAll(),
             'prods' => $products,'user' => $user,"tournois" => $tournois,
         ]);
     }
+
     /**
      * @Route("/prod/prod1/barchart", name="barchart")
      */
