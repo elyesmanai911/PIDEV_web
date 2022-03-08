@@ -157,6 +157,7 @@
       <path value="$PROJECT_DIR$/Gclaim/vendor/dasprid/enum" />
       <path value="$PROJECT_DIR$/Gclaim/vendor/stripe/stripe-php" />
       <path value="$PROJECT_DIR$/Gclaim/vendor/twilio/sdk" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/mercuryseries/flashy-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

@@ -324,9 +324,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ path('listedesdemandes') }}" class="nav-link">
+                                <a href="{{ path('commande_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>les demandes</p>
+                                    <p>Commande</p>
                                 </a>
                             </li>
                         </ul>
@@ -442,35 +442,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-table"></i>
-                            <p>
-                                Les Statistiques
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ path('stat') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>PIE CHART </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>balbla</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>blabla</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+
                     {% elseif user.roles==["ROLE_COACH"] %}
                         <li class="nav-item">
                             <a href="{{ path('rdv_show') }}" class="nav-link">

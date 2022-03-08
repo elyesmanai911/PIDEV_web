@@ -47,7 +47,7 @@ class ProduitController extends AbstractController
 
         );
         return $this->render('produit/index.html.twig', [
-            'produits' => $Produits,
+            'produits' => $Produits,'user'=>$this->getUser()
 
         ]);
 
@@ -98,12 +98,13 @@ class ProduitController extends AbstractController
             $entityManager->flush();
             $Qrcode = $qrcodeService ->qrcode("http://127.0.0.1:8000/produit/prod/{{id_produit}}",$produit -> getid_produit());
 
-            return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('produit_index', ['user'=>$this->getUser()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('produit/new.html.twig', [
             'produit' => $produit,
             'form' => $form->createView(),
+            'user'=>$this->getUser(),
             'Qrcode' => $Qrcode,
         ]);
     }
@@ -116,6 +117,7 @@ class ProduitController extends AbstractController
         $produit=$repository->find($id_produit);
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
+            'user'=>$this->getUser(),
         ]);
     }
 
@@ -151,7 +153,7 @@ class ProduitController extends AbstractController
 
         return $this->render('produit/edit.html.twig', [
             'produit' => $produit,
-            'form' => $form->createView(),
+            'form' => $form->createView(),'user'=>$this->getUser(),
         ]);
     }
 
