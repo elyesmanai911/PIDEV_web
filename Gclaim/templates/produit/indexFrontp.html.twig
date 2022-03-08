@@ -70,10 +70,17 @@
                                             <div class="section-title">
 
                                             </div>
+                                            {% if user is not null %}
                                             <div class="tag-list">
-                                                <a href="{{ asset('#') }}"><span>Ajouter au panier</span></a>
+                                                <a href="{{ path('add' ,{id :produit.id_produit})}}"><span>Ajouter au panier</span></a>
 
                                             </div>
+                                            {% else %}
+                                            <div class="tag-list">
+                                              <a href="{{ path('app_login') }}" ><span> Ajouter au panier</span></a>
+                                            </div>
+
+                                            {% endif %}
                                         </div>
                                 </div>
                             </div>

@@ -6,6 +6,7 @@ use App\Entity\Commande;
 
 use App\Entity\LigneCommande;
 use App\Entity\Achat;
+use App\Entity\Tournoi;
 use App\Form\CommandeType;
 use App\Form\AchatType;
 use App\Repository\CommandeRepository;
@@ -54,10 +55,16 @@ class CommandeController extends AbstractController
      * @Route("/top", name="top", methods={"GET"})
      */
 
-    public function TopCart(CommandeRepository $commandeRepository): Response
-    { 
+    public function TopCart(CommandeRepository $commandeRepository, Request $request,PaginatorInterface $paginator): Response
+    {
+        $donnees=$commandeRepository->findTopCart();
+        $comm = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            5 // Nombre de résultats par page
+        );
         return $this->render('commande/index.html.twig', [
-            'commandes' => $commandeRepository->findTopCart(),'user'=>$this->getUser(),
+            'commandes' =>$comm,'user'=>$this->getUser(),
 
         ]);
     }
@@ -65,22 +72,26 @@ class CommandeController extends AbstractController
      * @Route("/least", name="least", methods={"GET"})
      */
 
-    public function LeastCart(CommandeRepository $commandeRepository): Response
+    public function LeastCart(CommandeRepository $commandeRepository, Request $request,PaginatorInterface $paginator): Response
     {
-       
+        $donnees=$commandeRepository->findLeastCart();
+        $comm = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            5 // Nombre de résultats par page
+        );
         return $this->render('commande/index.html.twig', [
-            'commandes' => $commandeRepository->findLeastCart(),'user'=>$this->getUser(),
+            'commandes' => $comm,'user'=>$this->getUser(),
 
         ]);
     }
-
     /**
      * @Route("/front", name="commande", methods={"GET"})
      */
 
     public function indexFront(ProduitRepository $produitRepository,SessionInterface $session): Response
     {
-       
+
         return $this->render('commande/indexFront.html.twig', [
             'produits' =>  $produitRepository->findAll(),'user'=>$this->getUser(),
         ]);
@@ -95,41 +106,41 @@ class CommandeController extends AbstractController
         $somme=0;
         $cart=$session->get('cart',[]);
         if ($cart != []){
-        foreach ($cart as $c){
-            
-            $somme=$somme+$c["total"];
-        }
-        
-        $commande = new Commande();
-        $commande->setUser($this->getUser());
-        $commande->setDateAchat(new \DateTime('now'));
-        $commande->setTotal($somme);
-       // $form = $this->createForm(CommandeType::class, $commande);
-        //$form->handleRequest($request);
-        $commande->setLivrer(false);
-        
-        //if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($cart as $c){
+
+                $somme=$somme+$c["total"];
+            }
+
+            $commande = new Commande();
+            $commande->setUser($this->getUser());
+            $commande->setDateAchat(new \DateTime('now'));
+            $commande->setTotal($somme);
+            // $form = $this->createForm(CommandeType::class, $commande);
+            //$form->handleRequest($request);
+            $commande->setLivrer(false);
+
+            //if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($commande);
             $entityManager->flush();
-            
-            foreach ($cart as $p ){
-              
-            $produit=$produitRepository->find($p['id']);
-            $ligneCommande= new LigneCommande();
-            $ligneCommande->setProduit($produit);
-            $ligneCommande->setQuantite($p['quantite']);
-            $comm=$commandeRepository->find($commande->getId());
-            $ligneCommande->setCommande($comm);
 
-            $entityManager->persist($ligneCommande);
-            $entityManager->flush();
-            
+            foreach ($cart as $p ){
+
+                $produit=$produitRepository->find($p['id']);
+                $ligneCommande= new LigneCommande();
+                $ligneCommande->setProduit($produit);
+                $ligneCommande->setQuantite($p['quantite']);
+                $comm=$commandeRepository->find($commande->getId());
+                $ligneCommande->setCommande($comm);
+
+                $entityManager->persist($ligneCommande);
+                $entityManager->flush();
+
             }
-            
-        $session->set('cart',[]);
-        $session->set('panier',[]);
-    }
-            return $this->redirectToRoute('produit', [], Response::HTTP_SEE_OTHER);
+
+            $session->set('cart',[]);
+            $session->set('panier',[]);
+        }
+        return $this->redirectToRoute('produit', [], Response::HTTP_SEE_OTHER);
         //}
 
 
@@ -161,85 +172,85 @@ class CommandeController extends AbstractController
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
             5 // Nombre de résultats par page
         );
-         // Configure Dompdf according to your needs
-         $pdfOptions = new Options();
-         $pdfOptions->set('defaultFont', 'Arial');
-         
-         // Instantiate Dompdf with our options
-         $dompdf = new Dompdf($pdfOptions);
-         //$html= "";
-         
-         
-         //dd($ligneCommandeRepository);
-         // Retrieve the HTML generated in our twig file
-         $date=new \DateTime('now');
-         $html = $this->renderView('ligne_commande/toPDF.html.twig', [
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        //$html= "";
+
+
+        //dd($ligneCommandeRepository);
+        // Retrieve the HTML generated in our twig file
+        $date=new \DateTime('now');
+        $html = $this->renderView('ligne_commande/toPDF.html.twig', [
             'ligne_commandes' => $comm,
             'commande'=> $c,
             'total' => $somme,
             'date' =>$date,
         ]);
 
-         // Load HTML to Dompdf
-         $dompdf->loadHtml($html);
-         
-         // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-         $dompdf->setPaper('A4', 'portrait');
- 
-         // Render the HTML as PDF
-         $dompdf->render();
- 
-         // Output the generated PDF to Browser (force download)
-         /*$dompdf->stream("mypdf.pdf", [
-             "Attachment" => false
-         ]);*/
-         // Store PDF Binary Data
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        /*$dompdf->stream("mypdf.pdf", [
+            "Attachment" => false
+        ]);*/
+        // Store PDF Binary Data
         $output = $dompdf->output();
-        
+
         // In this case, we want to write the file in the public directory
         $publicDirectory = $this->getParameter('kernel.project_dir');
         // e.g /var/www/project/public/mypdf.pdf
         //dd($publicDirectory);
         //$pdfFilepath =  ;
-        
+
         // Write file to the desired path
         file_put_contents($publicDirectory. '\\public\\pdf'.$commande->getId().'.pdf', $output);
         $message = (new Email())
-        ->from('gclaimpidev@gmail.com')
-        ->to($c->getUser()->getEmail())
-        ->subject('Facture')
-        ->text(
-            "Bonjour Mr/Mme "
-        )
-        ->attachFromPath($publicDirectory. '\\public\\pdf'.$commande->getId().'.pdf', 'factre');
+            ->from('gclaimpidev@gmail.com')
+            ->to($c->getUser()->getEmail())
+            ->subject('Facture')
+            ->text(
+                "Bonjour Mr/Mme "
+            )
+            ->attachFromPath($publicDirectory. '\\public\\pdf'.$commande->getId().'.pdf', 'factre');
         $mailer->send($message);
-        
+
         return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    
+
 
     /**
      * @Route("/{id}/edit", name="commande_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
     {
-       // $form = $this->createForm(CommandeType::class, $commande);
+        // $form = $this->createForm(CommandeType::class, $commande);
         $commande->setLivrer(!$commande->getLivrer());
         $entityManager->flush();
-       // $form->handleRequest($request);
+        // $form->handleRequest($request);
 
-     //   if ($form->isSubmitted() && $form->isValid()) {
-           
+        //   if ($form->isSubmitted() && $form->isValid()) {
 
-            return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
+
+        return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
         //}
-     
 
-      /*  return $this->render('commande/edit.html.twig', [
-            'commande' => $commande,
-            'form' => $form->createView(),
-        ]);*/
+
+        /*  return $this->render('commande/edit.html.twig', [
+              'commande' => $commande,
+              'form' => $form->createView(),
+          ]);*/
     }
 
     /**
@@ -269,19 +280,21 @@ class CommandeController extends AbstractController
      */
     public function ToConfirmCart(Request $request ): Response
     {
+        $user = $this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $achat = new Achat();
         $form = $this->createForm(AchatType::class, $achat);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             return $this->redirectToRoute('commande_new', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('panier/form.html.twig', [
             'achat' => $achat,
             'form' => $form->createView(),
-            'user'=>$this->getUser(),
+            'user' => $user,"tournois" => $tournois,
         ]);
-    
+
     }
 
     /**
@@ -289,7 +302,7 @@ class CommandeController extends AbstractController
      */
     public function checkout(SessionInterface $s)
     {
-        
+
         $somme=0;
         $cart=$s->get('cart',[]);
         if ($cart != []){
@@ -327,7 +340,7 @@ class CommandeController extends AbstractController
     public function success()
     {
         return $this->render('panier/success.html.twig', [
-            
+
             'user'=>$this->getUser(),
         ]);
     }
@@ -340,7 +353,7 @@ class CommandeController extends AbstractController
     {
         $this->addFlash('warning', 'Your payment failed!');
         return $this->render('panier/error.html.twig', [
-            
+
             'user'=>$this->getUser(),
         ]);
     }
@@ -350,21 +363,22 @@ class CommandeController extends AbstractController
      */
     public function add($id ,SessionInterface $session)
     {
-        $panier = $session->get("cart",[]);
-        
 
-        
+        $panier = $session->get("cart",[]);
+
+
+
         if (!empty($panier[$id])){
             $panier[$id]['quantite']=$panier[$id]['quantite']+1;
         }else{
             $panier[$id]['quantite']=1;
         }
-       
+
         $session->set("cart",$panier);
-    
+
         return $this->redirectToRoute('produit', [], Response::HTTP_SEE_OTHER);
     }
 
-    
+
 
 }
