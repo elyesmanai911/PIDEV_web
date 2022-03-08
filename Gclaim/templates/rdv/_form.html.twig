@@ -1,11 +1,10 @@
 {{ form_start(form) }}
-
+  {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ form_errors(form.date) }}
-{{ form_label(form.date) }}
 {{ form_widget(form.date) }}
 <br>
 
 
 
-<button class="btn">{{ button_label|default('Save') }}</button>
+<button class="btn btn-lg btn-primary" style="background: #c24400;color:white ">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

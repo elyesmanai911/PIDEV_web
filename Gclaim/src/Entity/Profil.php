@@ -63,6 +63,11 @@ class Profil
      */
     private $rdvs;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $numero;
+
     public function __construct()
     {
         $this->rdvs = new ArrayCollection();
@@ -159,6 +164,18 @@ class Profil
                 $rdv->setCoach(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(string $numero): self
+    {
+        $this->numero = $numero;
 
         return $this;
     }

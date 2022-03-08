@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Twilio\Rest\Client;
 
 /**
  * @Route("/profil")
@@ -67,7 +68,19 @@ class ProfilController extends AbstractController
             $profil->setUser($user);
             $entityManager->persist($profil);
             $entityManager->flush();
+            // Send an SMS using Twilio's REST API and PHP
 
+            $sid = "AC011f55307a119c4e2af431ef17eed27e"; // Your Account SID from www.twilio.com/console
+            $token = "70e51c43b3a15c4c1ea429b55c5d48ab"; // Your Auth Token from www.twilio.com/console
+
+            $client = new Client($sid, $token);
+            $message = $client->messages->create(
+                '+216'.$profil->getNumero(), // Text this number
+                [
+                    'from' => '+17128827707', // From a valid Twilio number
+                    'body' => 'Félicitations! Vous êtes desormais un coach'
+                ]
+            );
             return $this->redirectToRoute('profil_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -116,7 +129,7 @@ class ProfilController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="profil_delete", methods={"GET" , "POST"}))
+     * @Route("/{id}", name="pro_delete", methods={"GET" , "POST"}))
      */
     public function delete(Request $request, Profil $profil, EntityManagerInterface $entityManager): Response
     {

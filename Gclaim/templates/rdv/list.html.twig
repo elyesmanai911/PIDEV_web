@@ -23,6 +23,7 @@
                         </thead>
                         <tbody>
                         {% for s in rdv %}
+                        {% if s.isVerified == 1 %}
                             <tr data-widget="expandable-table" aria-expanded="false">
                                 <td>{{ s.id }}</td>
                                 <td>{{ s.date|date }}</td>
@@ -35,6 +36,7 @@
 
 
                             </tr>
+                        {% endif %}
                         {% endfor %}
 
                         </tbody>

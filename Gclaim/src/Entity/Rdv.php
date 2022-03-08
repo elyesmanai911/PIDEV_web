@@ -35,7 +35,10 @@ class Rdv
      * @ORM\ManyToOne(targetEntity=SimpleUtilisateur::class, inversedBy="rdvs")
      */
     private $user;
-
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isVerified = false;
 
     public function getId(): ?int
     {
@@ -77,6 +80,16 @@ class Rdv
 
         return $this;
     }
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
 
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
 
 }

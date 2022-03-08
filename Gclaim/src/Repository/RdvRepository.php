@@ -50,4 +50,17 @@ class RdvRepository extends ServiceEntityRepository
         ;
     }
 
+    public function verifRDV($id): ?Rdv
+    {
+        return $this->createQueryBuilder('r')
+            ->where( "r.user = :id" )
+            ->andWhere('r.isVerified = :val')
+            ->setMaxResults(1)
+            ->setParameter('id', $id)
+            ->setParameter('val', false)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 }

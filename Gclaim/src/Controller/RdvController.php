@@ -9,10 +9,15 @@ use App\Form\RdvType;
 use App\Repository\ProfilRepository;
 use App\Repository\RdvRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Security\EmailVerifier;
+use Symfony\Component\Mime\Address;
+use Twilio\Rest\Client;
 
 /**
  * @Route("/rdv")
@@ -20,6 +25,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class RdvController extends AbstractController
 {
 
+    private EmailVerifier $emailVerifier;
+
+    public function __construct(EmailVerifier $emailVerifier)
+    {
+        $this->emailVerifier = $emailVerifier;
+    }
     /**
      * @Route("/", name="rdv_index", methods={"GET"})
      */
@@ -50,9 +61,19 @@ $error='safe';
         if ($form->isSubmitted() && $form->isValid()) {
             if ($rep->verif($rdv->getDate(), $id) == null) {
                 $rdv->setCoach($coach);
+                $rdv->setIsVerified(false);
                 $rdv->setUser($user);
                 $entityManager->persist($rdv);
                 $entityManager->flush();
+
+
+                $this->emailVerifier->sendEmailConfirmation('app_rdv_verify_email', $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('Gclaim.Gclaim@esprit.tn', 'G_Claim'))
+                        ->to($user->getEmail())
+                        ->subject('Confirmer votre rendez-vous')
+                        ->htmlTemplate('rdv/confirmation_email.html.twig')
+                );
 
                 return $this->redirectToRoute('rdv_index', [], Response::HTTP_SEE_OTHER);
             } else {
@@ -122,7 +143,30 @@ $error='safe';
             array('rdv' => $activites));
 
     }
+    /**
+     * @Route("/verify/rdv/email", name="app_rdv_verify_email")
+     */
+    public function verifyRdvEmail(Request $request, RdvRepository $rep): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+        // validate email confirmation link, sets User::isVerified=true and persists
+
+        $val = $rep->verifRDV($this->getUser()->getId());
+
+        try {
+            $this->emailVerifier->handleEmailConfirmation1($request, $this->getUser(),$val);
+        } catch (VerifyEmailExceptionInterface $exception) {
+            $this->addFlash('verify_email_error', $exception->getReason());
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        // @TODO Change the redirect on success and handle or remove the flash message in your templates
+        $this->addFlash('success', 'Your email address has been verified.');
+
+        return $this->redirectToRoute('rdv_index');
+    }
 
     /**
      * @Route("/{id}", name="rdv_delete", methods={"GET" , "POST"})
