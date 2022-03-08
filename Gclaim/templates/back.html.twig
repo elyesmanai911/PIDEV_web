@@ -234,6 +234,12 @@
                                     <p>l'ajout d'une categorie</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="  {{ path('addJeu') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>l'ajout d'un Jeu</p>
+                                </a>
+                            </li>
                         </ul>
 
                     </li>
@@ -316,7 +322,7 @@
                     </li>
 
 
-                            <p>
+
 
                <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -354,6 +360,40 @@
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-procedures"></i>
+                            <p>
+                                Tournoi
+                                <i class="right fas fa-angle-left"></i>
+
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a  href="{{ path('listTournoi') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Les Tournois</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('tournoicalendar') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Calendrier Tournoi</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('listJeu') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>les Jeux</p>
+                                </a>
+                            </li>
+
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('commentaire_index') }}" class="nav-link">
@@ -428,7 +468,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Blank Page</h1>
+                        <h1>G_CLAIM</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">

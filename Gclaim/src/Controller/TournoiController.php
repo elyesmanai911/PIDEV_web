@@ -12,15 +12,22 @@ use App\Form\TournoiType;
 use App\Repository\EquipeRepository;
 use App\Repository\SimpleUtilisateurRepository;
 use App\Repository\TournoiRepository;
+use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Dompdf\Dompdf;
-use Symfony\Flex\Options;
+use Dompdf\Options;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Validator\Constraints\Email;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class TournoiController extends AbstractController
 {
@@ -48,15 +55,25 @@ class TournoiController extends AbstractController
     public function traff($id): Response
     {
         $user = $this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $tournoi = $this->getDoctrine()->getRepository(Tournoi::class)->find($id);
         return $this->render('tournoi/tournoi.html.twig', [
-            'controller_name' => 'TournoiController', 'tournoi'=>$tournoi, 'user' => $user
+            'controller_name' => 'TournoiController', 'tournoi'=>$tournoi,'tournois'=>$tournois, 'user' => $user
         ]);
+    }
+    /**
+     * @Route("/listTournois/{id}", name="listTournois")
+     */
+    public function listTournois($id)
+    {
+        $tournoi=$this->getDoctrine()->getRepository(Tournoi::class)->find($id);
+        return $this->render("tournoi/liste.html.twig",array("tournoi"=>$tournoi,'user'=>$this->getUser()));
     }
     /**
      * @Route("/rejoindre/{id}", name="rejoindre")
      */
-    public function rejoindre($id,TournoiRepository $repository,Request $request,SimpleUtilisateurRepository $rep,EquipeRepository $repp)
+    public function rejoindre($id,TournoiRepository $repository,Request $request,UtilisateurRepository $rep,EquipeRepository $repp)
     {
         $userr = $this->getUser()->getUsername();
         $idd=$rep->utilisateurbyname($userr);
@@ -65,9 +82,9 @@ class TournoiController extends AbstractController
         if($equipe==Null)
         {
             $user=$this->getUser();
-            $equip = $repp->equip();
+            $equip =$repp->equip();
 
-                $eq=$equip[0];
+            $eq=$equip[0];
 
             $eq->addSimpleutilisateur($user);
             $tournoi->addEquipe($eq);
@@ -78,14 +95,17 @@ class TournoiController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($tournoi);
             $em->flush();
+
         }
-       else {
-           $equipp = $equipe[0];
-           $tournoi->addEquipe($equipp);
-           $em = $this->getDoctrine()->getManager();
-           $em->persist($tournoi);
-           $em->flush();
-       }
+        else {
+            $equipp = $equipe[0];
+            $tournoi->addEquipe($equipp);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tournoi);
+            $em->flush();
+
+        }
+
         return $this->redirectToRoute('listtTournoi');
 
 
@@ -123,37 +143,60 @@ class TournoiController extends AbstractController
      */
     public function listTournoi()
     {
+        $user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
-        return $this->render('tournoi/list.html.twig', array("tournois" => $tournois));
+        return $this->render('tournoi/list.html.twig', array("tournois" => $tournois,'user' => $user));
     }
-
     /**
      * @Route("/deleteTournoi/{id}", name="deleteTournoi")
      */
-    public function deleteTournoi($id)
+    public function deleteTournoi($id,\Swift_Mailer $mailer )
     {
         $tournoi = $this->getDoctrine()->getRepository(Tournoi::class)->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($tournoi);
         $em->flush();
+
+        $message = (new \Swift_Message('New'))
+
+            ->setFrom('elyesmanai7@gmail.com')
+
+            ->setTo('elyesmanai7@gmail.com')
+
+            ->setSubject('Tournoi Annulé !')
+
+
+            ->setBody(
+                $this->renderView('emails/emails/tournoi.html.twig', compact('tournoi')),
+                'text/html'
+            );
+
+        $mailer->send($message);
         return $this->redirectToRoute("listTournoi");
     }
+
     /**
      * @Route("/addTournoi", name="addTournoi")
      */
     public function addTournoi(Request $request)
     {
+        $user = $this->getUser();
+
         $tournoi = new Tournoi();
         $form = $this->createForm(TournoiType::class, $tournoi);
         $form->add('save',SubmitType::class,['label' => 'Enregistrer']);
         $form->handleRequest($request);
         if ($form->isSubmitted()&&$form->isValid()) {
+            $file = $tournoi->getImage();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('images_directory'),$fileName);
             $em = $this->getDoctrine()->getManager();
+            $tournoi->setImage($fileName);
             $em->persist($tournoi);
             $em->flush();
-            return $this->redirectToRoute('listTournoi');
+            return $this->redirectToRoute('listTournoi', array('user' => $user));
         }
-        return $this->render("tournoi/add.html.twig",array('tournoi'=>$form->createView()));
+        return $this->render("tournoi/add.html.twig",array('tournoi'=>$form->createView(),'user'=>$this->getUser(),));
     }
 
     /**
@@ -166,35 +209,41 @@ class TournoiController extends AbstractController
         $form->add('save',SubmitType::class,['label' => 'Enregistrer']);
         $form->handleRequest($request);
         if ($form->isSubmitted()&&$form->isValid()) {
+            $file = $tournoi->getImage();
+            $fileName =md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('images_directory'),$fileName);
             $em = $this->getDoctrine()->getManager();
+            $em->persist($tournoi);
+            $tournoi->setImage($fileName);
             $em->flush();
             return $this->redirectToRoute('listTournoi');
         }
-        return $this->render("tournoi/update.html.twig",array('tournoi'=>$form->createView()));
+        return $this->render("tournoi/update.html.twig",array('tournoi'=>$form->createView(),'user'=>$this->getUser()));
     }
 
     /**
      * @Route("/pdfd/{id}", name="pdfd", methods={"GET"})
      */
-    public function pdfd ($id,TournoiRepository $repository,Request $request,SimpleUtilisateurRepository $rep,EquipeRepository $repp)
+    public function pdfd ($id,TournoiRepository $repository,Request $request,UtilisateurRepository $rep,EquipeRepository $repp): Response
     {
-        $user = $this->getUser();
-        $userr = $this->getUser()->getUsername();
+        $user=$this->getUser();
+        $userr=$this->getUser()->getUsername();
         $idd=$rep->utilisateurbyname($userr);
         $equipe =$repp->listEquipeparuti($idd);
+        $eq=$equipe[0];
         $ut=$rep->listutiparequip($equipe[0]->getId());
         $tournoi = $repository->find($id);
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();
-//        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->set('defaultFont', 'Arial');
 
         // Instantiate Dompdf with our options
         $dompdf = new Dompdf($pdfOptions);
-//        $produit = $produitRepository->findAll();
+
 
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('/tournoi/pdftournoi.html.twig',[
-            'tournoi' => $tournoi,'user' => $user,'uts' => $ut
+            'tournoi' => $tournoi,'user' => $user,'uts' => $idd[0],'equipe'=>$eq
         ]);
 
         // Load HTML to Dompdf
@@ -210,6 +259,18 @@ class TournoiController extends AbstractController
         $dompdf->stream("Tournoi.pdf", [
             "Attachment" => true
         ]);
+        return $this->render('tournoi/pdftournoi.html.twig', [
+            'controller_name' => 'TournoiController', 'tournoi'=>$tournoi,'uts'=>$idd, 'user' => $user,'equipe'=>$eq
+        ]);
+    }
+    /**
+     * @Route("/calendar", name="tournoicalendar", methods={"GET"})
+     */
+    public function calendar(): Response
+    {
+        $user=$this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+        return $this->render('tournoi/calendar.html.twig', [ 'user' => $user ,'tournois'=>$tournois,]);
     }
 
 }

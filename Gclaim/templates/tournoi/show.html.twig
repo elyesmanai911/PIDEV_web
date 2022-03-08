@@ -1,6 +1,6 @@
 {% extends 'test.html.twig' %}
 {% block navb %}
-    <div class="megamenu-wrapper">
+    <div class="megamenu-wrapper"  style="margin-top: 180px">
         <ul class="mw-nav">
             <li><a href="{{ asset('#') }}"><span>Playstation</span></a></li>
             <li><a href="{{ asset('#') }}"><span>Windows</span></a></li>
@@ -80,9 +80,13 @@
 {% endblock %}
 {% block body %}
 
-
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
     <div class="hero-slider owl-carousel">
-        <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-5.jpg') }}"></div>
+        <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-1.jpg') }}"></div>
         <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-2.jpg') }}"></div>
         <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-3.jpg') }}"></div>
         <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-1.jpg') }}"></div>
@@ -98,7 +102,7 @@
             {% for tournoi in tournois %}
             <div class="ip-item">
                 <div class="ip-pic">
-                    <img src="{{ asset('img/instagram/insta-1.jpg') }}" alt="">
+                    <img src="{{ asset(tournoi.image )}}" alt="">
                 </div>
                 <div class="ip-text">
                     <div class="label"><span>{{ tournoi.jeu }}</span></div>
@@ -111,8 +115,10 @@
                     </ul>
                     <p>{{ tournoi.description}}</p>
                 </div>
+                <a href={{ path('pdfd', {'id': tournoi.id}) }}  class="btn btn-danger" >Telecharger En Pdf</a>
             </div>
             {% endfor %}
+
            <!-- <div class="ip-item">
                 <div class="ip-pic">
                     <img src="{{ asset('img/instagram/insta-2.jpg') }}" alt="">
@@ -173,4 +179,5 @@
     </div>
 </div>
     </section>
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 {% endblock %}

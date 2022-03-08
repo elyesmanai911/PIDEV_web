@@ -10,5 +10,9 @@ return [
         'ImageWidth' => 250,
         'ImageHeight' => 50,
         'margin-left' =>500,
+    ],  'ExampleCaptcha' => [
+        'UserInputID' => 'captchaCode',
+        'ImageWidth' => 250,
+        'ImageHeight' => 50,
     ],
 ];

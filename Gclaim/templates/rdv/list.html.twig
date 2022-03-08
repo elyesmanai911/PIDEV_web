@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">LES COACHS</h3>
+                    <h3 class="card-title">LES RENDEZ_VOUS</h3>
                 </div>
                 <!-- ./card-header -->
                 <div class="card-body">
@@ -29,9 +29,8 @@
                                 <td>{{ s.date|date }}</td>
                                 <td>{{ s.coach.username }}</td>
                                  <td>{{ s.user.username }}</td>
-
-                                 <td> <a href="{{ path('rdv_delete',{'id':s.id}) }}">Delete</a></td>
-                                <td>  <a href="{{ path('rdv_edit',{'id':s.id}) }}">Update</a></td>
+                                <td> <a href="{{ path('rdv_delete',{'id':s.id}) }} " class="btn btn-block btn-warning btn-sm">Delete</a></td>
+                                <td> <a href="{{ path('rdv_edit',{'id':s.id}) }}" class="btn btn-block btn-warning btn-sm">Update</a></td>
 
 
 

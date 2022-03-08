@@ -148,6 +148,9 @@
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/stripe/stripe-php" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/twilio/sdk" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/mercuryseries/flashy-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/tattali/calendar-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/symfony/swiftmailer-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/swiftmailer/swiftmailer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -71,10 +71,12 @@
 
                                             </div>
                                             {% if user is not null %}
+                                               {% if produit.QteProduit != 0 %}
                                             <div class="tag-list">
                                                 <a href="{{ path('add' ,{id :produit.id_produit})}}"><span>Ajouter au panier</span></a>
 
                                             </div>
+                                                   {% endif %}
                                             {% else %}
                                             <div class="tag-list">
                                               <a href="{{ path('app_login') }}" ><span> Ajouter au panier</span></a>

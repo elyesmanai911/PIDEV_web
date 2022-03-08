@@ -1,4 +1,4 @@
-{% extends 'test.html.twig' %}
+{% extends 'base.html.twig' %}
 {% block navb %}
     <div class="megamenu-wrapper">
         <ul class="mw-nav">
@@ -80,9 +80,9 @@
 {% endblock %}
 {% block body %}
 
-
+<section>
     <div class="hero-slider owl-carousel">
-        <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-5.jpg') }}"></div>
+        <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-1.jpg') }}"></div>
         <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-2.jpg') }}"></div>
         <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-3.jpg') }}"></div>
         <div class="hs-item set-bg" data-setbg="{{ asset('img/hero/hero-1.jpg') }}"></div>
@@ -172,4 +172,5 @@
     </div>
 </div>
     </section>
+</section>
 {% endblock %}

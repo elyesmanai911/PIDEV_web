@@ -60,7 +60,6 @@ class Jeu
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Assert\NotBlank(message="la date est  obligatoire")
-     * @Assert\GreaterThan("Today",message="Saisir une date à partir de la date d'aujourd'hui")
      */
     private $dateS;
 

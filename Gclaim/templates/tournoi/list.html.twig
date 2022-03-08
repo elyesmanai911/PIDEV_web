@@ -20,6 +20,7 @@
                             <td>DATE_CREATION</td>
                             <td>DATE_EVENEMENT</td>
                             <td>HEURE_EVENEMENT</td>
+                            <td>IMAGE</td>
                             <td>SUPPRIMER</td>
                             <td>MODIFIER</td>
                         </tr>
@@ -34,6 +35,9 @@
                                 <td>{{ tournoi.datec|date("m/d/Y") }}</td>
                                 <td>{{ tournoi.dateev|date("m/d/Y") }}</td>
                                 <td>{{ tournoi.heureev ? tournoi.heureev|date('H:i')}}</td>
+                                <td><img src ="{{ asset(tournoi.image )}}"
+                                         alt="" height="80" width="80"></td>
+                                
                                 <td>  <a href="{{ path('deleteTournoi',{'id':tournoi.id},{'attr':{'class':'btn btn-primary'}}) }}">Delete</a></td>
                                 <td>    <a href="{{ path('updateTournoi',{'id':tournoi.id},{'attr':{'class':'btn btn-primary'}}) }}">Update</a>
 
@@ -50,5 +54,6 @@
             <!-- /.card -->
         </div>
     </div>
+
     <!-- /.row -->
 {% endblock %}

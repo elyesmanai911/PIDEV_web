@@ -75,7 +75,7 @@ $error='safe';
                         ->htmlTemplate('rdv/confirmation_email.html.twig')
                 );
 
-                return $this->redirectToRoute('rdv_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('profil_index', [], Response::HTTP_SEE_OTHER);
             } else {
 
                 $error = 'unsafe';

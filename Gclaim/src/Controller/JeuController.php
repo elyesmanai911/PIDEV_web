@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
-class JeuController extends AbstractController
+class   JeuController extends AbstractController
 {
     /**
      * @Route("/jeu", name="jeu")
@@ -31,7 +31,7 @@ class JeuController extends AbstractController
     public function back(): Response
     {
         return $this->render('back.html.twig', [
-            'controller_name' => 'JeuController',
+            'controller_name' => 'JeuController','user'=>$this->getUser()
         ]);
     }
 
@@ -41,7 +41,7 @@ class JeuController extends AbstractController
     public function show(): Response
     {
         return $this->render('jeu/show.html.twig', [
-            'controller_name' => 'JeuController',
+            'controller_name' => 'JeuController','user'=>$this->getUser()
         ]);
     }
 
@@ -51,7 +51,7 @@ class JeuController extends AbstractController
     public function listTournoisByJeu(TournoiRepository  $repository,$id)
     {
         $tournois=$repository->listTournoiByJeu($id);
-        return $this->render("tournoi/list.html.twig",array("tournois"=>$tournois));
+        return $this->render("tournoi/list.html.twig",array("tournois"=>$tournois,'user'=>$this->getUser()));
     }
     /**
      * @Route("/listJeu", name="listJeu")
@@ -59,7 +59,7 @@ class JeuController extends AbstractController
     public function listJeu()
     {
         $jeus=$this->getDoctrine()->getRepository(Jeu::class)->findAll();
-        return $this->render('jeu/list.html.twig', array("jeus" => $jeus));
+        return $this->render('jeu/list.html.twig', array("jeus" => $jeus,'user'=>$this->getUser()));
     }
     /**
      * @Route("/listtJeu", name="listtJeu")
@@ -102,7 +102,7 @@ class JeuController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('listJeu');
         }
-        return $this->render("jeu/add.html.twig",array('jeu'=>$form->createView()));
+        return $this->render("jeu/add.html.twig",array('jeu'=>$form->createView(),'user'=>$this->getUser()));
     }
 
     /**
@@ -119,10 +119,11 @@ class JeuController extends AbstractController
             $file->move($this->getParameter('images_directory'),$fileName);
             $em = $this->getDoctrine()->getManager();
             $jeu->setImage($fileName);
+            $em->persist($jeu);
             $em->flush();
             return $this->redirectToRoute('listJeu');
         }
-        return $this->render("jeu/update.html.twig",array('jeu'=>$form->createView()));
+        return $this->render("jeu/update.html.twig",array('jeu'=>$form->createView(),'user'=>$this->getUser()));
     }
 
 }

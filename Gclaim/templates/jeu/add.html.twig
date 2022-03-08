@@ -10,10 +10,7 @@
         <h3 class="card-title"> Ajouter un jeu </h3>
     </div>
 <div class="card-body">
-    {% if (form_errors(jeu.nomjeu)) not in ["veuillez saisir le nom du jeu","le nom du jeu doit etre supérieur a 6 caracteres","le nom du jeu ne doit pas depasser 15 caracteres"]%}
 
-
-    {% endif %}
     <div class="form-group">
 {{ form_label(jeu.nomjeu,"Nom du jeu",{'attr':{'class':'exampleInputEmail1'}}) }}
     </div>

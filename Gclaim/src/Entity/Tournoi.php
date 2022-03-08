@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Jeu;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
 /**
  * @ORM\Entity(repositoryClass=TournoiRepository::class)
  */
@@ -86,6 +86,26 @@ class Tournoi
      * @Groups("post:read")
      */
     private $image;
+
+
+    /**
+     * @CaptchaAssert\ValidCaptcha(
+     *      message = "CAPTCHA validation failed, try again."
+     * )
+     */
+    protected $captchaCode;
+
+    public function getCaptchaCode()
+    {
+        return $this->captchaCode;
+    }
+
+    public function setCaptchaCode($captchaCode)
+    {
+        $this->captchaCode = $captchaCode;
+    }
+
+
 
     public function __construct()
     {
@@ -201,10 +221,11 @@ class Tournoi
         return $this->image;
     }
 
-    public function setImage(string $image)
+    public function setImage( $image)
     {
         $this->image = $image;
 
         return $this;
     }
+
 }

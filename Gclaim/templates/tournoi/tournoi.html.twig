@@ -1,4 +1,36 @@
-{% extends 'details.html.twig' %}
-{% block exe %}
+{% extends 'test.html.twig' %}
 
+{% block part %}
+    <section class="details-hero-section set-bg" data-setbg="{{ asset('img/details/details-post-review.jpg') }}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="details-hero-text">
+                        <div class="label"><span>{{ tournoi.jeu}}</span></div>
+
+                        <h3>{{ tournoi.nomtournoi }}</h3>
+                        <div class="dt-desc">
+                            <p>{{ tournoi.description }}</p>
+                        </div>
+                        <ul>
+                            <li>by <span>Admin</span></li>
+                            <li><i class="fa fa-clock-o"></i> {{ tournoi.dateev|date("m/d/Y") }}
+                                : {{ tournoi.heureev ? tournoi.heureev|date('H:i')}}</li>
+                            <li><i class="fa fa-comment-o"></i> 20</li>
+                            <div class="col-lg-8 p-0">
+                                <div class="details-tex"t>
+                                    <div class="dt-leave-comment">
+                                        <br>
+                                        <br>
+                                        {% if user is not null %}
+                                        <a href="{{ path('rejoindre',{'id':tournoi.id}) }}" class="label" type="submit" style="color: #f8f9fa;">Rejoindre</a></div></div></div>
+
+                       {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
 {% endblock %}

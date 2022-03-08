@@ -80,9 +80,15 @@
                                         {#                                        {{ form_widget(form.article,{'attr':{'placeholder':'article','style':'border-color: #c24400;background:transparent;width:48%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;#}
                                         {#	                                 transform: skewX(-15deg);'}}) }}#}
                                         <br>
+                                        {% if user is not null %}
                                         {{ form_errors(form.user) }}
                                         {{ form_widget(form.user,{'attr':{'value':user.username,'style':'border-color: #c24400;background:transparent;width:48%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
 	                                 transform: skewX(-15deg);'}}) }}
+                                        {% else %}
+                                            {{ form_errors(form.user) }}
+                                            {{ form_widget(form.user,{'attr':{'placeholder':'user','style':'border-color: #c24400;background:transparent;width:48%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+	                                 transform: skewX(-15deg);'}}) }}
+                                        {% endif%}
                                         <br>
                                         {{ form_errors(form.commentaire,{'attr':{'style':'color: #c24400;'}}) }}
                                         {{ form_widget(form.commentaire,{'attr':{'placeholder':'commentaire*','style':'border-color: #c24400;background:transparent;width:100%;height: 100px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
