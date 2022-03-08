@@ -350,11 +350,12 @@ class CommandeController extends AbstractController
      * @Route("/cart/error", name="error", methods={"GET"})
      */
     public function error()
-    {
+    {        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $this->addFlash('warning', 'Your payment failed!');
         return $this->render('panier/error.html.twig', [
 
-            'user'=>$this->getUser(),
+            'user'=>$this->getUser(),"tournois" => $tournois,
         ]);
     }
 
