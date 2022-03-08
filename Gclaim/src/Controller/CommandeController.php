@@ -293,7 +293,7 @@ class CommandeController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            return $this->redirectToRoute('commande_new', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('form', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('panier/form.html.twig', [
             'achat' => $achat,
