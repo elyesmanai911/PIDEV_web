@@ -284,9 +284,10 @@ class ProduitController extends AbstractController
         dump($request->get('search'));
         if (null != $request->get('search')) {
             return $this->render('/produit/index.html.twig', [
-                'produits' => $Produits,
+                'produits' => $Produits,'user'=>$this->getUser(),
             ]);
         }
+        return  $this->redirectToRoute('produit_index');
     }
     /**
      * @Route("/prod/prods/pdfd/{id_produit}", name="pdfd11", methods={"GET"})

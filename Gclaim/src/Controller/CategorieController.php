@@ -100,9 +100,10 @@ class CategorieController extends AbstractController
     {
         dump($request->get('search'));
         if (null != $request->get('search')) {
-            return $this->render('/categorie/index.html.twig', [
+            return $this->render('/categorie/index.html.twig', ['user'=>$this->getUser(),
                 'categories' => $this->getDoctrine()->getRepository(Categorie::class)->findBy(['nom_categorie' => $request->get('search')]),
             ]);
         }
+        return  $this->redirectToRoute('categorie_index');
     }
 }

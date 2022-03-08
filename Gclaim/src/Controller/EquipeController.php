@@ -162,6 +162,8 @@ class EquipeController extends AbstractController
      */
     public function updateequipe(Request $request,$id,EquipeRepository  $repository)
     {  $user = $this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $equipe = $repository->find($id);
         $form = $this->createForm(EquipeType::class, $equipe);
 
@@ -173,7 +175,7 @@ class EquipeController extends AbstractController
             return $this->redirectToRoute('afficheequipe');
 
         }
-        return $this->render("equipe/add.html.twig",array('form'=>$form->createView(),'user' => $user));
+        return $this->render("equipe/add.html.twig",array('form'=>$form->createView(),'user' => $user,"tournois" => $tournois,));
     }
 
     /**
