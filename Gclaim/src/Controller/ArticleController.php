@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Cat;
 use App\Entity\Commentaire;
 use App\Entity\Tournoi;
 use App\Form\ArticleType;
 use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
+use App\Repository\CatRepository;
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 
 /**
  * @Route("/article")
@@ -25,17 +28,24 @@ class ArticleController extends AbstractController
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
-    public function index(ArticleRepository $articleRepository): Response
-    {
+    public function index(Request $request ,PaginatorInterface $paginator)
+    { $donnees = $this->getDoctrine()->getRepository(Article::class)->findBy([],['createAt' => 'desc']);
+
+        $articles = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1),
+           3
+        );
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articles,'user'=>$this->getUser(),
         ]);
     }
     /**
      * @Route("/affichage", name="affichage", methods={"GET"})
      */
-    public function affichage(Request $request ,PaginatorInterface $paginator)
-    {  $user = $this->getUser();
+    public function affichage(Request $request,CatRepository $catRepository,PaginatorInterface $paginator)
+    {
+        $user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $donnees = $this->getDoctrine()->getRepository(Article::class)->findBy([],['createAt' => 'desc']);
 
@@ -46,7 +56,13 @@ class ArticleController extends AbstractController
         );
 
         return $this->render('article/affichage.html.twig', [
-            'articles' => $articles,'user' => $user,"tournois" => $tournois,
+            'articles' => $articles,
+            'user' => $user,
+            'tournois' => $tournois,
+            'categories'=>$catRepository->findAll(),
+
+
+
         ]);
     }
 
@@ -78,25 +94,28 @@ class ArticleController extends AbstractController
             }
             $entityManager->persist($article);
             $entityManager->flush();
+            //$flashy->success('Article Ajouté!', 'http://your-awesome-link.com');
+
 
             return $this->redirectToRoute('article_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('article/new.html.twig', [
             'article' => $article,
-            'form' => $form->createView(),
+
+            'form' => $form->createView(),'user'=>$this->getUser(),
         ]);
     }
 
-    /**
-     * @Route("/", name="article_show", methods={"GET"})
-     */
-    public function show(Article $article): Response
-    {
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-        ]);
-    }
+//    /**
+//     * @Route("/{id}/show", name="article_show", methods={"GET", "POST"})
+//     */
+//    public function show(Article $article): Response
+//    {
+//        return $this->render('article/show.html.twig', [
+//            'article' => $article,
+//        ]);
+//    }
 
     /**
      * @Route("/{id}/edit", name="article_edit", methods={"GET", "POST"})
@@ -123,12 +142,12 @@ class ArticleController extends AbstractController
             }
             $entityManager->flush();
 
-            return $this->redirectToRoute('article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('article_index', ['user'=>$this->getUser(),], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('article/edit.html.twig', [
             'article' => $article,
-            'form' => $form->createView(),
+            'form' => $form->createView(),'user'=>$this->getUser(),
         ]);
     }
 
@@ -152,11 +171,13 @@ class ArticleController extends AbstractController
      * @Route("/{id}/afficheA", name="article_afficheA", methods={"GET" , "POST"})
      */
     public function afficheA(ArticleRepository $articleRepository,CommentaireRepository $commentaireRepository,$id ,Request $request, EntityManagerInterface $entityManager): Response
-    {
+    {   $user = $this->getUser();
 
-        $user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $article=$this->getDoctrine()->getRepository(Article::class)->find($id);
+        $article ->setNbrVu($article ->getNbrVu()+1);
+        $entityManager->persist($article);
+        $entityManager->flush();
         $commentaire = new Commentaire();
         $commentaire->setCreation(new \DateTime('now'));
         $commentaire->setArticle($article);
@@ -169,16 +190,78 @@ class ArticleController extends AbstractController
             $entityManager->persist($commentaire);
             $entityManager->flush();
 
-            return $this->redirectToRoute('article_afficheA', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('article_afficheA', array('id'=>$id), Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('article/afficheA.html.twig', [
             'articles' => $articleRepository->find($id),
-            'user' => $user,"tournois" => $tournois,
             'form' => $form->createView(),
             'commentaire'=>$commentaire,
-           'commentaires' => $commentaireRepository->findAll(),
+            'commentaires' => $commentaireRepository->findAll(),
+            'id'=>$id,
+            'user' => $user,
+            'tournois' => $tournois,
 
+        ]);
+
+    }
+    /**
+     * @Route("/stats", name="stats")
+     */
+
+    public function statistiques(CatRepository $categRepo, ArticleRepository $annRepo){
+        // On va chercher toutes les catégories
+        $categories = $categRepo->findAll();
+
+        $categNom = [];
+        $categColor = [];
+        $categCount = [];
+
+        // On "démonte" les données pour les séparer tel qu'attendu par ChartJS
+        foreach($categories as $cat){
+            $categNom[] = $cat->getNom();
+            $categColor[] = $cat->getCouleur();
+            $categCount[] = count($cat->getArticles());
+        }
+
+        return $this->render('article/stats.html.twig', [
+            'categNom' => json_encode($categNom),
+            'categColor' => json_encode($categColor),
+            'categCount' => json_encode($categCount),
+            'user'=>$this->getUser(),
+
+        ]);
+    }
+    /**
+     * @Route("/article/filtre_article", name="filtre_article", methods={"GET", "POST"})
+     */
+    public function filtre_article(ArticleRepository $articleRepository, CatRepository $catRepository, Request $request,  PaginatorInterface $paginator): Response
+    {
+        $categorie = $request->get('cat');
+
+        $user = $this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
+        $articles = $this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT a FROM App\Entity\Article a order by a.nbr_vu desc')
+            ->setMaxResults(5)
+            ->getResult();
+        $articles = $this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT a FROM App\Entity\Article a  WHERE a.cat in (:list) ')
+            ->setParameter('list',$categorie)
+            ->getResult();
+        $ar =$paginator->paginate(
+            $articles,
+            $request->query->getInt('page',1),
+            4
+        );
+        return $this->render('article/affichage.html.twig', [
+            'categories'=>$catRepository->findAll(),
+            'articles' => $ar,
+            'user' => $user,
+            'tournois' => $tournois,
         ]);
 
     }

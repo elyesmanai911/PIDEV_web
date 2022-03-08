@@ -22,10 +22,18 @@ class CatController extends AbstractController
     public function index(CatRepository $catRepository): Response
     {
         return $this->render('cat/index.html.twig', [
-            'cats' => $catRepository->findAll(),
+            'cats' => $catRepository->findAll(),'user'=>$this->getUser(),
         ]);
     }
-
+    /**
+     * @Route("/affcat", name="affcat", methods={"GET"})
+     */
+    public function affcat (CatRepository $catRepository): Response
+    {
+        return $this->render('cat/affcat.html.twig', [
+            'cats' => $catRepository->findAll(),'user'=>$this->getUser(),
+        ]);
+    }
     /**
      * @Route("/new", name="cat_new", methods={"GET", "POST"})
      */
@@ -44,7 +52,7 @@ class CatController extends AbstractController
 
         return $this->render('cat/new.html.twig', [
             'cat' => $cat,
-            'form' => $form->createView(),
+            'form' => $form->createView(),'user'=>$this->getUser(),
         ]);
     }
 
@@ -54,7 +62,7 @@ class CatController extends AbstractController
     public function show(Cat $cat): Response
     {
         return $this->render('cat/show.html.twig', [
-            'cat' => $cat,
+            'cat' => $cat,'user'=>$this->getUser(),
         ]);
     }
 
@@ -74,7 +82,7 @@ class CatController extends AbstractController
 
         return $this->render('cat/edit.html.twig', [
             'cat' => $cat,
-            'form' => $form->createView(),
+            'form' => $form->createView(),'user'=>$this->getUser(),
         ]);
     }
 
@@ -88,6 +96,6 @@ class CatController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('cat_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('cat_index', ['user'=>$this->getUser(),], Response::HTTP_SEE_OTHER);
     }
 }

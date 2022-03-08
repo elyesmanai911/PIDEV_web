@@ -23,10 +23,9 @@
                 <td>{{ commentaire.creation ? commentaire.creation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ commentaire.user }}</td>
                 <td>{{ commentaire.article.titre }}</td>
-                <td>
-                    <a href="{{ path('commentaire_show', {'id': commentaire.id}) }}">show</a>
-                    <a href="{{ path('commentaire_edit', {'id': commentaire.id}) }}">edit</a>
-                </td>
+
+                <td> <a href="{{ path('commentaire_show',{'id':commentaire.id}) }}"class="btn btn-block btn-warning btn-sm">show</a></td>
+
             </tr>
         {% else %}
             <tr>
@@ -36,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('commentaire_new') }}">Create new</a>
+
 {% endblock %}

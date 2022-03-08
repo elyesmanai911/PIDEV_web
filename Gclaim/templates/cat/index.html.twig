@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'back.html.twig' %}
 
 {% block title %}Cat index{% endblock %}
 
@@ -7,19 +7,18 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Article</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+
+            <th>Nom</th>
+            <th>Article</th>
+            <th>actions</th>
+        </tr>
         </thead>
-        <tbody>
+        <body>
         {% for cat in cats %}
             <tr>
-                <td>{{ cat.id }}</td>
                 <td>{{ cat.nom }}</td>
-                <td>{{ cat.article }}</td>
+                <td>{{ cat.couleur }}</td>
                 <td>
                     <a href="{{ path('cat_show', {'id': cat.id}) }}">show</a>
                     <a href="{{ path('cat_edit', {'id': cat.id}) }}">edit</a>
@@ -30,7 +29,7 @@
                 <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
-        </tbody>
+        </body>
     </table>
 
     <a href="{{ path('cat_new') }}">Create new</a>

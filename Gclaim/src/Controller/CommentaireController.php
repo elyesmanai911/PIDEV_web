@@ -22,7 +22,7 @@ class CommentaireController extends AbstractController
     public function index(CommentaireRepository $commentaireRepository): Response
     {
         return $this->render('commentaire/index.html.twig', [
-            'commentaires' => $commentaireRepository->findAll(),
+            'commentaires' => $commentaireRepository->findAll(),'user'=>$this->getUser(),
         ]);
     }
 
@@ -45,7 +45,7 @@ class CommentaireController extends AbstractController
 
         return $this->render('commentaire/new.html.twig', [
             'commentaire' => $commentaire,
-            'form' => $form->createView(),
+            'form' => $form->createView(),'user'=>$this->getUser(),
         ]);
     }
 
@@ -55,7 +55,7 @@ class CommentaireController extends AbstractController
     public function show(Commentaire $commentaire): Response
     {
         return $this->render('commentaire/show.html.twig', [
-            'commentaire' => $commentaire,
+            'commentaire' => $commentaire,'user'=>$this->getUser(),
 
         ]);
     }
@@ -71,7 +71,7 @@ class CommentaireController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('commentaire_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('commentaire_index', ['user'=>$this->getUser(),], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('commentaire/edit.html.twig', [
@@ -90,6 +90,6 @@ class CommentaireController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('commentaire_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('commentaire_index', ['user'=>$this->getUser(),], Response::HTTP_SEE_OTHER);
     }
 }

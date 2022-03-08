@@ -56,6 +56,17 @@ class Article
      */
     private $commentaires;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Cat::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $cat;
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Positive
+     */
+    private $nbr_vu;
+
 
     public function __construct()
     {
@@ -148,5 +159,25 @@ class Article
     public function __toString(){
         return ('$this->id') ;
 
+    }
+
+    public function getCat(): ?Cat
+    {
+        return $this->cat;
+    }
+
+    public function setCat(?Cat $cat): self
+    {
+        $this->cat = $cat;
+
+        return $this;
+    }
+    public function setNbrVu($nbr_vu): void
+    {
+        $this->nbr_vu = $nbr_vu;
+    }
+    public function getNbrVu()
+    {
+        return $this->nbr_vu;
     }
 }

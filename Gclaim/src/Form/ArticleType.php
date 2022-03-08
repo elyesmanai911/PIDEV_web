@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Cat;
 use App\Entity\Commentaire;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -19,11 +20,13 @@ class ArticleType extends AbstractType
             ->add('titre')
             ->add('description')
             ->add('image')
-//            ->add('createAt')
+            ->add('cat',EntityType::class,['class'=>Cat::class,'choice_label'=>'nom'])
+
+            //            ->add('createAt')
 //            ->add('commentaires',EntityType::class,['class'=>Commentaire::class,'choice_label'])
             ->add('image',FileType::class,array('label'=>'inserer une image','data_class' => null))
             ->add('confirmer',SubmitType::class)
-            ->add('savoir',SubmitType::class)
+
 
 
         ;

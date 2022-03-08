@@ -24,13 +24,33 @@ class Cat
      */
     private $nom;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="cat")
+     */
+    private $articles;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $couleur;
+
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
     }
 
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
+    public function setId(string $id): self
+    {
+        $this->couleur = $id;
+
+        return $this;
+    }
 
     public function getNom(): ?string
     {
@@ -50,6 +70,40 @@ class Cat
     public function getArticles(): Collection
     {
         return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setCat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getCat() === $this) {
+                $article->setCat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCouleur(): ?string
+    {
+        return $this->couleur;
+    }
+
+    public function setCouleur(string $couleur): self
+    {
+        $this->couleur = $couleur;
+
+        return $this;
     }
 
 

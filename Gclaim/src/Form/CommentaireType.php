@@ -18,8 +18,8 @@ class CommentaireType extends AbstractType
         $builder
             ->add('commentaire')
             ->add('user')
-         //   ->add('article',EntityType::class,['class'=>Article::class,'choice_label'=>'titre'])
-            ->add('confirmer',SubmitType::class)
+            //   ->add('article',EntityType::class,['class'=>Article::class,'choice_label'=>'titre'])
+           ->add('confirmer',SubmitType::class)
 
         ;
     }

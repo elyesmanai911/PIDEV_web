@@ -221,7 +221,7 @@ class ProduitController extends AbstractController
         return $this->render('produit/indexFrontP.html.twig', [
             'produits' => $produits,
             'categories' => $categorieRepository->findAll(),
-            'prods' => $products,'user'=>$user,"tournois" => $tournois,
+            'prods' => $products,'user'=>$user,"tournois" => $tournois, 'user'=>$this->getUser(),
         ]);
 
     }
@@ -432,7 +432,7 @@ class ProduitController extends AbstractController
         $col->getOptions()->setWidth(900);
         $col->getOptions()->setHeight(500);
         dump($data[1][0]);
-        return $this->render('produit/statproduitback.html.twig', array('barchart' => $col));
+        return $this->render('produit/statproduitback.html.twig', array('barchart' => $col, 'user'=>$this->getUser(),));
     }
 
     /**

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'back.html.twig' %}
 
 {% block title %}Cat{% endblock %}
 
@@ -7,18 +7,18 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ cat.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ cat.nom }}</td>
-            </tr>
-            <tr>
-                <th>Article</th>
-                <td>{{ cat.article }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ cat.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ cat.nom }}</td>
+        </tr>
+        <tr>
+            <th>Couleur</th>
+            <td>{{ cat.couleur }}</td>
+        </tr>
         </tbody>
     </table>
 

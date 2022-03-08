@@ -2,8 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Article;
 use App\Entity\Cat;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +16,9 @@ class CatType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('articles')
+//            ->add('articles',EntityType::class,['class'=>Article::class,'choice_label'=>'titre'])
+            ->add('couleur',ColorType::class)
+
         ;
     }
 

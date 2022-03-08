@@ -106,8 +106,8 @@ class Commentaire
     }
 
 
-public function __toString(){
-    return (String) $this->getId;
+    public function __toString(){
+        return (String) $this->getId;
 
-}
+    }
 }
