@@ -243,6 +243,7 @@ header:before {
         <th>Description</th>
         <th>Prix HT</th>
         <th>Prix TTC</th>
+        <th>Quantite</th>
         
       </tr>
     </thead>
@@ -255,6 +256,7 @@ header:before {
         <td>{{ ligne_commande.produit.Description}}</td>
         <td>{{ligne_commande.produit.prixproduit}}$</td>
         <td>{{ligne_commande.produit.prixproduit*1.19}}$</td>
+        <td>{{ligne_commande.quantite}}</td>
         
       </tr>
       {% endfor%}

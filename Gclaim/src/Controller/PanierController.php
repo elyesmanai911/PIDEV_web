@@ -17,12 +17,14 @@ class PanierController extends AbstractController
     public function index(SessionInterface $session,ProduitRepository $produitRepository): Response
     {$user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
-        $panier=$session->get("cart",[]);
+        $panier=$session->get("panier",[]);
 
         $dataPanier=[];
         $i=0;
+
         foreach ($panier as $id => $quantite ){
             $i++;
+
             $produit=$produitRepository->find($id);
             $dataPanier[$i] =[
                 "id"=>$id,
@@ -44,27 +46,26 @@ class PanierController extends AbstractController
      */
     public function cart_delete($id,SessionInterface $session,ProduitRepository $produitRepository): Response
     {
-        $panier=$session->get("cart",[]);
-
+        $cart=$session->get("cart",[]);
+        $panier=$session->get('panier',[]);
 
         $p=[];
+        $pan=[];
         $produit=$produitRepository->find($id);
-        foreach ($panier as $i => $quantite ){
+        foreach ($cart as $i => $quantite ){
 
-
-
-            if ($panier[$i]['id']!=$id){
-
+            if ($cart[$i]['id']!=$id){
+                $pan[$id]['quantite']=$panier[$id]['quantite'];
                 $p[$i]=[
                     "id"=>$id,
                     "produit"=>$produit->getNomProduit(),
-                    "quantite"=>$panier[$i]['quantite'],
-                    "total"=>$produit->getPrixProduit()*$panier[$i]['quantite']
+                    "quantite"=>$cart[$i]['quantite'],
+                    "total"=>$produit->getPrixProduit()*$cart[$i]['quantite']
                 ];
 
             }
         }
-
+        $session->set('panier',$pan);
         $session->set('cart',$p);
         return $this->redirectToRoute('panier', [], Response::HTTP_SEE_OTHER);
     }
@@ -74,11 +75,12 @@ class PanierController extends AbstractController
      */
     public function cart_plus($id,SessionInterface $session,ProduitRepository $produitRepository): Response
     {
+
         $user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
 
         $panier=$session->get('cart',[]);
-
+        $pan=$session->get('panier',[]);
         $produit=$produitRepository->find($id);
 
 
@@ -90,11 +92,13 @@ class PanierController extends AbstractController
                     "quantite"=>$panier[$i]['quantite']+1,
                     "total"=>$produit->getPrixProduit()*($panier[$i]['quantite']+1)
                 ];
+                $pan[$id]['quantite']=$pan[$id]['quantite']+1;
 
             }
         }
 
 
+        $session->set('panier',$pan);
         $session->set('cart',$panier);
        // return $this->redirectToRoute('panier', [], Response::HTTP_SEE_OTHER);
         return $this->render('panier/indexPanier.html.twig', [
@@ -110,6 +114,7 @@ class PanierController extends AbstractController
         $user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $panier=$session->get('cart',[]);
+        $pan=$session->get('panier',[]);
         $produit=$produitRepository->find($id);
         foreach ($panier as $i => $quantite ){
             if ($panier[$i]['id']==$id){
@@ -119,9 +124,10 @@ class PanierController extends AbstractController
                     "quantite"=>$panier[$i]['quantite']-1,
                     "total"=>$produit->getPrixProduit()*($panier[$i]['quantite']-1)
                 ];
-
+                $pan[$id]['quantite']=$pan[$id]['quantite']-1;
             }
         }
+        $session->set('panier',$pan);
         $session->set('cart',$panier);
         return $this->render('panier/indexPanier.html.twig', [
             'paniers' => $panier,'user' => $user,"tournois" => $tournois,

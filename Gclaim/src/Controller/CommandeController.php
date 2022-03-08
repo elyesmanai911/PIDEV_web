@@ -181,7 +181,7 @@ class CommandeController extends AbstractController
         //$html= "";
 
 
-        //dd($ligneCommandeRepository);
+
         // Retrieve the HTML generated in our twig file
         $date=new \DateTime('now');
         $html = $this->renderView('ligne_commande/toPDF.html.twig', [
@@ -210,7 +210,7 @@ class CommandeController extends AbstractController
         // In this case, we want to write the file in the public directory
         $publicDirectory = $this->getParameter('kernel.project_dir');
         // e.g /var/www/project/public/mypdf.pdf
-        //dd($publicDirectory);
+
         //$pdfFilepath =  ;
 
         // Write file to the desired path
@@ -220,9 +220,9 @@ class CommandeController extends AbstractController
             ->to($c->getUser()->getEmail())
             ->subject('Facture')
             ->text(
-                "Bonjour Mr/Mme "
+                "Bonjour Mr/Mme ".$c->getUser()->getUserName()."\n Voici Votre Facture"
             )
-            ->attachFromPath($publicDirectory. '\\public\\pdf'.$commande->getId().'.pdf', 'factre');
+            ->attachFromPath($publicDirectory. '\\public\\pdf'.$commande->getId().'.pdf', 'facture');
         $mailer->send($message);
 
         return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
@@ -310,7 +310,7 @@ class CommandeController extends AbstractController
                 $somme=$somme+$c["total"];
             }
         }
-        //dd(count($cart));
+
         \Stripe\Stripe::setApiKey('sk_test_51KaSl9LhSkNSJwhCDDrrsGKrsD2fN2yu3Wa2d71W0BrV5LIvDWFkvNxcGWJRaknLyz2WSkk2JyNHO0CN2BzHCe5L00tUwVIS0y');
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
@@ -365,7 +365,7 @@ class CommandeController extends AbstractController
     public function add($id ,SessionInterface $session)
     {
 
-        $panier = $session->get("cart",[]);
+        $panier = $session->get("panier",[]);
 
 
 
@@ -375,7 +375,7 @@ class CommandeController extends AbstractController
             $panier[$id]['quantite']=1;
         }
 
-        $session->set("cart",$panier);
+        $session->set("panier",$panier);
 
         return $this->redirectToRoute('produit', [], Response::HTTP_SEE_OTHER);
     }
