@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Coach;
 use App\Entity\SimpleUtilisateur;
+use App\Entity\Tournoi;
 use App\Form\CoachsType;
 use App\Form\CoachType;
 use App\Form\SimpleUtilisateurType;
@@ -35,27 +36,27 @@ class CoachController extends AbstractController
         $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['username' => $request->get('searchname'), 'specialite' => $request->get('searchspecialite')]);
 
         return $this->render('/coach/list.html.twig', [
-            'l' => $evenement,
+            'l' => $evenement,'user'=>$this->getUser()
         ]);
     }
         if (null != $request->get('searchspecialite')) {
         $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['specialite' => $request->get('searchspecialite')]);
 
         return $this->render('/coach/list.html.twig', [
-            'l' => $evenement,
+            'l' => $evenement,'user'=>$this->getUser()
         ]);
     }
         if (null != $request->get('searchname')) {
             $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['username' => $request->get('searchname')]);
 
             return $this->render('/coach/list.html.twig', [
-                'l' => $evenement,
+                'l' => $evenement,'user'=>$this->getUser()
             ]);
         }
         $evenement = $repository->findAll();
 
         return $this->render('/coach/list.html.twig', [
-            'l' => $evenement,
+            'l' => $evenement,'user'=>$this->getUser()
         ]);
     }
     /**
@@ -125,7 +126,8 @@ class CoachController extends AbstractController
      */
 
     public function updatecoach1($id,Request $request,CoachRepository $repository)
-    {
+    {        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $coach=$repository->find($id);
         $form = $this->createForm(CoachType::class, $coach);
         $form->handleRequest($request);
@@ -142,13 +144,14 @@ class CoachController extends AbstractController
                 $em->flush();
                 return $this->redirectToRoute('profile');
             }}
-        return $this->render("coach/modifcoach.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach]);
+        return $this->render("coach/modifcoach.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach,"tournois" => $tournois,]);
     }
     /**
      * @Route("/modifspecialite/{id}", name="modifspecialite")
      */
     public function modifspecialite($id,Request $request,CoachRepository $repository)
-    {
+    {        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+
         $coach=$repository->find($id);
         $form = $this->createForm(CoachsType::class, $coach);
         $form->handleRequest($request);
@@ -159,7 +162,7 @@ class CoachController extends AbstractController
                 $em->flush();
                 return $this->redirectToRoute('profile');
             }
-        return $this->render("simpleutilisateur/modifspecialite.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach]);
+        return $this->render("simpleutilisateur/modifspecialite.html.twig",['form'=>$form->createView(),'error'=>'',"user"=>$coach,"tournois" => $tournois,]);
     }
     /**
      * @Route("/deletesimpleutilisateur1/{id}", name="deletesimpleutilisateur1")
@@ -174,7 +177,7 @@ class CoachController extends AbstractController
     }
 
     /**
-     * @Route("/coach/tri", name="tri1")
+     * @Route("/coach/tri", name="triii")
      */
     public function Tri(Request $request)
     {
@@ -188,7 +191,7 @@ class CoachController extends AbstractController
 
         $activites = $query->getResult();
         return $this->render('coach/list.html.twig',
-            array('l' => $activites));
+            array('l' => $activites,'user'=>$this->getUser()));
 
     }
 }

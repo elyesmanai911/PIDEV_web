@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block part %}
+    <div style="background: #0d0909">
+        <div class="signup-title">
+            <h2 style="color: white ">Coach</h2>
+            <h3 style="color: #c24400 " >{{ profil.username }}</h3>
+            <h2 style="color: white ">Description</h2>
+            <h3 style="color: #c24400 " >{{ profil.description }}</h3>
+            <h2 style="color: white ">Game</h2>
+            <h3 style="color: #c24400 " >{{ profil.game }}</h3>
+        </div>
+
+    </div>
+
+    <html>
+
+    <div id="calendar"></div>
+    {% block script %}
+
+        <script>
+            // initialize your calendar, once the page's DOM is ready
+            $(document).ready(function() {
+                $('#calendar').evoCalendar({
+                    theme: 'Midnight Blue'
+                });
+                {% for c in coach %}
+                {% if c.isVerified==1 %}
+            $('#calendar').evoCalendar('addCalendarEvent', {
+                id: 'FF',
+                name: 'Not Available',
+                description: 'Client Name: {{ c.user.username }}',
+                date: '{{ c.date|date("m/d/Y") }}',
+                type: 'session coaching'
+            });
+            {% endif %}
+                {% endfor %}
+            });
+        </script>
+
+
+
+
+
+<script>
+
+
+
+</script>
+
+
+    {% endblock %}
+
+
+
+
+    <div style="background: #0d0909">
+    <div class="btn btn-lg btn-primary" style="background: #c24400;color:white ">
+        <a  href="{{ path('rdv_new',{'id':profil.id}) }}" onclick="add()" > Réserver maintenant! </a>
+    </div>
+    </body>
+    </html>
+<div class="btn btn-lg btn-primary" style="background: #c24400;color:white ">
+    <a  href="{{ path('profil_index') }}" > COACHS </a>
+
+</div>
+
+
+
+
+{% endblock %}

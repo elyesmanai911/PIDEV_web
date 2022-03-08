@@ -24,17 +24,17 @@
                 <div class="alert alert-danger" role="alert">{{ flashError }}</div>
             {% endfor %}
             <div class="container">
+
+                {{ form_start(requestForm) }}
                 <div class="signup-title">
                     <h2>Réinitialisez votre mot de passe</h2>
                     <p>Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.</p>
                 </div>
-                {{ form_start(requestForm) }}
-
-                {{ form_widget(requestForm.email,{'attr':{'placeholder':'EMAIL*','style':'border-color: #c24400;background:transparent;width:40%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+                {{ form_widget(requestForm.email,{'attr':{'placeholder':'EMAIL*','style':'border-color: #c24400;background:transparent;width:70%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
                                        	transform: skewX(-15deg);'}}) }}
                 <br>
 
-                <button class="btn btn-lg btn-primary" type="submit" style="color: #bd6b18">
+                <button class="btn btn-lg btn-primary" type="submit" style="background: #c24400">
                     Envoyer un e-mail
                 </button>
 

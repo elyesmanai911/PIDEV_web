@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Security;
-
+use App\Entity\Rdv;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,6 +50,19 @@ class EmailVerifier
 
         $user->setIsVerified(false);
 
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+        /**
+     * @throws VerifyEmailExceptionInterface
+     */
+    public function handleEmailConfirmation1(Request $request, UserInterface $user, Rdv $rdv): void
+    {
+        
+        $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
+
+
+$rdv->setIsVerified(true);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }

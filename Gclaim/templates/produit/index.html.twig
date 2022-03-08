@@ -1,0 +1,89 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Produit index{% endblock %}
+
+{% block body %}
+    <h1>Produit index</h1>
+
+
+
+        </br>
+    <section class="content">
+        <div class="container-fluid">
+            <h2 class="text-center display-4">Chercher un produit</h2>
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <form action="{{ path('searchprod')}}" method="GET">
+                        <div class="input-group">
+                            <input type="search" class="form-control form-control-lg" placeholder="Entrer le nom d'un produit" id="site-search" name="search">
+                            <div class="input-group-append">
+                                <button  class="btn btn-lg btn-default">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+   <div>
+       <center>Nombre de produits total: {{ produits.getTotalItemCount }}</center>
+    </div>
+<div class="card card-info">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom_produit</th>
+                <th>Description</th>
+                <th>Prix_produit</th>
+                <th>DateAjout_produit</th>
+                <th>Quantité</th>
+                <th>actions</th>
+            </tr>
+
+        </thead>
+        <tbody id="all">
+        {% for produit in produits %}
+            <tr>
+                <td>{{ produit.nomProduit }}</td>
+                <td>{{ produit.description }}</td>
+                <td>{{ produit.prixProduit }}</td>
+                <td>{{ produit.dateAjoutProduit ? produit.dateAjoutProduit|date('Y-m-d') : '' }}</td>
+                <td>{{ produit.Qteproduit }}</td>
+                <td>
+                    <a href="{{ path('produit_show', {'id_produit': produit.id_produit}) }}" class="btn btn-primary" >show</a>
+                    </br></br>
+                    <a href="{{ path('produit_edit', {'id_produit': produit.id_produit}) }}" class="btn btn-primary">edit</a>
+                </td>
+            </tr>
+        {% else %}
+
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+
+    </table>
+</div>
+    <div class="pagination-item">
+
+        <span>{{ knp_pagination_render(produits) }}</span>
+    </div>
+<div class="container">
+    <tr>
+    <th><center><a href="{{ path('produit_new') }}" class="btn btn-primary" >Create new</a></center></th>
+        </br>
+        <th> <center><a href="{{ path('barchart') }}" class="btn btn-primary">voir statistiques</a></center></th>
+
+    </tr>
+{#    <a class="btn btn-default" href="{{ path('excel') }}">Export Excel</a>#}
+
+
+</div>
+
+{% endblock %}

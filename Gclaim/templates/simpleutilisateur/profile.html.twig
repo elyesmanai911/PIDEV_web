@@ -7,10 +7,18 @@
     <meta name="keywords" content="Amin, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}PROFILE{% endblock %}</title>
+    <title>{% block title %}profile{% endblock %}</title>
 
     <!-- Google Font -->
     {% block css%}
+
+        {# <link rel="preconnect" href="{{ asset('https://fonts.gstatic.com') }}" />
+
+        <link rel="stylesheet" href="{{ asset('css/button.css') }}" />
+        <!-- Css Styles -->
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/evo-calendar.midnight-blue.css') }}"/> #}
 
         <link href="{{ asset('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap') }}"
               rel="stylesheet">
@@ -25,6 +33,9 @@
         <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
+
+
+
     {% endblock %}
 </head>
 
@@ -42,10 +53,10 @@
     </div>
     <div class="hw-menu mobile-menu">
         <ul>
-            <li><a href="{{ asset('/') }}">Home</a></li>
+            <li><a href="{{ asset('./index.html') }}">Home</a></li>
             <li><a href="{{ asset('#') }}">Pages <i class="fa fa-angle-down"></i></a>
                 <ul class="dropdown">
-                    <li><a href="{{ asset('./categories_list.html.twig') }}">Categories</a></li>
+                    <li><a href="{{ asset('#') }}">Equipes</a></li>
                     <li><a href="{{ asset('./categories-grid.html') }}">Categories grid</a></li>
                     <li><a href="{{ asset('./typography.html') }}">Typography</a></li>
                     <li><a href="{{ asset('./details-post-default.html') }}">Post default</a></li>
@@ -81,7 +92,9 @@
         </ul>
     </div>
     <div id="mobile-menu-wrap"></div>
-
+    <div class="hw-copyright">
+        Copyright © 2019 Colorlib Inc. All rights reserved
+    </div>
     <div class="hw-social">
         <a href="{{ asset('#') }}"><i class="fa fa-facebook"></i></a>
         <a href="{{ asset('#') }}"><i class="fa fa-twitter"></i></a>
@@ -111,14 +124,18 @@
                     <div class="ht-widget">
                         <ul>
                             <li><i class="fa fa-clock-o"></i>   {{"now"|date('F j, Y')}} </li>
-                            <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>
+
 
                             {% if user is not null %}
-                            <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
-                               {% else%}
-                            <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
-                                {% endif %}
 
+                                <a href="{{ path('app_logout') }}" ><li> <i class="fa fa-sign-out"> se deconnecter </i> </li></a>
+                                <a href="{{ path('profile') }}"><li> <i class="fa fa-sun-o"> profile </i></li> </a>
+
+                            {% else%}
+                                <a href="{{ path('addUtilisateur') }}"><li> <i class="fa fa-sign-out"> Login / Sign up </i></li> </a>
+                            {% endif %}
+
+                            </a>
                         </ul>
                     </div>
                 </div>
@@ -153,106 +170,49 @@
             </div>
             <div class="nav-menu">
                 <ul>
-                    <li class="active"><a href="{{ asset('/') }}"><span>Accueil</span></a></li>
-                    <li class="mega-menu"><a href="{{ asset('#') }}"><span>Tournois <i class="fa fa-angle-down"></i></span></a>
-                        <div class="megamenu-wrapper">
-                            <ul class="mw-nav">
-                                <li><a href="{{ asset('#') }}"><span>Playstation</span></a></li>
-                                <li><a href="{{ asset('#') }}"><span>Windows</span></a></li>
-                                <li><a href="{{ asset('#') }}"><span>Mobile</span></a></li>
-                                <li><a href="{{ asset('#') }}"><span>Xbox</span></a></li>
-                            </ul>
-                            <div class="mw-post">
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-1.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois1</a></h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> {{"now"|date('Y-m-d')}}</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-2.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois2</a>
-                                        </h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> {{"now"|date('Y-m-d')}}</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-3.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois3</a>
-                                        </h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> {{"now"|date('Y-m-d')}}</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-4.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois4</a></h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> {{"now"|date('Y-m-d')}}</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mw-post-item">
-                                    <div class="mw-pic">
-                                        <img src="{{ asset('img/megamenu/mm-5.jpg') }}" alt="">
-                                    </div>
-                                    <div class="mw-text">
-                                        <h6><a href="{{ asset('#') }}">Tournois5</a>
-                                        </h6>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> {{"now"|date('Y-m-d')}}</li>
-                                            <li><i class="fa fa-comment-o"></i> 12</li>
-                                        </ul>
-                                    </div>
+                    <li class="active"><a href="{{ path('tournoi')}}"><span>Accueil</span></a></li>
+                    <li class="mega-menu"><a href="{{ path('listtTournoi') }}"><span>Tournois <i class="fa fa-angle-down"></i></span></a>
+                        {% block navb %}
+                            <div class="megamenu-wrapper" style="margin-top: 180px">
+                                <ul class="mw-nav" >
+                                    <li><a href="{{ asset('#') }}"><span>Playstation</span></a></li>
+                                    <li><a href="{{ asset('#') }}"><span>Windows</span></a></li>
+                                    <li><a href="{{ asset('#') }}"><span>Mobile</span></a></li>
+                                    <li><a href="{{ asset('#') }}"><span>Xbox</span></a></li>
+                                </ul>
+                                <div class="mw-post">
+                                    {% for tournoi in tournois %}
+                                        <div class="mw-post-item">
+                                            <div class="mw-pic">
+                                                <img src="{{ asset('img/megamenu/mm-1.jpg') }}" alt="">
+                                            </div>
+                                            <div class="mw-text">
+                                                <h6><a href="{{ path('traff',{'id':tournoi.id}) }}">{{ tournoi.nomtournoi }}</a></h6>
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> {{ tournoi.dateev|date("m/d/Y") }}
+                                                        : {{ tournoi.heureev ? tournoi.heureev|date('H:i')}}</li>
+                                                    <li><i class="fa fa-comment-o"></i> {{ tournoi.jeu}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
                                 </div>
                             </div>
-                        </div>
+                        {% endblock %}
                     </li>
 
-                    <li><a href="{{ asset('#') }}"><span>Actualités <i class="active"></i></span></a></li>
-                    <li><a href="{{ asset('#') }}"><span>Entraineurs <i class="active"></i></span></a>
-                    <ul class="dropdown">
-                        <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>
-                        </li>
-                    </ul>
-                    </li>
-                    <li>
-                        <a href="{{ asset('#') }}"><span>Produits <i class="fa fa-angle-down"></i></span></a>
+                    <li><a href="{{ path('affichage') }}"><span>Actualités <i class="active"></i></span></a></li>
+                    <li><a href="{{ path('profil_index')}}"><span>Entraineurs <i class="fa fa-angle-down"></i></span></a>
                         <ul class="dropdown">
-                            <li><a href="{{ asset('./categories-list.html') }}">Categories</a></li>
-                            <li><a href="{{ asset('./categories-grid.html') }}">Categories grid</a></li>
-                            <li><a href="{{ asset('./typography.html') }}">Typography</a></li>
-                            <li><a href="{{ asset('./details-post-default.html') }}">Post default</a></li>
-                            <li><a href="{{ asset('./details-post-gallery.html') }}">Post gallery</a></li>
-                            <li><a href="{{ asset('./details-post-review.html') }}">Post review</a></li>
-                            <li><a href="{{ asset('./contact.html') }}">Contact</a></li>
+                            <li><a href="{{ path('afficheequipe') }}">Equipe</a></li>
+                            </li>
                         </ul>
-                    <li><a href="{{ asset('#') }}"><span> Paniers<i class="active"></i></span></a></li>
+                    <li>
+                        <a href="{{ path('produit') }}"><span>Produits <i class="fa fa-angle-down"></i></span></a>
 
 
-
-
+                    <li><a href="{{ path('panier') }}"><span> Paniers<i class="active"></i></span></a></li>
 
                     </li>
                 </ul>
@@ -260,7 +220,6 @@
         </div>
     </div>
 </header>
-
 <!-- Instagram Post Section Begin -->
 <section class="instagram-post-section spad">
     <div class="container">
@@ -368,12 +327,15 @@
                                 <div class="label"><span><a href="{{ path('updateUtilisateur',{'id':user.id}) }}">Modifier</a></span> </div>
                             {% elseif user.roles==["ROLE_COACH"] %}
                                 <div class="label"><span><a href="{{ path('updatecoach1',{'id':user.id}) }}">Modifier le Profil de COACH</a></span> </div>
+                                <div class="label"><span><a href="{{ path('rdv_show',{'id':user.id}) }}">VOIR les rendez-vous</a></span> </div>
+
                             {% endif %}
+                            <divclass="label">
                             <div class="label"><span><a href="{{ path('desactivationcompteparmail') }}">DESACTIVER MON COMPTE</a></span> </div>
 
                                                </div>
 
-
+                        </div>
 
 
                         </div>

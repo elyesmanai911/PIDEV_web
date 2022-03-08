@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\Coach;
 use App\Entity\SimpleUtilisateur;
+use App\Entity\Tournoi;
 use App\Entity\Utilisateur;
 use App\Form\CoachType;
 use App\Form\SimpleUtilisateurType;
@@ -41,13 +42,13 @@ class SimpleutilisateurController extends AbstractController
     public function index(): Response
     {
         $user = $this->getUser();
-
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
         return $this->render('simpleutilisateur/profile.html.twig', [
-            'user' => $user
+            'user' => $user,'tournois'=>$tournois,
         ]);
     }
 
@@ -55,18 +56,17 @@ class SimpleutilisateurController extends AbstractController
      * @Route("/affichesimpleutilisateur", name="affichesimpleutilisateur"  , methods={"GET"})
      */
     public function readsimpleutilisateur(SimpleUtilisateurRepository $repository, Request $request)
-    {
-        if (null != $request->get('searchname')) {
-            $evenement = $this->getDoctrine()->getRepository(SimpleUtilisateur::class)->findBy(['username' => $request->get('searchname')]);
+    {if (null != $request->get('searchname')) {
+        $evenement = $this->getDoctrine()->getRepository(SimpleUtilisateur::class)->findBy(['username' => $request->get('searchname')]);
 
-            return $this->render('/simpleutilisateur/list.html.twig', [
-                'l' => $evenement,
-            ]);
-        }
+        return $this->render('/simpleutilisateur/list.html.twig', [
+            'l' => $evenement,'user'=>$this->getUser()
+        ]);
+    }
         $evenement = $repository->findAll();
 
         return $this->render('/simpleutilisateur/list.html.twig', [
-            'l' => $evenement,
+            'l' => $evenement,'user'=>$this->getUser()
         ]);
     }
 
@@ -126,7 +126,7 @@ class SimpleutilisateurController extends AbstractController
      */
 
     public function addUtilisateur(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager)
-    {
+    { $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $Utilisateur = new SimpleUtilisateur();
         $form = $this->createForm(SimpleUtilisateurType::class, $Utilisateur);
         $form->handleRequest($request);
@@ -139,7 +139,7 @@ class SimpleutilisateurController extends AbstractController
                 ]);
             } else {
                 //$Utilisateur->setPassword(MD5($Utilisateur->getPassword(), PASSWORD_DEFAULT));
-                // $Utilisateur->setVerifPassword(password_hash($Utilisateur->getVerifPassword(), PASSWORD_DEFAULT));
+                 $Utilisateur->setVerifPassword(password_hash($Utilisateur->getVerifPassword(), PASSWORD_DEFAULT));
                 $Utilisateur->setRoles(['ROLE_USER']);
                 $Utilisateur->setIsVerified(true);
                 $em = $this->getDoctrine()->getManager();
@@ -147,10 +147,10 @@ class SimpleutilisateurController extends AbstractController
                 $em->flush();
 
 
-                return $this->redirectToRoute("app_login");
+                return $this->redirectToRoute("app_login",["user" => $Utilisateur]);
             }
         }
-        return $this->render("simpleutilisateur/add.html.twig", ['form' => $form->createView(), "user" => $Utilisateur, 'error' => '']);
+        return $this->render("simpleutilisateur/add.html.twig", ['form' => $form->createView(), "user" => $Utilisateur, 'error' => '',"tournois" => $tournois,]);
     }
 
     /**
@@ -158,7 +158,7 @@ class SimpleutilisateurController extends AbstractController
      */
 
     public function updateUtilisateur($id, Request $request, UtilisateurRepository $repository)
-    {
+    {$tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $simpleutilisateur = $repository->find($id);
         $form = $this->createForm(SimpleUtilisateurType::class, $simpleutilisateur);
         $form->handleRequest($request);
@@ -168,7 +168,7 @@ class SimpleutilisateurController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('profile');
         }
-        return $this->render("simpleutilisateur/modif.html.twig", ['form' => $form->createView(), 'user' => $simpleutilisateur, 'error' => '']);
+        return $this->render("simpleutilisateur/modif.html.twig", ['form' => $form->createView(), 'user' => $simpleutilisateur, 'error' => '','tournois'=>$tournois]);
     }
 
     /**
@@ -186,7 +186,7 @@ class SimpleutilisateurController extends AbstractController
 
         $activites = $query->getResult();
         return $this->render('simpleutilisateur/list.html.twig',
-            array('l' => $activites));
+            array('l' => $activites,'user'=>$this->getUser()));
 
     }
 
@@ -194,14 +194,14 @@ class SimpleutilisateurController extends AbstractController
      * @Route("/demandecoach/{id}", name="demandecoach")
      */
     public function demandecoach(Request $request, $id, UtilisateurRepository $utilisateurRepository)
-    {
+    {  $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $user = $utilisateurRepository->find($id);
         $user->setRole(1);
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 
-        return $this->redirectToRoute("profile");
+        return $this->redirectToRoute("profile",['tournois'=>$tournois]);
     }
 
     /**
@@ -218,7 +218,7 @@ class SimpleutilisateurController extends AbstractController
 
         $u = $query->getResult();
         return $this->render('simpleutilisateur/listdesdemandes.html.twig',
-            array('l' => $u));
+            array('l' => $u,'user'=>$this->getUser()));
     }
 
     /**
@@ -235,7 +235,7 @@ class SimpleutilisateurController extends AbstractController
 
         $u = $query->getResult();
         return $this->render('simpleutilisateur/listdactivie.html.twig',
-            array('l' => $u));
+            array('l' => $u,'user'=>$this->getUser()));
     }
 
     /**
@@ -252,7 +252,7 @@ class SimpleutilisateurController extends AbstractController
 
         $u = $query->getResult();
         return $this->render('simpleutilisateur/listdesactive.html.twig',
-            array('l' => $u));
+            array('l' => $u,'user'=>$this->getUser()));
     }
 
     /**
@@ -265,6 +265,8 @@ class SimpleutilisateurController extends AbstractController
         $this->container->get('security.token_storage')->setToken(null);
         $coach = new Coach();
         $coach->setRole(0);
+        $coach->setIsVerified(true);
+
         $coach->setUserName($user->getUserName());
         $coach->setVerifPassword($user->getVerifPassword());
         $coach->setEmail($user->getEmail());
@@ -332,8 +334,9 @@ class SimpleutilisateurController extends AbstractController
             (new TemplatedEmail())
                 ->from(new Address('Gclaim.Gclaim@esprit.tn', 'G_Claim'))
                 ->to($Utilisateur->getEmail())
-                ->subject('Please Confirm your Email')
+                ->subject(' Confirmer la désactivation par mail ')
                 ->htmlTemplate('simpleutilisateur/confirmation_email.html.twig')
+            ->context(['user'=>$Utilisateur])
         );
         return $this->redirectToRoute('profile');
     }

@@ -1,0 +1,51 @@
+{% extends 'back.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">LES RENDEZ_VOUS</h3>
+                </div>
+                <!-- ./card-header -->
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <td>Id</td>
+                            <td>DATE</td>
+                            <td>Coach Name</td>
+                            <td>Client Name</td>
+
+                            <td>SUPPRIMER</td>
+                            <td>MODIFIER</td>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for s in rdv %}
+                        {% if s.isVerified == 1 %}
+                            <tr data-widget="expandable-table" aria-expanded="false">
+                                <td>{{ s.id }}</td>
+                                <td>{{ s.date|date }}</td>
+                                <td>{{ s.coach.username }}</td>
+                                 <td>{{ s.user.username }}</td>
+                                <td> <a href="{{ path('rdv_delete',{'id':s.id}) }} " class="btn btn-block btn-warning btn-sm">Delete</a></td>
+                                <td> <a href="{{ path('rdv_edit',{'id':s.id}) }}" class="btn btn-block btn-warning btn-sm">Update</a></td>
+
+
+
+                            </tr>
+                        {% endif %}
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                    <td>  <a href="{{ path('tri1') }}" class="btn btn-block btn-outline-warning btn-xs">trié les RDV</a></td>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+{% endblock %}

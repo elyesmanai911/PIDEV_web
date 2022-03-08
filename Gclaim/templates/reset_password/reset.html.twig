@@ -23,17 +23,17 @@
         <div class="signup-text">
 
             <div class="container">
+
+                {{ form_start(resetForm) }}
                 <div class="signup-title">
                     <h2>Réinitialisez votre mot de passe</h2>
                     <p>REMPLIR LE FORMULAIRE</p>
                 </div>
-                {{ form_start(resetForm) }}
-
-                {{ form_row(resetForm.plainPassword,{'attr':{'placeholder':'EMAIL*','style':'border-color: #c24400;background:transparent;width:40%;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
+                {{ form_widget(resetForm.plainPassword,{'attr':{'style':'border-color: #c24400;background:transparent;margin-right:100px;height: 46px;font-size: 14px;color: #c4c4c4;-webkit-transform: skewX(-15deg);-ms-transform: skewX(-15deg);margin-bottom: 30px;border-radius: 2px;
                                        	transform: skewX(-15deg);'}}) }}
 
 
-                    <button class="btn btn-lg btn-primary" type="submit" style="color: #c4c4c4">
+                    <button class="btn btn-lg btn-primary" type="submit" style="background: #c24400">
                         Réinitialiser le mot de passe
                     </button>
 

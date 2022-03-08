@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Rdv{% endblock %}
+
+{% block part %}
+    <div style="background: #0d0909">
+    <h1 style ="color : white">Réserver un rendez-vous</h1>
+
+    {% if error == 'unsafe' %}
+
+        <script>
+            window.alert("Cette date est déjà prise :(");
+        </script>
+    {% endif %}
+
+<div class="section-title">
+    <h5 style ="color : #c24400"> entrer une date</h5>
+</div>
+
+    {{ include('rdv/_form.html.twig') }}
+        <div class="btn btn-lg btn-primary" style="background: #c24400;color:white ">
+            <a  href="{{ path('rdv_index') }}" > back to list</a>
+        </div>
+
+    </div>
+{% endblock %}
