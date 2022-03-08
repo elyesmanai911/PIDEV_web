@@ -36,27 +36,27 @@ class CoachController extends AbstractController
         $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['username' => $request->get('searchname'), 'specialite' => $request->get('searchspecialite')]);
 
         return $this->render('/coach/list.html.twig', [
-            'l' => $evenement,
+            'l' => $evenement,'user'=>$this->getUser()
         ]);
     }
         if (null != $request->get('searchspecialite')) {
         $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['specialite' => $request->get('searchspecialite')]);
 
         return $this->render('/coach/list.html.twig', [
-            'l' => $evenement,
+            'l' => $evenement,'user'=>$this->getUser()
         ]);
     }
         if (null != $request->get('searchname')) {
             $evenement = $this->getDoctrine()->getRepository(Coach::class)->findBy(['username' => $request->get('searchname')]);
 
             return $this->render('/coach/list.html.twig', [
-                'l' => $evenement,
+                'l' => $evenement,'user'=>$this->getUser()
             ]);
         }
         $evenement = $repository->findAll();
 
         return $this->render('/coach/list.html.twig', [
-            'l' => $evenement,
+            'l' => $evenement,'user'=>$this->getUser()
         ]);
     }
     /**
@@ -191,7 +191,7 @@ class CoachController extends AbstractController
 
         $activites = $query->getResult();
         return $this->render('coach/list.html.twig',
-            array('l' => $activites));
+            array('l' => $activites,'user'=>$this->getUser()));
 
     }
 }

@@ -56,18 +56,17 @@ class SimpleutilisateurController extends AbstractController
      * @Route("/affichesimpleutilisateur", name="affichesimpleutilisateur"  , methods={"GET"})
      */
     public function readsimpleutilisateur(SimpleUtilisateurRepository $repository, Request $request)
-    {
-        if (null != $request->get('searchname')) {
-            $evenement = $this->getDoctrine()->getRepository(SimpleUtilisateur::class)->findBy(['username' => $request->get('searchname')]);
+    {if (null != $request->get('searchname')) {
+        $evenement = $this->getDoctrine()->getRepository(SimpleUtilisateur::class)->findBy(['username' => $request->get('searchname')]);
 
-            return $this->render('/simpleutilisateur/list.html.twig', [
-                'l' => $evenement,
-            ]);
-        }
+        return $this->render('/simpleutilisateur/list.html.twig', [
+            'l' => $evenement,'user'=>$this->getUser()
+        ]);
+    }
         $evenement = $repository->findAll();
 
         return $this->render('/simpleutilisateur/list.html.twig', [
-            'l' => $evenement,
+            'l' => $evenement,'user'=>$this->getUser()
         ]);
     }
 
@@ -148,7 +147,7 @@ class SimpleutilisateurController extends AbstractController
                 $em->flush();
 
 
-                return $this->redirectToRoute("app_login");
+                return $this->redirectToRoute("app_login",["user" => $Utilisateur]);
             }
         }
         return $this->render("simpleutilisateur/add.html.twig", ['form' => $form->createView(), "user" => $Utilisateur, 'error' => '',"tournois" => $tournois,]);
@@ -187,7 +186,7 @@ class SimpleutilisateurController extends AbstractController
 
         $activites = $query->getResult();
         return $this->render('simpleutilisateur/list.html.twig',
-            array('l' => $activites));
+            array('l' => $activites,'user'=>$this->getUser()));
 
     }
 
@@ -219,7 +218,7 @@ class SimpleutilisateurController extends AbstractController
 
         $u = $query->getResult();
         return $this->render('simpleutilisateur/listdesdemandes.html.twig',
-            array('l' => $u));
+            array('l' => $u,'user'=>$this->getUser()));
     }
 
     /**
@@ -236,7 +235,7 @@ class SimpleutilisateurController extends AbstractController
 
         $u = $query->getResult();
         return $this->render('simpleutilisateur/listdactivie.html.twig',
-            array('l' => $u));
+            array('l' => $u,'user'=>$this->getUser()));
     }
 
     /**
@@ -253,7 +252,7 @@ class SimpleutilisateurController extends AbstractController
 
         $u = $query->getResult();
         return $this->render('simpleutilisateur/listdesactive.html.twig',
-            array('l' => $u));
+            array('l' => $u,'user'=>$this->getUser()));
     }
 
     /**

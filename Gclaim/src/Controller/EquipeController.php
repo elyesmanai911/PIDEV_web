@@ -46,7 +46,7 @@ class EquipeController extends AbstractController
             4
 
         );
-        return $this->render('equipe/list.html.twig',["equipe"=>$equipe,"tournois" => $tournois]);
+        return $this->render('equipe/list.html.twig',["equipe"=>$equipe,"tournois" => $tournois,'user'=>$this->getUser()]);
     }
     /**
      * @Route("/equipe/tri", name="tridate")
@@ -69,7 +69,7 @@ class EquipeController extends AbstractController
 
         );
         return $this->render('equipe/list.html.twig',
-            array('equipe' => $activites));
+            array('equipe' => $activites,'user'=>$this->getUser()));
 
     }
     /**
@@ -86,7 +86,7 @@ class EquipeController extends AbstractController
             4
 
         );
-        return $this->render('equipe/showequipe.html.twig',["equipe"=>$equipe,'user' => $user,"tournois" => $tournois]);
+        return $this->render('equipe/showequipe.html.twig',["equipe"=>$equipe,'user' => $user,"tournois" => $tournois,'user'=>$this->getUser()]);
     }
     /**
      * @Route("/equipe/AllEquipes", name="AllEquipes")
@@ -217,7 +217,7 @@ class EquipeController extends AbstractController
         $pieChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
         $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
 
-        return $this->render('equipe/stat.html.twig', array('piechart' => $pieChart));
+        return $this->render('equipe/stat.html.twig', array('piechart' => $pieChart,'user'=>$this->getUser()));
     }
 
 }

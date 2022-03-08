@@ -146,6 +146,7 @@
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/bacon/bacon-qr-code" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/dasprid/enum" />
       <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/stripe/stripe-php" />
+      <excludeFolder url="file://$MODULE_DIR$/Gclaim/vendor/twilio/sdk" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

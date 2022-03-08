@@ -194,6 +194,8 @@
                 </div>
             </div>
 
+            {% if user is not null %}
+            {% if user.roles==["ROLE_ADMIN"] %}
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -469,6 +471,21 @@
                             </li>
                         </ul>
                     </li>
+                    {% elseif user.roles==["ROLE_COACH"] %}
+                        <li class="nav-item">
+                            <a href="{{ path('rdv_show') }}" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Les rendez-vous
+
+                                </p>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% else %}
+                        <a href="{{ path('app_login') }}"><li> <i class="fa fa-sign-out"> connecter en tant que admin </i></li> </a>
+                    {% endif %}
+
 
 
             <!-- /.sidebar-menu -->
