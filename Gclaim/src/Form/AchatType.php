@@ -17,7 +17,7 @@ class AchatType extends AbstractType
            
             ->add('Addresse')
             ->add('Numero_de_Telephone',IntegerType::class)
-            ->add('Confirmer',SubmitType::class)
+            ->add('Verifier',SubmitType::class)
         ;
     }
 

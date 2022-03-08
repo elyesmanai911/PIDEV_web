@@ -17,7 +17,7 @@ class Commande
      */
     private $id;
     /**
-     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="Utilisateur")
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class)
      * @ORM\JoinColumn(name="User", referencedColumnName="id")
      */
     private $User;
