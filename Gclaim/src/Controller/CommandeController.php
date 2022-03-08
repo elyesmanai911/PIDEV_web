@@ -215,13 +215,19 @@ class CommandeController extends AbstractController
 
         // Write file to the desired path
         file_put_contents($publicDirectory. '\\public\\pdf'.$commande->getId().'.pdf', $output);
+        $Mailhtml = $this->renderView('ligne_commande/email.html.twig', [
+            'commande'=> $c,
+            'total' => $somme,
+            'date' =>$date,
+        ]);
         $message = (new Email())
             ->from('gclaimpidev@gmail.com')
             ->to($c->getUser()->getEmail())
             ->subject('Facture')
-            ->text(
+            /*->text(
                 "Bonjour Mr/Mme ".$c->getUser()->getUserName()."\n Voici Votre Facture"
-            )
+            )*/
+            ->html($Mailhtml)
             ->attachFromPath($publicDirectory. '\\public\\pdf'.$commande->getId().'.pdf', 'facture');
         $mailer->send($message);
 
