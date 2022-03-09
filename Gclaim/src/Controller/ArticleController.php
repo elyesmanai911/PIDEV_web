@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use MercurySeries\FlashyBundle\FlashyNotifier;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/article")
@@ -264,5 +265,25 @@ class ArticleController extends AbstractController
             'tournois' => $tournois,
         ]);
 
+    }
+    /**
+     * @Route("/searcharticle", name="searcharticle", methods={"GET"})
+     */
+    public function searcharticle(Request $request, NormalizerInterface $Normalizer, PaginatorInterface $paginator)
+    {
+        $articles=$paginator->paginate(
+            $this->getDoctrine()->getRepository(Article::class)->findBy(['titre' => $request->get('search')]),
+            $request->query->getInt('page',1),
+            4
+
+        );
+        dump($request->get('search'));
+        if (null != $request->get('search')) {
+            return $this->render('/article/index.html.twig', [
+                'articles' => $articles,
+                'user'=>$this->getUser(),
+
+            ]);
+        }
     }
 }

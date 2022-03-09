@@ -73,8 +73,26 @@
     <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
 {% endblock %}
 {% block body %}
-    <h1>Article index</h1>
-
+    <h1>Article </h1>
+    <section class="content">
+        <div class="container-fluid">
+            <h2 class="text-center display-4">Chercher un article</h2>
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <form action="{{ path('searcharticle')}}" method="GET">
+                        <div class="input-group">
+                            <input type="search" class="form-control form-control-lg" placeholder="Entrer le titre de l'actualité" id="site-search" name="search">
+                            <div class="input-group-append">
+                                <button  class="btn btn-lg btn-default">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
     <table class="table">
         <thead>
             <tr>

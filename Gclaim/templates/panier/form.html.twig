@@ -13,9 +13,21 @@
 <script src="https://js.stripe.com/v3/"></script>
 <input type="hidden" name="edd_action" value="purchase">
                             <input type="hidden" name="edd-gateway" value="manual">
-    
-    <a href="{{ path('checkout') }}"><input type="submit" class="edd-submit button" id="checkout-button" name="edd-purchase"   value="Purchase"></a>
-<script type="text/javascript">
+
+    <div class="container" style="margin-left: 300">
+        <div class="row"style="margin-left: 300">
+            <div class="col-lg-6"style="margin-left: 300">
+                <div class="details-hero-text"style="margin-left: 300">
+                    <div class="col-lg-8 p-0"style="margin-left: 300">
+                        <div class="details-text"style="margin-left: 300">
+                            <div class="dt-leave-comment"style="margin-left: 300">
+                                <a href="{{ path('checkout') }}"><input type="submit" class="label" id="checkout-button" name="edd-purchase"   value="Purchase"></a>
+                            </div>    </div>
+                    </div>
+                </div>
+            </div>
+        </div></div>
+    <script type="text/javascript">
     // Create an instance of the Stripe object with your publishable API key
     var stripe = Stripe("pk_test_51KaSl9LhSkNSJwhCfsoGhLly4ZPCXcmrLkiAWo2RTMxuJ88OW5OPnO1vRApuPiem03NAlLdhIBxQB5cHNOBXLpI300C3OUqeKT");
     var checkoutButton = document.getElementById('checkout-button');

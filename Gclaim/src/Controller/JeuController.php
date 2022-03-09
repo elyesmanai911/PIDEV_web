@@ -5,13 +5,18 @@ namespace App\Controller;
 use App\Entity\Tournoi;
 use App\Entity\Jeu;
 use App\Form\JeuType;
+use App\Repository\JeuRepository;
 use App\Repository\TournoiRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+
 
 class   JeuController extends AbstractController
 {
@@ -48,27 +53,42 @@ class   JeuController extends AbstractController
     /**
      * @Route("/listTournoisByJeu/{id}", name="listTournoisByJeu")
      */
-    public function listTournoisByJeu(TournoiRepository  $repository,$id)
+    public function listTournoisByJeu(TournoiRepository  $repository,$id,PaginatorInterface $paginator,Request $request)
     {
-        $tournois=$repository->listTournoiByJeu($id);
+        $tournois=$paginator->paginate(
+        $tr=$repository->listTournoiByJeu($id), $request->query->getInt('page',1),
+            2
+
+        );
         return $this->render("tournoi/list.html.twig",array("tournois"=>$tournois,'user'=>$this->getUser()));
     }
     /**
      * @Route("/listJeu", name="listJeu")
      */
-    public function listJeu()
+    public function listJeu(PaginatorInterface $paginator,Request $request)
     {
-        $jeus=$this->getDoctrine()->getRepository(Jeu::class)->findAll();
-        return $this->render('jeu/list.html.twig', array("jeus" => $jeus,'user'=>$this->getUser()));
+        $jeus=$paginator->paginate(
+            $this->getDoctrine()->getRepository(Jeu::class)->findAll(), $request->query->getInt('page',1),
+            2
+
+        );
+        $user = $this->getUser();
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
+        return $this->render('jeu/list.html.twig', array("jeus" => $jeus,"tournois" => $tournois,'user'=>$this->getUser()));
     }
     /**
      * @Route("/listtJeu", name="listtJeu")
      */
-    public function listtJeu()
+    public function listtJeu(PaginatorInterface $paginator,Request $request)
     {
+
+        $jeus=$paginator->paginate(
+            $this->getDoctrine()->getRepository(Jeu::class)->findAll(), $request->query->getInt('page',1),
+            4
+
+        );
         $user = $this->getUser();
         $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
-        $jeus=$this->getDoctrine()->getRepository(Jeu::class)->findAll();
         return $this->render('jeu/show.html.twig', array("jeus" => $jeus,"tournois" => $tournois, 'user' => $user));
     }
     /**
@@ -124,6 +144,47 @@ class   JeuController extends AbstractController
             return $this->redirectToRoute('listJeu');
         }
         return $this->render("jeu/update.html.twig",array('jeu'=>$form->createView(),'user'=>$this->getUser()));
+    }
+    /**
+     * @Route("/searchJ", name="searchJ", methods={"GET"})
+     */
+    public function searchJ(Request $request, NormalizerInterface $Normalizer, PaginatorInterface $paginator)
+    {
+            $jeus=$paginator->paginate(
+            $this->getDoctrine()->getRepository(Jeu::class)->findBy(['nomjeu' => $request->get('search')]),
+            $request->query->getInt('page',1),
+            4
+
+        );
+        dump($request->get('search'));
+        if (null != $request->get('search')) {
+            return $this->render('/jeu/list.html.twig', [
+                'jeus' => $jeus,'user'=>$this->getUser(),
+            ]);
+        }
+    }
+    /**
+     * @Route("/orderbydateJ", name="orderdateJ", methods={"GET"})
+     */
+    public function orderbydatejeu(JeuRepository  $jeuRepository, PaginatorInterface $paginator, Request $request ): Response
+    {
+
+        $jeus = $this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT p FROM App\Entity\Jeu p order by  p.dateS asc')
+            ->getResult();
+        $jeu=$paginator->paginate(
+            $jeus,
+            $request->query->getInt('page',1),
+            2
+
+        );
+
+
+        return $this->render('jeu/list.html.twig', [
+            'jeus' => $jeu,'user'=>$this->getUser()
+
+        ]);
     }
 
 }

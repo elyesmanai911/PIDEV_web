@@ -63,4 +63,13 @@ class EquipeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function listequippartournoi($id)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin('s.Tournois','c')
+            ->where('c.id=:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
 }

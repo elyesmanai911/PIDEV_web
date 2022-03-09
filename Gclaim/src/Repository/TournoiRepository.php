@@ -57,10 +57,28 @@ class TournoiRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function listTournoiByEq($id)
+    {
+        return $this->createQueryBuilder('s')
+            ->join('s.equipes','c')
+            ->addSelect('c')
+            ->where('c.id=:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
     public function Equipe($id){
         $query=$this->getEntityManager()
                  ->createQuery("SELECT s FROM App\Entity\Equipe s INNER JOIN s.simpleutilisateurs c WHERE c.id=:id ")
                  ->setParameter('id',$id);
         return $query->getSingleScalarResult();
+    }
+
+    public function countByDate(){
+        $query = $this->getEntityManager()->createQuery("
+            SELECT SUBSTRING(a.dateev, 1, 10) as dateev, COUNT(a) as count FROM App\Entity\Tournoi a GROUP BY dateev
+        ");
+        return $query->getResult();
+
     }
 }
