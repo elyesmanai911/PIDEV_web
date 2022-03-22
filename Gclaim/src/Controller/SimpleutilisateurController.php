@@ -429,4 +429,36 @@ class SimpleutilisateurController extends AbstractController
         $jsonContent =$normalizable->normalize($equipe,'json',['groups'=>'post:read']);
         return new Response(json_encode($jsonContent));
     }
+
+    /**
+     * @Route("/deleteUser/{id}", name="deleteUser")
+     */
+    public function deleteUser($id,UtilisateurRepository  $repository,Request $request,NormalizerInterface $normalizable)
+    {$em=$this->getDoctrine()->getManager();
+        $equipe=$repository->find($id);
+        $em->remove($equipe);
+        $em->flush();
+        $jsonContent =$normalizable->normalize($equipe,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+    }
+    /**
+     * @Route("/addcoachmobile", name="addcoachmobile")
+     */
+    public function addcoachmobile(Request $request,NormalizerInterface $normalizer)
+    {$em=$this->getDoctrine()->getManager();
+        $user=new Coach();
+        $user->setUserName($request->get('username'));
+        $user->setPassword($request->get('password'));
+        $user->setVerifPassword($request->get('verifpassword'));
+        $user->setEmail($request->get('email'));
+        $user->setSpecialite($request->get('specialite'));
+        $user->setRole(0);
+        $user->setRoles(['ROLE_COACH']);
+        $user->setIsVerified(1);
+        $em->persist($user);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($user,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
 }

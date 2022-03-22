@@ -11,6 +11,7 @@ use App\Form\CoachType;
 use App\Form\EquipeType;
 use App\Repository\EquipeRepository;
 use App\Repository\SimpleUtilisateurRepository;
+use App\Repository\UtilisateurRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -301,5 +302,17 @@ class EquipeController extends AbstractController
         return new Response(json_encode($jsonContent));
 
 
+    }
+
+    /**
+     * @Route("/deleteEquipeMobile/{id}", name="deleteEquipeMobile")
+     */
+    public function deleteEquipeMobile($id,EquipeRepository  $repository,Request $request,NormalizerInterface $normalizable)
+    {$em=$this->getDoctrine()->getManager();
+        $equipe=$repository->find($id);
+        $em->remove($equipe);
+        $em->flush();
+        $jsonContent =$normalizable->normalize($equipe,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
     }
 }
