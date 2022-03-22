@@ -12,8 +12,10 @@ use App\Repository\UtilisateurRepository;
 use App\Security\EmailVerifier;
 use App\Security\UsersAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +26,11 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder;
 
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Twilio\Serialize;
+
 class SimpleutilisateurController extends AbstractController
 {
 
@@ -340,6 +346,67 @@ class SimpleutilisateurController extends AbstractController
         );
         return $this->redirectToRoute('profile');
     }
+    /**
+     * @Route("/addusermobile", name="addusermobile")
+     */
+    public function addusermobile(Request $request,NormalizerInterface $normalizer)
+    {$em=$this->getDoctrine()->getManager();
+        $user=new SimpleUtilisateur();
+        $user->setUserName($request->get('username'));
+        $user->setPassword($request->get('password'));
+        $user->setVerifPassword($request->get('verifpassword'));
+        $user->setEmail($request->get('email'));
+        $user->setFullName($request->get('fullname'));
+        $user->setRole(0);
+        $user->setIsVerified(true);
+        $user->setRoles(['ROLE_USER']);
+        $em->persist($user);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($user,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
 
-    // do anything else you need here, like send an email
+    }
+    /**
+     * @Route("/signinmobile", name="signinmobile")
+     */
+    public function signinmobile(Request $request,NormalizerInterface $normalizer)
+    {
+        $username=$request->query->get('username');
+        $password=$request->query->get('password');
+        $em=$this->getDoctrine()->getManager();
+        $user=$em->getRepository(Utilisateur::class)->findOneBy(['username'=>$username]);
+
+       if($user)
+       {if($user->getPassword()==$password)
+       {
+           $jsonContent=$normalizer->normalize($user,'json',['groups'=>'post:read']);
+           return new Response(json_encode($jsonContent));
+       }
+       else {
+           return new Response("failed");
+       }
+       }
+       else {
+           return new Response("failed");
+       }
+
+
+    }
+    /**
+     * @Route("/updateusermobile/{id}", name="updateusermobile")
+     */
+    public function updateusermobile($id,Request $request,NormalizerInterface $normalizer)
+    {$em=$this->getDoctrine()->getManager();
+        $user=$em->getRepository(Utilisateur::class)->find($id);
+        $user->setUserName($request->get('username'));
+        $user->setPassword($request->get('password'));
+        $user->setVerifPassword($request->get('verifpassword'));
+        $user->setEmail($request->get('email'));
+        $user->setFullName($request->get('fullname'));
+        $em->persist($user);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($user,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
 }

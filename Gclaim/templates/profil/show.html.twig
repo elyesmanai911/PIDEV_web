@@ -31,7 +31,7 @@
             $('#calendar').evoCalendar('addCalendarEvent', {
                 id: 'FF',
                 name: 'Not Available',
-                description: 'Client Name: {{ c.user.username }}',
+                description: 'Client Name: {{ c.user.username }} et Email : {{ c.user.email }}',
                 date: '{{ c.date|date("m/d/Y") }}',
                 type: 'session coaching'
             });

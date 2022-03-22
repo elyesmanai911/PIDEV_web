@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -25,12 +26,14 @@ abstract class Utilisateur implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="login est obligatoire")
+     * @Groups("post:read")
      */
     protected $username;
 
@@ -42,12 +45,14 @@ abstract class Utilisateur implements UserInterface
      *      max = "20",
      *      minMessage = "Votre mot de passe doit faire au moins {{ limit }} caractères",
      *      maxMessage = "Votre mot de passe ne peut pas être plus long que {{ limit }} caractères")
+     * @Groups("post:read")
      */
     protected $password;
 
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="mot de passe est obligatoire")
+     * @Groups("post:read")
      */
     protected $verifpassword;
 
@@ -55,19 +60,23 @@ abstract class Utilisateur implements UserInterface
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="Email est un champs obligatoire")
      * @Assert\Email(message = " email est invalide verifiez votre email.")
+     * @Groups("post:read")
      */
     protected $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups("post:read")
      */
     protected $roles = [];
     /**
      * @ORM\Column(type="boolean")
+     * @Groups("post:read")
      */
     protected $isVerified = false;
     /**
      * @ORM\Column(type="boolean")
+     * @Groups("post:read")
      */
     protected $role = false;
     /**

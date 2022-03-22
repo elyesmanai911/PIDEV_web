@@ -28,7 +28,7 @@
         {% for commande in commandes %}
             <tr>
                 
-                <td>{{ commande.User.username }}</td>
+
                 <td>{{ commande.total }}</td>
                 <td>{{ commande.dateAchat ? commande.dateAchat|date('Y-m-d') : '' }}</td>
                 <td>{{ commande.livrer ? 'Yes' : 'No' }}</td>

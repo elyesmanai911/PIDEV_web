@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Mapping\Entity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=CoachRepository::class)
  * @ORM\Table(name="coach")
@@ -26,6 +26,7 @@ class Coach extends Utilisateur
      * @ORM\Column(type="string", length=50)
      *
      * @Assert\NotBlank (message="specialité est obligatoire")
+     * @Groups("post:read")
      */
     private $specialite;
 

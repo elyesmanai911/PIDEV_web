@@ -71,7 +71,7 @@ class ProfilController extends AbstractController
             // Send an SMS using Twilio's REST API and PHP
 
             $sid = "AC011f55307a119c4e2af431ef17eed27e"; // Your Account SID from www.twilio.com/console
-            $token = "70e51c43b3a15c4c1ea429b55c5d48ab"; // Your Auth Token from www.twilio.com/console
+            $token = "0728384028360074c8f89055bfa236ea"; // Your Auth Token from www.twilio.com/console
 
             $client = new Client($sid, $token);
             $message = $client->messages->create(

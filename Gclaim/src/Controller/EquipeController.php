@@ -6,19 +6,23 @@ use App\Entity\Coach;
 use App\Entity\Equipe;
 use App\Entity\SimpleUtilisateur;
 use App\Entity\Tournoi;
+use App\Entity\Utilisateur;
 use App\Form\CoachType;
 use App\Form\EquipeType;
 use App\Repository\EquipeRepository;
 use App\Repository\SimpleUtilisateurRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
 class EquipeController extends AbstractController
 {
     /**
@@ -222,4 +226,80 @@ class EquipeController extends AbstractController
         return $this->render('equipe/stat.html.twig', array('piechart' => $pieChart,'user'=>$this->getUser()));
     }
 
+    /**
+     * @Route("/ajoutEquipeMobile", name="ajoutEquipeMobile")
+     */
+    public function ajoutEquipeMobile(Request $request,NormalizerInterface $normalizer)
+    {   $equipe=new Equipe();
+        $nom=$request->query->get("nomEquipe");
+        $description=$request->query->get("description");
+        $etat=$request->query->get("Etat");
+        $date=new \DateTime('now');
+        $chef=$request->query->get("chef");
+        $idUser=$request->query->get("simpleutilisateurs");
+        $equipe->setNb(1);
+        $em=$this->getDoctrine()->getManager();
+        $equipe->setChef($chef);
+        $equipe->setDateCreation($date);
+        $equipe->setEtat($etat);
+        $equipe->setNomEquipe($nom);
+        $equipe->setDescription($description);
+        $equipe->addSimpleutilisateur($this->getDoctrine()->getRepository(Utilisateur::class)->find($idUser));
+        $em->persist($equipe);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($equipe,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+        
+    }
+    /**
+     * @Route("/updateEquipeMobile/{id}", name="updateEquipeMobile")
+     */
+    public function updateEquipeMobile($id,Request $request,NormalizerInterface $normalizer)
+    {     $em=$this->getDoctrine()->getManager();
+
+        $equipe=$em->getRepository(Equipe::class)->find($id);
+        $nom=$request->query->get("nomEquipe");
+        $description=$request->query->get("description");
+        $etat=$request->query->get("Etat");
+        $equipe->setEtat($etat);
+        $equipe->setNomEquipe($nom);
+        $equipe->setDescription($description);
+        $em->persist($equipe);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($equipe,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
+
+
+    /**
+     * @Route("/rejoindreequipeMOBILE/{id}", name="rejoindreequipeMOBILE")
+     */
+    public function rejoindreequipeMOBILE($id,EquipeRepository  $repository,Request $request,NormalizerInterface $normalizer)
+    {  $em = $this->getDoctrine()->getManager();
+        $iduser=$request->query->get("simpleutilisateurs");
+        $user=$em->getRepository(Utilisateur::class)->find($iduser);
+        $equipe = $repository->find($id);
+        $equipe->addSimpleutilisateur($user);
+        $equipe->setNb($equipe->getNb()+1);
+
+        $em->persist($equipe);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($equipe,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+
+    }
+    /**
+     * @Route("/MemebreEQuipe/{id}", name="MemebreEQuipe")
+     */
+    public function MemebreEQuipe($id,EquipeRepository  $repository,Request $request,NormalizerInterface $normalizer)
+    {
+        $equipe = $repository->find($id);
+        $x=$equipe->getSimpleutilisateurs();
+        $jsonContent=$normalizer->normalize($x,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+
+    }
 }

@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SimpleUtilisateurRepository::class)
@@ -29,6 +30,7 @@ class SimpleUtilisateur extends Utilisateur
      * @Assert\Length(
      *      max = "20",
      *      maxMessage = "Votre nom et prenom ne peut pas être plus long que {{ limit }} caractères")
+     * @Groups("post:read")
      */
     private $fullname;
 

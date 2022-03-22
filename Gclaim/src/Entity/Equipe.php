@@ -24,6 +24,7 @@ class Equipe
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="Nom de Equipe est obligatoire")
+     * @Groups("post:read")
      */
     private $nomEquipe;
 
