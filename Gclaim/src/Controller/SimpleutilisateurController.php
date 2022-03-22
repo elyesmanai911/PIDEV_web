@@ -7,6 +7,8 @@ use App\Entity\Tournoi;
 use App\Entity\Utilisateur;
 use App\Form\CoachType;
 use App\Form\SimpleUtilisateurType;
+use App\Repository\CoachRepository;
+use App\Repository\EquipeRepository;
 use App\Repository\SimpleUtilisateurRepository;
 use App\Repository\UtilisateurRepository;
 use App\Security\EmailVerifier;
@@ -408,5 +410,23 @@ class SimpleutilisateurController extends AbstractController
         $jsonContent=$normalizer->normalize($user,'json',['groups'=>'post:read']);
         return new Response(json_encode($jsonContent));
 
+    }
+    /**
+     * @Route("/listUsers", name="listUsers")
+     */
+    public function listUsers(SimpleUtilisateurRepository $repository,Request $request,NormalizerInterface $normalizable)
+    {
+        $equipe=$repository->findall();
+        $jsonContent =$normalizable->normalize($equipe,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+    }
+    /**
+     * @Route("/listCoach", name="listCoach")
+     */
+    public function listCoach(CoachRepository  $repository,Request $request,NormalizerInterface $normalizable)
+    {
+        $equipe=$repository->findall();
+        $jsonContent =$normalizable->normalize($equipe,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
     }
 }
