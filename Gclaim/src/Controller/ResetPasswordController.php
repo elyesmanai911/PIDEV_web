@@ -19,7 +19,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
-
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 /**
  * @Route("/reset-password")
  */
@@ -149,15 +151,6 @@ class ResetPasswordController extends AbstractController
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
-            // If you want to tell the user why a reset email was not sent, uncomment
-            // the lines below and change the redirect to 'app_forgot_password_request'.
-            // Caution: This may reveal if a user is registered or not.
-            //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     'There was a problem handling your password reset request - %s',
-            //     $e->getReason()
-            // ));
-
             return $this->redirectToRoute('app_check_email');
         }
 
@@ -181,4 +174,47 @@ class ResetPasswordController extends AbstractController
 
         return $this->redirectToRoute('app_check_email');
     }
+
+    /**
+     * @Route("/emailMobile", name="emailMobile")
+     */
+    public function emailMobile( Request $request,MailerInterface $mailer,NormalizerInterface $normalizer)
+    {   $emailFormData=$request->query->get('email');
+        $user = $this->entityManager->getRepository(Utilisateur::class)->findOneBy([
+            'email' => $emailFormData,
+        ]);
+
+        // Do not reveal whether a user account was found or not.
+        if (!$user) {
+            return new Response("failed");
+        }
+
+        try {
+            $resetToken = $this->resetPasswordHelper->generateResetToken($user);
+
+        } catch (ResetPasswordExceptionInterface $e) {
+            return new Response("failed");
+        }
+
+        $email = (new TemplatedEmail())
+            ->from(new Address('Gclaim.Gclaim@gmail.com', 'Security'))
+            ->to($user->getEmail())
+            ->subject('Your password reset request')
+            ->htmlTemplate('reset_password/emailMobile.html.twig')
+            ->context([
+                'user'=>$user,
+                'resetToken' => $resetToken,
+
+            ])
+
+        ;
+
+        $mailer->send($email);
+
+        // Store the token object in session for retrieval in check-email route.
+        $this->setTokenObjectInSession($resetToken);
+        $jsonContent=$normalizer->normalize($user,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+    }
+
 }
