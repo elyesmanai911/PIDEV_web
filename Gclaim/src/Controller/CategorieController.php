@@ -29,6 +29,20 @@ class CategorieController extends AbstractController
     }
 
     /**
+     * @Route("/categ/Allcategories", name="Allcategories")
+     */
+    public function Allcategories(Request $request, NormalizerInterface $Normalizer)
+    {
+        $repository = $this->getDoctrine()->getRepository(Categorie::class);
+        $categories = $repository->findAll();
+        $jsonContent = $Normalizer->normalize($categories, 'json',['groups'=>'post:read']);
+//        return $this->render('produit/Allproducts', [
+//            'data' => $jsonContent,
+//        ]);
+        return new Response(json_encode($jsonContent));
+    }
+
+    /**
      * @Route("/new", name="categorie_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -48,6 +62,26 @@ class CategorieController extends AbstractController
             'categorie' => $categorie,
             'form' => $form->createView(),'user'=>$this->getUser(),
         ]);
+    }
+
+    /**
+     * @Route("/addcategoriejson/new", name="addcategoriejson")
+     */
+    public function addcategoriejson(NormalizerInterface $Normalizer,Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $categorie = new Categorie();
+        $form = $this->createForm(CategorieType::class, $categorie);
+        $form->handleRequest($request);
+
+        $categorie->setNomCategorie($request->get('nom_categorie'));
+        $categorie->setTypeCategorie($request->get('type_categorie'));
+            $entityManager->persist($categorie);
+            $entityManager->flush();
+
+        $jsonContent = $Normalizer->normalize($categorie, 'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+
     }
 
     /**
@@ -80,6 +114,25 @@ class CategorieController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/updatecategoriejson/{id_categorie}/edit", name="updatecategoriejson")
+     */
+    public function updatecategoriejson(NormalizerInterface $Normalizer,Request $request, Categorie $categorie, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(CategorieType::class, $categorie);
+        $form->handleRequest($request);
+
+        $categorie->setNomCategorie($request->get('nom_categorie'));
+        $categorie->setTypeCategorie($request->get('type_categorie'));
+            $entityManager->flush();
+
+        $jsonContent = $Normalizer->normalize($categorie, 'json',['groups'=>'post:read']);
+        return new Response("information updated successfully".json_encode($jsonContent));
+
+    }
+
+
     /**
      * @Route("/{id_categorie}", name="categorie_delete", methods={"POST"})
      */
@@ -91,6 +144,21 @@ class CategorieController extends AbstractController
         }
 
         return $this->redirectToRoute('categorie_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/deletecategoriejson/{id}", name="deletecategoriejson")
+     */
+    public function deletecategoriejson(NormalizerInterface $Normalizer,Request $request, $id): Response
+    {
+        $entityManager=$this->getDoctrine()->getManager();
+        $categorie=$entityManager->getRepository(Categorie::class)->find($id);
+            $entityManager->remove($categorie);
+            $entityManager->flush();
+        $jsonContent = $Normalizer->normalize($categorie, 'json',['groups'=>'post:read']);
+        return new Response("information deleted successfully".json_encode($jsonContent));
+
+
     }
 
     /**

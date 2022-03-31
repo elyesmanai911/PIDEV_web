@@ -72,7 +72,6 @@ class Produit
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="produits")
      * @ORM\JoinColumn(name="categorie", referencedColumnName="id_categorie")
-     * @Groups("post:read")
      */
     private $categorie;
 
@@ -124,7 +123,7 @@ class Produit
         $this->images = new ArrayCollection();
     }
 
-    public function getid_produit(): ?int
+    public function getIdProduit(): ?int
     {
         return $this->id_produit;
     }

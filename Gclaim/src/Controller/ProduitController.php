@@ -96,7 +96,7 @@ class ProduitController extends AbstractController
             $entityManager->persist($img);
             $entityManager->persist($produit);
             $entityManager->flush();
-            $Qrcode = $qrcodeService ->qrcode("http://127.0.0.1:8000/produit/prod/{{id_produit}}",$produit -> getid_produit());
+            $Qrcode = $qrcodeService ->qrcode("http://127.0.0.1:8000/produit/prod/{{id_produit}}",$produit -> getIdProduit());
 
             return $this->redirectToRoute('produit_index', ['user'=>$this->getUser()], Response::HTTP_SEE_OTHER);
         }
@@ -108,7 +108,32 @@ class ProduitController extends AbstractController
             'Qrcode' => $Qrcode,
         ]);
     }
+    /**
+     * @Route("/addproduitjson/new", name="addproduitjson")
+     */
+    public function addproduitjson(NormalizerInterface $Normalizer,Request $request, CategorieRepository $categorieRepository,EntityManagerInterface $entityManager): Response
+    {
 
+        $produit = new Produit();
+        $datetime = new \DateTime('now');
+        $produit->setDateAjoutProduit($datetime);
+        $produit->setNbrVu(0);
+        $produit->setNomProduit($request->get('nom_produit'));
+        $produit->setDescription($request->get('description'));
+        $produit->setPrixProduit($request->get('prix_produit'));
+        $produit->setQteProduit($request->get('Qte_produit'));
+//        $cat=$categorieRepository->find($request->get("idcat"));
+//        $produit->setCategorie($cat);
+//
+        $entityManager->persist($produit);
+            $entityManager->flush();
+
+            $jsonContent = $Normalizer->normalize($produit, 'json',['groups'=>'post:read']);
+            return new Response(json_encode($jsonContent));
+
+
+
+    }
     /**
      * @Route("/{id_produit}", name="produit_show", methods={"GET"})
      */
@@ -157,17 +182,52 @@ class ProduitController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/updateproduitjson/{id_produit}/edit", name="updateproduitjson")
+     */
+    public function updateproduitjson(NormalizerInterface $Normalizer,Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
+    {
+        $datetime = new \DateTime('now');
+        $produit->setDateAjoutProduit($datetime);
+        $produit->setNbrVu(0);
+        $produit->setNomProduit($request->get('nom_produit'));
+        $produit->setDescription($request->get('description'));
+        $produit->setPrixProduit($request->get('prix_produit'));
+        $produit->setQteProduit($request->get('Qte_produit'));
+        $entityManager->persist($produit);
+        $entityManager->flush();
+
+        $jsonContent = $Normalizer->normalize($produit, 'json',['groups'=>'post:read']);
+        return new Response("information updated successfully".json_encode($jsonContent));
+
+    }
+
+
     /**
      * @Route("/{id_produit}", name="produit_delete", methods={"POST"})
      */
     public function delete(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$produit->getid_produit(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$produit->getIdProduit(), $request->request->get('_token'))) {
             $entityManager->remove($produit);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('produit_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/deleteproduitjson/{id}", name="deleteproduitjson")
+     */
+    public function deleteproduitjson(Request $request,NormalizerInterface $Normalizer,$id)
+    {
+        $entityManager=$this->getDoctrine()->getManager();
+        $produit=$entityManager->getRepository(Produit::class)->find($id);
+            $entityManager->remove($produit);
+            $entityManager->flush();
+            $jsonContent = $Normalizer->normalize($produit, 'json',['groups'=>'post:read']);
+        return new Response("information deleted successfully".json_encode($jsonContent));
     }
 
     /**
