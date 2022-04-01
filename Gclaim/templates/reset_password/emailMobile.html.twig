@@ -13,13 +13,12 @@
 	">
     <div style="color: #c24400">
 
-        <h1>Bonjour! {{ user.username }}</h1>
+
     </div>
-    <p>Pour réinitialiser votre mot de passe, veuillez visiter le lien suivant</p>
+
     <p> voici votre mot de passe
    {{ user.password }}
     </p>
-    <p>Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
     <div style="color: #c24400">
         <p>Cordialement </p>
         <p>	Gclaim by BITS&BAYTES</p>

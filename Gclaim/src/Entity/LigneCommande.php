@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\LigneCommandeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=LigneCommandeRepository::class)
@@ -14,6 +15,7 @@ class LigneCommande
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -25,6 +27,7 @@ class LigneCommande
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $quantite;
 

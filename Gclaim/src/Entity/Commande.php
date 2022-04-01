@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=CommandeRepository::class)
  */
@@ -14,6 +14,7 @@ class Commande
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
     /**
@@ -24,16 +25,19 @@ class Commande
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups("post:read")
      */
     private $total;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups("post:read")
      */
     private $dateAchat;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups("post:read")
      */
     private $livrer;
 

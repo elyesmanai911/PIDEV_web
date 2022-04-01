@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b02b0d38-f244-43d8-86f9-7ddb67494a90" name="Changes" comment="session+gestion des equipes">
+      <change beforePath="$PROJECT_DIR$/Gclaim/templates/reset_password/emailMobile.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/Gclaim/templates/reset_password/emailMobile.html.twig" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/Gclaim/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Gclaim/templates/coach/list.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Gclaim/templates/coach/index.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Gclaim/templates/back.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/animsition/js" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/animsition/css" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/bootstrap/js" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/bootstrap/css" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/persistence" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/common" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/sql-formatter" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/doctrine-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/asset" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/monolog-bridge" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/dotenv" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/form" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/twig-bridge" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/intl" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/debug" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/framework-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/debug-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/serializer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/proxy-manager-bridge" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/web-profiler-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/web-link" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/security-http" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/inflector" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/expression-language" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/security-core" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/security-csrf" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/web-server-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/phpunit-bridge" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/twig-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/doctrine-bridge" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/monolog-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/dom-crawler" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/browser-kit" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/security-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/twig/extra-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/security-guard" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sensio/framework-extra-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/laminas/laminas-code" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/friendsofphp/proxy-manager-lts" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/psr/link" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/composer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfonycasts/verify-email-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/cmen/google-charts-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfonycasts/reset-password-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/google-mailer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/vich/uploader-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/dompdf/dompdf" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phenx/php-svg-lib" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/jms/metadata" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/captcha-com/symfony-captcha-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/captcha-com/captcha" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/endroid/qr-code" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/endroid/installer" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/endroid/qr-code-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/bacon/bacon-qr-code" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/dasprid/enum" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/stripe/stripe-php" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/twilio/sdk" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/mercuryseries/flashy-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/tattali/calendar-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/symfony/swiftmailer-bundle" />
+      <path value="$PROJECT_DIR$/Gclaim/vendor/swiftmailer/swiftmailer" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="250OcKFXfMyvvcTrD89GHCe4Xih" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Gclaim" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\PIDEV\Gclaim\src\Entity" />
+      <recent name="C:\xampp\htdocs\PIDEV\Gclaim\src\Controller" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b02b0d38-f244-43d8-86f9-7ddb67494a90" name="Changes" comment="" />
+      <created>1644660618173</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1644660618173</updated>
+      <workItem from="1644660619591" duration="20807000" />
+      <workItem from="1644686361059" duration="8168000" />
+      <workItem from="1644746046521" duration="1229000" />
+      <workItem from="1644747765070" duration="2290000" />
+      <workItem from="1644750565069" duration="515000" />
+      <workItem from="1644752801144" duration="13250000" />
+      <workItem from="1644779203083" duration="8308000" />
+      <workItem from="1644789218873" duration="848000" />
+      <workItem from="1644832805442" duration="1134000" />
+      <workItem from="1644834660830" duration="320000" />
+      <workItem from="1644837244399" duration="347000" />
+      <workItem from="1644838167560" duration="564000" />
+      <workItem from="1644841756776" duration="490000" />
+      <workItem from="1644842424643" duration="3000" />
+      <workItem from="1644842736284" duration="58000" />
+      <workItem from="1644842874922" duration="761000" />
+      <workItem from="1644848435473" duration="370000" />
+      <workItem from="1644860976572" duration="3176000" />
+      <workItem from="1644867923356" duration="199000" />
+      <workItem from="1644868225291" duration="433000" />
+      <workItem from="1644871180728" duration="2313000" />
+      <workItem from="1644926946570" duration="622000" />
+      <workItem from="1644934302898" duration="1534000" />
+      <workItem from="1644941383257" duration="4481000" />
+      <workItem from="1644953027733" duration="11962000" />
+      <workItem from="1644998802728" duration="11271000" />
+      <workItem from="1645013643971" duration="12036000" />
+      <workItem from="1645037084357" duration="6840000" />
+      <workItem from="1645112396043" duration="2358000" />
+      <workItem from="1645177868568" duration="59000" />
+      <workItem from="1645188046889" duration="1369000" />
+      <workItem from="1645202238652" duration="18278000" />
+      <workItem from="1645223981075" duration="96000" />
+      <workItem from="1645224184806" duration="35000" />
+      <workItem from="1645225130401" duration="411000" />
+      <workItem from="1645267655603" duration="355000" />
+      <workItem from="1645268065879" duration="260000" />
+      <workItem from="1645271181163" duration="340000" />
+      <workItem from="1645271610417" duration="178000" />
+      <workItem from="1645279796010" duration="468000" />
+      <workItem from="1645354981795" duration="3682000" />
+      <workItem from="1645376128348" duration="2468000" />
+      <workItem from="1645392460449" duration="2483000" />
+      <workItem from="1645395501776" duration="283000" />
+      <workItem from="1645436997840" duration="2121000" />
+      <workItem from="1645445699836" duration="2823000" />
+      <workItem from="1645449815376" duration="1620000" />
+      <workItem from="1645451461734" duration="10000" />
+      <workItem from="1645451527116" duration="9521000" />
+      <workItem from="1645466108175" duration="2702000" />
+      <workItem from="1645469046770" duration="739000" />
+      <workItem from="1645475275296" duration="1007000" />
+      <workItem from="1645476785786" duration="4000" />
+      <workItem from="1645476803263" duration="1479000" />
+      <workItem from="1645525809394" duration="191000" />
+      <workItem from="1645528581069" duration="10343000" />
+      <workItem from="1645543837424" duration="2425000" />
+      <workItem from="1645550532438" duration="5179000" />
+      <workItem from="1645559438309" duration="2664000" />
+      <workItem from="1645603401206" duration="987000" />
+      <workItem from="1645619668307" duration="221000" />
+      <workItem from="1645620968246" duration="715000" />
+      <workItem from="1645625294072" duration="1176000" />
+      <workItem from="1645632448648" duration="1715000" />
+      <workItem from="1645643710424" duration="596000" />
+      <workItem from="1645697474432" duration="4471000" />
+      <workItem from="1645719559422" duration="6903000" />
+      <workItem from="1645728985818" duration="47000" />
+      <workItem from="1645804218606" duration="4158000" />
+      <workItem from="1645815743941" duration="2310000" />
+      <workItem from="1645820346116" duration="5908000" />
+      <workItem from="1645868501359" duration="1911000" />
+      <workItem from="1645911848658" duration="2106000" />
+      <workItem from="1645962167596" duration="1223000" />
+      <workItem from="1646055156644" duration="1579000" />
+      <workItem from="1646058107355" duration="7244000" />
+      <workItem from="1646066250691" duration="2000" />
+      <workItem from="1646134416309" duration="67000" />
+      <workItem from="1646208936044" duration="4376000" />
+      <workItem from="1646236107417" duration="15086000" />
+      <workItem from="1646263275968" duration="957000" />
+      <workItem from="1646295058696" duration="10485000" />
+      <workItem from="1646325984559" duration="3984000" />
+      <workItem from="1646386299632" duration="11888000" />
+      <workItem from="1646520093467" duration="1391000" />
+      <workItem from="1646521530941" duration="6896000" />
+      <workItem from="1646684070792" duration="94000" />
+      <workItem from="1646684472084" duration="13706000" />
+      <workItem from="1646726614768" duration="4926000" />
+      <workItem from="1646734805292" duration="3000" />
+      <workItem from="1646735900077" duration="6267000" />
+      <workItem from="1646755282350" duration="20492000" />
+      <workItem from="1646810093310" duration="7776000" />
+      <workItem from="1646856809052" duration="1563000" />
+      <workItem from="1647681532304" duration="4922000" />
+      <workItem from="1647708601640" duration="4432000" />
+      <workItem from="1647771424009" duration="7428000" />
+      <workItem from="1647808027039" duration="1080000" />
+      <workItem from="1647865856139" duration="3413000" />
+      <workItem from="1647943364001" duration="7033000" />
+      <workItem from="1647960806255" duration="1204000" />
+      <workItem from="1647979929585" duration="3557000" />
+      <workItem from="1648050348798" duration="311000" />
+      <workItem from="1648062100248" duration="595000" />
+      <workItem from="1648222704840" duration="1443000" />
+      <workItem from="1648290167057" duration="4214000" />
+      <workItem from="1648463776235" duration="595000" />
+      <workItem from="1648724113399" duration="64000" />
+      <workItem from="1648725004310" duration="1551000" />
+      <workItem from="1648729512872" duration="670000" />
+      <workItem from="1648730802884" duration="280000" />
+      <workItem from="1648756470815" duration="1395000" />
+    </task>
+    <task id="LOCAL-00001" summary="session+gestion des equipes">
+      <created>1645271335178</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1645271335178</updated>
+    </task>
+    <task id="LOCAL-00002" summary="session+gestion des equipes">
+      <created>1645271356715</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1645271356715</updated>
+    </task>
+    <task id="LOCAL-00003" summary="session+gestion des equipes">
+      <created>1645271425638</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1645271425638</updated>
+    </task>
+    <task id="LOCAL-00004" summary="session+gestion des equipes">
+      <created>1645271435817</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1645271435817</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="gestion des equipe + session" />
+    <MESSAGE value="session+gestion des equipes" />
+    <option name="LAST_COMMIT_MESSAGE" value="session+gestion des equipes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/Gclaim/templates/base.html.twig</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
