@@ -484,5 +484,17 @@ class TournoiController extends AbstractController
         $jsonContent =$normalizable->normalize($tournoi,'json',['groups'=>'post:read']);
         return new Response(json_encode($jsonContent));
     }
+    /**
+     * @Route("/MemebreTournoi/{id}", name="MemebreTournoi")
+     */
+    public function MemebreTournoi($id,EquipeRepository  $repository,Request $request,NormalizerInterface $normalizer)
+    {
+        $equipe = $repository->find($id);
+        $x=$equipe->getTournois();
+        $jsonContent=$normalizer->normalize($x,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+
+    }
 
 }

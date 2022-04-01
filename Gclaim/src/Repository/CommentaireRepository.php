@@ -47,4 +47,13 @@ class CommentaireRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByArticleId($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.article = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
