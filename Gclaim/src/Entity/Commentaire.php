@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Mapping\Entity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -19,6 +20,7 @@ class Commentaire
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -28,11 +30,13 @@ class Commentaire
      * @Assert\Length(
      *      max = "255",
      *      maxMessage = "le commentaire est obligatoire")
+     * @Groups("post:read")
      */
     private $commentaire;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("post:read")
      */
     private $creation;
 
@@ -42,12 +46,15 @@ class Commentaire
      * @Assert\Length(
      *      max = "255",
      *      maxMessage = "le nom est obligatoire")
+     * @Groups("post:read")
+
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="commentaires",cascade={"persist","remove"})
      * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $article;
 

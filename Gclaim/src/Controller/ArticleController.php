@@ -174,7 +174,6 @@ class ArticleController extends AbstractController
     public function afficheA(ArticleRepository $articleRepository,CommentaireRepository $commentaireRepository,$id ,Request $request, EntityManagerInterface $entityManager): Response
     {   $user = $this->getUser();
 
-        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $article=$this->getDoctrine()->getRepository(Article::class)->find($id);
         $article ->setNbrVu($article ->getNbrVu()+1);
         $entityManager->persist($article);
@@ -286,4 +285,90 @@ class ArticleController extends AbstractController
             ]);
         }
     }
-}
+    /**
+     * @Route("/AllArticles",name="AllArticles")
+     */
+    public function AllArticles(Request $request, NormalizerInterface $normalizer)
+    {
+
+        $repository = $this->getDoctrine()->getRepository(Article::class);
+
+        $articles = $repository->findAll();
+        $jsonContent =$normalizer->normalize($articles, 'json' ,['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+        // return $this->render('profil/allProfilJSON.html.twig', ['data'=>$jsonContent,]);
+    }
+    /**
+     * @Route("/addarticlesjson/new", name="addarticlesjson")
+     */
+    public function addarticlesjson(Request $request, EntityManagerInterface $entityManager, NormalizerInterface $normalizer ): Response
+    {
+        $article = new Article();
+        $article->setCreateAt(new \DateTime('now'));
+        $datetime = new \DateTime('now');
+
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+        $article->setTitre($request->get('titre'));
+        $article->setImage($request->get('image'));
+        $article->setDescription($request->get('description'));
+        $article->setCreateAt($datetime);
+
+        $article->setNbrVu(0);
+
+        $entityManager->persist($article);
+        $entityManager->flush();
+        $jsonContent =$normalizer->normalize($article, 'json' ,['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+    }
+
+    /**
+     * @Route("/editarticlejson/{id}/edit", name="editarticlejson")
+     */
+    public function editarticlejson (Request $request, Article $article, EntityManagerInterface $entityManager , NormalizerInterface $normalizer ): Response
+    {
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+        $datetime = new \DateTime('now');
+
+        $article->setTitre($request->get('titre'));
+        $article->setImage($request->get('image'));
+        $article->setDescription($request->get('description'));
+        $article->setCreateAt($datetime);
+        $article->setNbrVu(0);
+
+        $entityManager->flush();
+        $jsonContent =$normalizer->normalize($article, 'json' ,['groups'=>'post:read']);
+        return new Response("information updated successfully". json_encode($jsonContent));
+
+    }
+    /**
+     * @Route("/deletearticlejson/{id}", name="deletearticlejson")
+     */
+    public function deletearticlejson( Article $article ,NormalizerInterface $normalizer, $id): Response
+    {
+        {
+            $em = $this->getDoctrine()->getManager();
+            $article=$em->getRepository(Article::class)->find($id);
+            $em->remove($article);
+            $em->flush();
+            $jsonContent =$normalizer->normalize($article, 'json' ,['groups'=>'post:read']);
+            return new Response("information deleted successfully".json_encode($jsonContent));
+        }
+
+    }
+    /**
+     * @Route("/affichearticlejson/{id}/affiche", name="affichearticlejson")
+     */
+    public function affichearticlejson(Request $request, NormalizerInterface $normalizer , $id)
+    {
+
+        $repository = $this->getDoctrine()->getRepository(Article::class);
+        $articles = $repository->find($id);
+        $jsonContent =$normalizer->normalize($articles, 'json' ,['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+        // return $this->render('profil/allProfilJSON.html.twig', ['data'=>$jsonContent,]);
+    }
+
+
+ }

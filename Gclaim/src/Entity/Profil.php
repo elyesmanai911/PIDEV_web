@@ -46,7 +46,7 @@ class Profil
     /**
      * @ORM\OneToOne(targetEntity=Coach::class)
      * @ORM\JoinColumn(nullable=true)
-     * @Groups("post:read")
+
      */
     private $user;
 
@@ -59,12 +59,13 @@ class Profil
 
     /**
      * @ORM\OneToMany(targetEntity=Rdv::class, mappedBy="coach",cascade={"all"},orphanRemoval=true)
-     * @Groups("post:read")
+
      */
     private $rdvs;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("post:read")
      */
     private $numero;
 

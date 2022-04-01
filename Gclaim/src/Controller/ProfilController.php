@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Equipe;
 use App\Entity\Profil;
 use App\Entity\Rdv;
 use App\Entity\Tournoi;
+use App\Entity\Utilisateur;
 use App\Form\ProfilType;
+use App\Repository\EquipeRepository;
 use App\Repository\ProfilRepository;
 use ContainerXwnxeG5\PaginatorInterface_82dac15;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Twilio\Rest\Client;
 
 /**
@@ -50,7 +54,7 @@ class ProfilController extends AbstractController
         $profils = $repository->findAll();
         $jsonContent =$normalizer->normalize($profils, 'json' ,['groups'=>'post:read']);
         return new Response(json_encode($jsonContent));
-        // return $this->render('profil/allProfilJSON.html.twig', ['data'=>$jsonContent,]);
+
     }
 
     /**
@@ -91,6 +95,66 @@ class ProfilController extends AbstractController
 
         ]);
     }
+    /**
+     * @Route("/ajoutProfilMobile", name="ajoutProfilMobile")
+     */
+    public function ajoutProfilMobile(Request $request,NormalizerInterface $normalizer)
+    {
+
+        $profil=new Profil();
+        $username=$request->query->get("username");
+
+        $description=$request->query->get("description");
+        $game=$request->query->get("game");
+        $numero=$request->query->get("numero");
+        $idUser=$request->query->get("user");
+        $em=$this->getDoctrine()->getManager();
+        $profil->setusername($username);
+
+        $profil->setDescription($description);
+        $profil->setGame($game);
+        $profil->setNumero($numero);
+        $profil->setUser($this->getDoctrine()->getRepository(Utilisateur::class)->find($idUser));
+        $sid = "ACd2d8bc4f83680956754250a9b8ace7e2"; // Your Account SID from www.twilio.com/console
+        $token = "142720e3123958bbf5d3885ca7f692bf"; // Your Auth Token from www.twilio.com/console
+
+        $client = new Client($sid, $token);
+        $message = $client->messages->create(
+            '+216'.$profil->getNumero(), // Text this number
+            [
+                'from' => '+17577987553', // From a valid Twilio number
+                'body' => 'Félicitations! Vous êtes desormais un coach'
+            ]
+        );
+        $em->persist($profil);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($profil,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
+    /**
+     * @Route("/updateProfilMobile/{id}", name="updateProfilMobile")
+     */
+    public function updatProfiMobile($id,Request $request,NormalizerInterface $normalizer)
+    {
+        $em=$this->getDoctrine()->getManager();
+
+        $profil=$em->getRepository(Profil::class)->find($id);
+
+        $username=$request->query->get("username");
+        $description=$request->query->get("description");
+        $game=$request->query->get("game");
+        $numero=$request->query->get("numero");
+        $profil->setusername($username);
+        $profil->setDescription($description);
+        $profil->setGame($game);
+        $profil->setNumero($numero);
+        $em->persist($profil);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($profil,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
 
     /**
      * @Route("/{id}", name="profil_show", methods={"GET"})
@@ -128,6 +192,17 @@ class ProfilController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/deleteProfilMobile/{id}", name="deleteProfilMobile")
+     */
+    public function deleteProfilMobile($id,ProfilRepository  $repository,Request $request,NormalizerInterface $normalizable)
+    {$em=$this->getDoctrine()->getManager();
+        $profil=$repository->find($id);
+        $em->remove($profil);
+        $em->flush();
+        $jsonContent =$normalizable->normalize($profil,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+    }
     /**
      * @Route("/{id}", name="pro_delete", methods={"GET" , "POST"}))
      */

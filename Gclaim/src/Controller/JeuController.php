@@ -16,7 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-
+use phpDocumentor\Reflection\DocBlock\Serializer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class   JeuController extends AbstractController
 {
@@ -56,7 +57,7 @@ class   JeuController extends AbstractController
     public function listTournoisByJeu(TournoiRepository  $repository,$id,PaginatorInterface $paginator,Request $request)
     {
         $tournois=$paginator->paginate(
-        $tr=$repository->listTournoiByJeu($id), $request->query->getInt('page',1),
+            $tr=$repository->listTournoiByJeu($id), $request->query->getInt('page',1),
             2
 
         );
@@ -150,7 +151,7 @@ class   JeuController extends AbstractController
      */
     public function searchJ(Request $request, NormalizerInterface $Normalizer, PaginatorInterface $paginator)
     {
-            $jeus=$paginator->paginate(
+        $jeus=$paginator->paginate(
             $this->getDoctrine()->getRepository(Jeu::class)->findBy(['nomjeu' => $request->get('search')]),
             $request->query->getInt('page',1),
             4
@@ -185,6 +186,73 @@ class   JeuController extends AbstractController
             'jeus' => $jeu,'user'=>$this->getUser()
 
         ]);
+    }
+    /**
+     * @Route("/Jeu/AllJeus", name="AllJeus")
+     */
+    public function AllJeus(JeuRepository $repository,Request $request,NormalizerInterface $normalizable)
+    {
+        $jeu=$repository->findall();
+        $jsonContent =$normalizable->normalize($jeu,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+    }
+
+    /**
+     * @Route("/ajoutJeuMobile", name="ajoutJeuMobile")
+     */
+    public function ajoutJeuMobile(Request $request,NormalizerInterface $normalizer)
+    {   $Jeu=new Jeu();
+        $nom=$request->query->get("nomjeu");
+        $description=$request->query->get("description");
+        $date=new \DateTime('now');
+        $createur=$request->query->get("createur");
+        $em=$this->getDoctrine()->getManager();
+        $Jeu->setNomjeu($nom);
+        $Jeu->setDateS($date);
+        $Jeu->setCreateur($createur);
+        $Jeu->setDescription($description);
+        $em->persist($Jeu);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($Jeu,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
+
+
+    /**
+     * @Route("/updateJeuMobile/{id}", name="updateJeuMobile")
+     */
+    public function updateJeuMobile($id,Request $request,NormalizerInterface $normalizer)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $Jeu=$em->getRepository(Jeu::class)->find($id);
+        $nom=$request->query->get("nomjeu");
+        $description=$request->query->get("description");
+        $date=new \DateTime('now');
+        $createur=$request->query->get("createur");
+        $em=$this->getDoctrine()->getManager();
+        $Jeu->setNomjeu($nom);
+        $Jeu->setDateS($date);
+        $Jeu->setCreateur($createur);
+        $Jeu->setDescription($description);
+        $em->persist($Jeu);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($Jeu,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
+
+    /**
+     * @Route("/deleteJeuMobile/{id}", name="deleteJeuMobile")
+     */
+    public function deleteTournoiMobile($id ,JeuRepository $repository, Request $request, NormalizerInterface $normalizable)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $jeu=$repository->find($id);
+        $em->remove($jeu);
+        $em->flush();
+        $jsonContent =$normalizable->normalize($jeu,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
     }
 
 }

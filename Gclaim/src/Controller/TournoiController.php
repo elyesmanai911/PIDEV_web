@@ -21,7 +21,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -30,6 +29,8 @@ use MercurySeries\FlashyBundle\FlashyNotifier;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Component\Pager\PaginatorInterface;
+use phpDocumentor\Reflection\DocBlock\Serializer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class TournoiController extends AbstractController
 {
@@ -136,8 +137,8 @@ class TournoiController extends AbstractController
     public function listtTournoi( PaginatorInterface $paginator,Request $request)
     {
 
-         $tournois=$paginator->paginate(
-             $this->getDoctrine()->getRepository(Tournoi::class)->findAll(), $request->query->getInt('page',1),
+        $tournois=$paginator->paginate(
+            $this->getDoctrine()->getRepository(Tournoi::class)->findAll(), $request->query->getInt('page',1),
             2
 
         );
@@ -156,7 +157,7 @@ class TournoiController extends AbstractController
         $tournoi=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
 
 
-            $tr=$repository->listTournoiByEq($equipe[0]->getId());
+        $tr=$repository->listTournoiByEq($equipe[0]->getId());
 
         $tournois=$paginator->paginate(
             $tr,
@@ -194,17 +195,17 @@ class TournoiController extends AbstractController
         foreach($equipes as $equipe) {
             $uts=$repU->listutiparequip($equipe->getId());
             foreach($uts as $ut){
-            $message = (new \Swift_Message('New'))
-                ->setFrom($ut->getEmail())
-                ->setTo($ut->getEmail())
-                ->setSubject('Tournoi Annulé !')
-                ->setBody(
-                    $this->renderView('emails/emails/tournoi.html.twig', compact('tournoi')),
-                    'text/html'
-                );
+                $message = (new \Swift_Message('New'))
+                    ->setFrom($ut->getEmail())
+                    ->setTo($ut->getEmail())
+                    ->setSubject('Tournoi Annulé !')
+                    ->setBody(
+                        $this->renderView('emails/emails/tournoi.html.twig', compact('tournoi')),
+                        'text/html'
+                    );
 
-            $mailer->send($message);
-        }
+                $mailer->send($message);
+            }
         }
 
         return $this->redirectToRoute("listTournoi", array('user' => $user));
@@ -330,8 +331,8 @@ class TournoiController extends AbstractController
         return $this->render('tournoi/calendar.html.twig', [ 'user' => $user ,'tournois'=>$tournois,]);
     }
     /**
-    * @Route("/searchT", name="searchT", methods={"GET"})
-    */
+     * @Route("/searchT", name="searchT", methods={"GET"})
+     */
     public function searchT(Request $request, NormalizerInterface $Normalizer, PaginatorInterface $paginator)
     {
         $tournois=$paginator->paginate(
@@ -369,6 +370,119 @@ class TournoiController extends AbstractController
             'tournois' => $tournoi,'user'=>$this->getUser()
 
         ]);
+    }
+
+    /**
+     * @Route("/ajoutTournoiMobile", name="ajoutTournoiMobile")
+     */
+    public function ajoutTournoiMobile(Request $request,NormalizerInterface $normalizer)
+    {   $tournoi=new Tournoi();
+        $nom=$request->query->get("nomTournoi");
+        $description=$request->query->get("description");
+        $date=new \DateTime('now');
+        $dateev=$request->query->get("dateev");
+        /*$idJeu=$request->query->get("idjeu");
+        $equipe=$request->query->get("equipes");*/
+        $image=$request->query->get("image");
+        $em=$this->getDoctrine()->getManager();
+        $tournoi->setNomtournoi($nom);
+        $tournoi->setDatec($date);
+        $tournoi->setDateev(new \DateTime($dateev));
+        // $tournoi->setJeu($idJeu);*/
+        $tournoi->setDescription($description);
+        $tournoi->setImage($image);
+        // $tournoi->addEquipe($this->getDoctrine()->getRepository(Utilisateur::class)->find($equipe));
+        $em->persist($tournoi);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($tournoi,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
+
+
+    /**
+     * @Route("/updateTournoiMobile/{id}", name="updateTournoiMobile")
+     */
+    public function updateTournoiMobile($id,Request $request,NormalizerInterface $normalizer)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $tournoi=$em->getRepository(Tournoi::class)->find($id);
+        $nom=$request->query->get("nomTournoi");
+        $description=$request->query->get("description");
+        $date=new \DateTime('now');
+        // $image=$request->query->get("image");
+        $tournoi->setNomtournoi($nom);
+        $tournoi->setDatec($date);
+        $tournoi->setDescription($description);
+        //$tournoi->setImage($image);
+        $em->persist($tournoi);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($tournoi,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
+
+
+    /**
+     * @Route("/rejoindreTournoiMOBILE/{id}", name="rejoindreTournoiMOBILE")
+     */
+    public function rejoindreTournoiMOBILE($id,TournoiRepository  $repository,Request $request,NormalizerInterface $normalizer,EquipeRepository $repp,UtilisateurRepository $rep)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $iduser=$request->query->get("simpleutilisateurs");
+        $user=$em->getRepository(Utilisateur::class)->find($iduser);
+        $equipe =$repp->listEquipeparuti($iduser);
+        $tournoi = $repository->find($id);
+        if($equipe==Null)
+        {
+            $equip =$repp->equip();
+
+            $eq=$equip[0];
+
+            $eq->addSimpleutilisateur($user);
+            $tournoi->addEquipe($eq);
+            $eq->setNb($eq->getNb()+1);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($eq);
+            $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tournoi);
+            $em->flush();
+
+        }
+        else {
+            $equipp = $equipe[0];
+            $tournoi->addEquipe($equipp);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tournoi);
+            $em->flush();
+        }
+        $jsonContent=$normalizer->normalize($equipe,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+    }
+
+
+    /**
+     * @Route("/deleteTournoiMobile/{id}", name="deleteTournoiMobile")
+
+     */
+    public function deleteTournoiMobile($id,\Swift_Mailer $mailer, TournoiRepository $repository, Request $request, NormalizerInterface $normalizable)
+    {$em=$this->getDoctrine()->getManager();
+        $tournoi=$repository->find($id);
+        $message = (new \Swift_Message('New'))
+            ->setFrom('elyes.manai1@esprit.tn')
+            ->setTo('elyes.manai1@esprit.tn')
+            ->setSubject('Tournoi Annulé !')
+            ->setBody(
+                $this->renderView('emails/emails/tournoi.html.twig', compact('tournoi')),
+                'text/html'
+            );
+
+        $mailer->send($message);
+        $em->remove($tournoi);
+        $em->flush();
+        $jsonContent =$normalizable->normalize($tournoi,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
     }
 
 }

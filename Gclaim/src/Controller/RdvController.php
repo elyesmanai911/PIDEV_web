@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Coach;
 use App\Entity\Profil;
 use App\Entity\Rdv;
 use App\Entity\Tournoi;
+use App\Entity\Utilisateur;
 use App\Form\RdvType;
 use App\Repository\ProfilRepository;
 use App\Repository\RdvRepository;
@@ -17,6 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use App\Security\EmailVerifier;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Twilio\Rest\Client;
 
 /**
@@ -43,7 +48,57 @@ class RdvController extends AbstractController
             'user' => $user,"tournois" => $tournois,
         ]);
     }
+    /**
+     * @Route("/AllRdvs",name="AllRdv")
+     */
+    public function AllRdvs(Request $request, NormalizerInterface $normalizer)
+    {
 
+        $repository = $this->getDoctrine()->getRepository(Rdv::class);
+        $rdv = $repository->findAll();
+        $jsonContent =$normalizer->normalize($rdv, 'json' ,['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+        // return $this->render('profil/allProfilJSON.html.twig', ['data'=>$jsonContent,]);
+    }
+    /**
+     * @Route("/ajoutRdvMobile", name="ajoutRdvMobile")
+     */
+    public function ajoutRdvMobile(Request $request,NormalizerInterface $normalizer)
+    {
+
+        $rdv=new Rdv();
+        $coach=$request->query->get("coach");
+        $user=$request->query->get("user");
+        $date=$request->query->get("date");
+
+        $em=$this->getDoctrine()->getManager();
+        $rdv->setDate(new \DateTime($date));
+        $rdv->setUsername($user);
+        $rdv->setCoachname($coach);
+
+        $em->persist($rdv);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($rdv,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
+    /**
+     * @Route("/updateRdvMobile/{id}", name="updateRdvMobile")
+     */
+    public function updateRdvMobile($id,Request $request,NormalizerInterface $normalizer)
+    {
+        $em=$this->getDoctrine()->getManager();
+
+        $rdv=$em->getRepository(Rdv::class)->find($id);
+
+        $date=$request->query->get("date");
+        $rdv->setDate(new \DateTime($date));
+        $em->persist($rdv);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($rdv,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+    }
     /**
      * @Route("/new/{id}", name="rdv_new", methods={"GET", "POST"})
      */
@@ -167,7 +222,17 @@ $error='safe';
 
         return $this->redirectToRoute('rdv_index');
     }
-
+    /**
+     * @Route("/deleteRdvMobile/{id}", name="deleteRdvMobile")
+     */
+    public function deleteRdvMobile($id,RdvRepository  $repository,Request $request,NormalizerInterface $normalizable)
+    {$em=$this->getDoctrine()->getManager();
+        $rdv=$repository->find($id);
+        $em->remove($rdv);
+        $em->flush();
+        $jsonContent =$normalizable->normalize($rdv,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+    }
     /**
      * @Route("/{id}", name="rdv_delete", methods={"GET" , "POST"})
      */

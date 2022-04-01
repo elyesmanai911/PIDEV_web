@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Mapping\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -19,6 +20,8 @@ class Article
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
+
      */
     private $id;
 
@@ -28,6 +31,7 @@ class Article
      * @Assert\Length(
      *      max = "255",
      *      maxMessage = "le titre est obligatoire")
+     * @Groups("post:read")
      */
     private $titre;
 
@@ -37,32 +41,38 @@ class Article
      * @Assert\Length(
      *      max = "255",
      *      maxMessage = "le sujet ne peut pas être plus long que {{ limit }} caractères")
+     * @Groups("post:read")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
      * @Assert\NotBlank(message="l'image' est obligatoire")
      */
     private $image;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("post:read")
      */
     private $createAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="article" ,cascade={"remove"})
+     * @Groups("post:read")
      */
     private $commentaires;
 
     /**
      * @ORM\ManyToOne(targetEntity=Cat::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("post:read")
      */
     private $cat;
     /**
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      * @Assert\Positive
      */
     private $nbr_vu;

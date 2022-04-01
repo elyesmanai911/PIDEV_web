@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Commentaire;
 use App\Form\CommentaireType;
+use App\Repository\ArticleRepository;
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/commentaire")
@@ -25,7 +28,20 @@ class CommentaireController extends AbstractController
             'commentaires' => $commentaireRepository->findAll(),'user'=>$this->getUser(),
         ]);
     }
+    /**
+     * @Route("/AffcheCommentaire/{id}", name="AffcheCommentaire")
+     */
+    public function AffcheCommentaire($id,NormalizerInterface $normalizer,CommentaireRepository $commentaireRepository)
+    {
 
+        $commentaire =$commentaireRepository->findByArticleId($id);
+
+
+        $jsonContent=$normalizer->normalize($commentaire,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+
+
+    }
     /**
      * @Route("/new", name="commentaire_new", methods={"GET", "POST"})
      */
@@ -91,5 +107,33 @@ class CommentaireController extends AbstractController
         }
 
         return $this->redirectToRoute('commentaire_index', ['user'=>$this->getUser(),], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * @Route("/com/AllCommentaires",name="AllCommentaires")
+     */
+    public function AllCommentaires(Request $request, NormalizerInterface $normalizer)
+    {
+
+        $repository = $this->getDoctrine()->getRepository(Commentaire::class);
+
+        $commentaires = $repository->findAll();
+        $jsonContent =$normalizer->normalize($commentaires, 'json' ,['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
+        // return $this->render('profil/allProfilJSON.html.twig', ['data'=>$jsonContent,]);
+    }
+    /**
+     * @Route("/com/addCommobile/{id}/new", name="addCommobile")
+     */
+    public function addCommobile(Request $request,NormalizerInterface $normalizer,$id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $user=new Commentaire();
+        $user->setCommentaire($request->get('commentaire'));
+        $user->setUser($request->get('user'));
+        $user->setArticle($this->getDoctrine()->getRepository(Article::class)->find($id));
+        $em->persist($user);
+        $em->flush();
+        $jsonContent=$normalizer->normalize($user,'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));
     }
 }

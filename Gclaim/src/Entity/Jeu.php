@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Tournoi;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * @ORM\Entity(repositoryClass=JeuRepository::class)
  */
@@ -17,6 +19,7 @@ class Jeu
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -33,11 +36,13 @@ class Jeu
      * @Assert\Type(
      * type={"alpha"},
      * message="Nom Jeu  {{ value }} doit contenir seulement des lettres alphabétiques")
+     * @Groups("post:read")
      */
     private $nomjeu;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
+     * @Groups("post:read")
      */
     private $description;
 
@@ -54,17 +59,20 @@ class Jeu
      * @Assert\Type(
      * type={"alpha"},
      * message="Nom createur  {{ value }} doit contenir seulement des lettres alphabétiques")
+     * @Groups("post:read")
      */
     private $createur;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Assert\NotBlank(message="la date est  obligatoire")
+     * @Groups("post:read")
      */
     private $dateS;
 
     /**
      * @ORM\Column(type="string", length=500)
+     * @Groups("post:read")
      */
     private $image;
 
