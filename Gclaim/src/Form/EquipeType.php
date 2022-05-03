@@ -20,8 +20,8 @@ class EquipeType extends AbstractType
             ->add('description')
             ->add('Etat', ChoiceType::class, [
                 'choices'  => [
-                    'OPEN' => true,
-                    'CLOSE' => false,
+                    'OPEN' => 'open',
+                    'CLOSE' => 'close',
 
                 ]])
             ->add('confirmer',SubmitType::class)

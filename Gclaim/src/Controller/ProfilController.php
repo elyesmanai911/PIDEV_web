@@ -116,7 +116,7 @@ class ProfilController extends AbstractController
         $profil->setNumero($numero);
         $profil->setUser($this->getDoctrine()->getRepository(Utilisateur::class)->find($idUser));
         $sid = "ACd2d8bc4f83680956754250a9b8ace7e2"; // Your Account SID from www.twilio.com/console
-        $token = "142720e3123958bbf5d3885ca7f692bf"; // Your Auth Token from www.twilio.com/console
+        $token = "71e1e0b751bd9d5ddc21789cb568d8fa"; // Your Auth Token from www.twilio.com/console
 
         $client = new Client($sid, $token);
         $message = $client->messages->create(

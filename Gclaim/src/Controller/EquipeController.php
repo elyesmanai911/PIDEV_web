@@ -121,6 +121,7 @@ class EquipeController extends AbstractController
             $equipe->setChef($this->getUser()->getUsername());
             $equipe->addSimpleutilisateur($user);
             $equipe->setDateCreation($dateTime);
+            $equipe->setNb(1);
             $em->persist($equipe);
             $em->flush();
             return $this->redirectToRoute("gclaim");
