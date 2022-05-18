@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Twilio\Rest\Client;
 
 /**
  * @Route("/profil")
@@ -72,19 +71,7 @@ class ProfilController extends AbstractController
             $profil->setUser($user);
             $entityManager->persist($profil);
             $entityManager->flush();
-            // Send an SMS using Twilio's REST API and PHP
 
-            $sid = "AC011f55307a119c4e2af431ef17eed27e"; // Your Account SID from www.twilio.com/console
-            $token = "0728384028360074c8f89055bfa236ea"; // Your Auth Token from www.twilio.com/console
-
-            $client = new Client($sid, $token);
-            $message = $client->messages->create(
-                '+216'.$profil->getNumero(), // Text this number
-                [
-                    'from' => '+17128827707', // From a valid Twilio number
-                    'body' => 'Félicitations! Vous êtes desormais un coach'
-                ]
-            );
             return $this->redirectToRoute('profil_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -92,7 +79,6 @@ class ProfilController extends AbstractController
             'profil' => $profil,
             'form' => $form->createView(),
             'user'=> $this->getUser(),"tournois" => $tournois,
-
         ]);
     }
     /**
@@ -115,17 +101,7 @@ class ProfilController extends AbstractController
         $profil->setGame($game);
         $profil->setNumero($numero);
         $profil->setUser($this->getDoctrine()->getRepository(Utilisateur::class)->find($idUser));
-        $sid = "ACd2d8bc4f83680956754250a9b8ace7e2"; // Your Account SID from www.twilio.com/console
-        $token = "71e1e0b751bd9d5ddc21789cb568d8fa"; // Your Auth Token from www.twilio.com/console
 
-        $client = new Client($sid, $token);
-        $message = $client->messages->create(
-            '+216'.$profil->getNumero(), // Text this number
-            [
-                'from' => '+17577987553', // From a valid Twilio number
-                'body' => 'Félicitations! Vous êtes desormais un coach'
-            ]
-        );
         $em->persist($profil);
         $em->flush();
         $jsonContent=$normalizer->normalize($profil,'json',['groups'=>'post:read']);

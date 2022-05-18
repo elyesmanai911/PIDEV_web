@@ -59,7 +59,7 @@
                                 <div class="label"><span>{{ produit.prixProduit }} DT</span></div>
 
                                 <ul>
-                                    <h5><a href="{{ path('detailprod', {'id_produit': produit.Id_produit}) }}">{{ produit.nomProduit }}</a></h5>
+                                    <h5><a href="{{ path('detailprod', {'id_produit': produit.getIdProduit}) }}">{{ produit.nomProduit }}</a></h5>
                                     <li>by <span>Admin</span></li>
                                     <li><i class="fa fa-clock-o"></i> {{ produit.dateAjoutProduit ? produit.dateAjoutProduit|date('Y-m-d') : '' }}</li>
                                    <li style="color: #9d1e15">{% if produit.QteProduit != 0 %}quantité: {{ produit.QteProduit }} {% else %}hors stock{% endif%} </li>
@@ -73,7 +73,7 @@
                                             {% if user is not null %}
                                                {% if produit.QteProduit != 0 %}
                                             <div class="tag-list">
-                                                <a href="{{ path('add' ,{id :produit.id_produit})}}"><span>Ajouter au panier</span></a>
+                                                <a href="{{ path('add' ,{id :produit.getIdProduit})}}"><span>Ajouter au panier</span></a>
 
                                             </div>
                                                    {% endif %}
@@ -128,7 +128,7 @@
                                     </div>
 
                                     <div class="bp-text">
-                                        <h6><a href="{{ path('detailprod', {'id_produit': p.Id_produit}) }}">{{ p.NomProduit }}</a></h6>
+                                        <h6><a href="{{ path('detailprod', {'id_produit': p.getIdProduit}) }}">{{ p.NomProduit }}</a></h6>
                                         <ul>
 
                                             <li><i class="fa fa-clock-o"></i> {{ p.dateAjoutProduit ? p.dateAjoutProduit|date('Y-m-d') : '' }}</li>

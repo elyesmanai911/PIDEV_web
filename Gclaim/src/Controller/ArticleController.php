@@ -173,7 +173,7 @@ class ArticleController extends AbstractController
      */
     public function afficheA(ArticleRepository $articleRepository,CommentaireRepository $commentaireRepository,$id ,Request $request, EntityManagerInterface $entityManager): Response
     {   $user = $this->getUser();
-
+        $tournois=$this->getDoctrine()->getRepository(Tournoi::class)->findAll();
         $article=$this->getDoctrine()->getRepository(Article::class)->find($id);
         $article ->setNbrVu($article ->getNbrVu()+1);
         $entityManager->persist($article);

@@ -155,7 +155,7 @@ class SimpleutilisateurController extends AbstractController
                 $em->flush();
 
 
-                return $this->redirectToRoute("app_login",["user" => $Utilisateur]);
+                return $this->redirectToRoute("app_login",["user" => $Utilisateur,"tournois" => $tournois,]);
             }
         }
         return $this->render("simpleutilisateur/add.html.twig", ['form' => $form->createView(), "user" => $Utilisateur, 'error' => '',"tournois" => $tournois,]);
